@@ -3,7 +3,7 @@
 alias build-dwm="cd ~/build/dwm/ && sudo make install"
 alias dps="docker ps -as"
 
-alias g++="g++ -Wall -Weffc++ -Wextra -Wsign-conversion"
+# alias g++="g++ -Wall -Weffc++ -Wextra -Wsign-conversion"
 alias mtree="tree --dirsfirst -L 3"
 alias qrencode-utf="qrencode -t ansiutf8"
 alias qrencode-png="qrencode -t PNG"
