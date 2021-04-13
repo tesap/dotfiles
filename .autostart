@@ -1,0 +1,12 @@
+#! /bin/bash
+
+$HOME/.fehbg
+
+# picom &
+
+# Systray
+redshift &
+# flameshot &
+# nm-applet &
+# pasystray &
+

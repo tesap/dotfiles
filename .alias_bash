@@ -1,0 +1,146 @@
+#!/usr/bin/bash
+
+alias build-dwm="cd ~/build/dwm/ && sudo make install"
+alias dps="docker ps -as"
+
+alias g++="g++ -Wall -Weffc++ -Wextra -Wsign-conversion"
+alias mtree="tree --dirsfirst -L 3"
+alias qrencode-utf="qrencode -t ansiutf8"
+alias qrencode-png="qrencode -t PNG"
+
+# alias ympd="ympd -w localhost:1111 -h 0.0.0.0"
+
+# --- Qemu ---
+alias qi="qemu-img"
+alias qc="qi create -f qcow2"
+alias qb="qi rebase -u -f qcow2 -b"
+
+alias xclip="xclip -se c"
+alias xclip-png="xclip -t image/png -o"
+
+# alias genvc='python -c "import random; print(''.join([random.choice('qwertyuiop[]asdfghjkl;zxcvbnm,./1234567890-=') for i in range(320)]))"'
+alias vc="sudo veracrypt -t"
+alias vd="vc -d"
+alias vm="vc -k '' --pim=0 --protect-hidden=no"
+alias vf="vc --auto-mount favorites"
+# vn() { sudo veracrypt -t -c --pim=0 --encryption=aes --hash=sha512 --size=$1 $2; }
+
+# alias mz='echo y | sh ~/.mozilla/firefox/s0sa3cb2.default/updater.sh -c'
+
+alias archivebox='docker run -v $PWD:/data -it nikisweeting/archivebox'
+alias archivebox-server="docker run -v $PWD:/data -it -p 8000:8000 nikisweeting/archivebox server 0.0.0.0:8000
+open http://127.0.0.1:8000"
+
+alias xss='xss-lock -l ~/.config/i3/transfer-sleep-lock-i3lock.sh -- i3lock-fancy -p &'
+
+alias ufw='sudo ufw'
+alias us='sudo ufw status verbose'
+
+alias mount='sudo mount'
+alias umount='sudo umount'
+
+alias grep="grep -i --color=always"
+alias free='free -m'
+alias cp="cp -i" 
+alias rm="rm -v"
+alias mkdir="mkdir -p"
+alias tt="trash"
+alias df='df -h'
+alias cal="cal -3 -m"
+alias zip="zip -r"
+alias picom="picom --config ~/.config/picom/config"
+
+alias rdu="sudo ncdu / --exclude '/home' --exclude '/swapfile' --exclude '/mnt'"
+alias hdu="ncdu $HOME"
+
+alias {v,vi}="$EDITOR"
+alias svi="sudo $EDITOR"
+
+alias m="ncmpcpp"
+alias h="htop -s PERCENT_CPU"
+alias b="bashtop"
+alias fm="ranger"
+alias rss="newsboat"
+
+alias ytv="straw-viewer"
+alias ytx="youtube-dl --extract-audio --audio-format mp3"
+alias ytdd="youtube-dl --prefer-free-formats"
+
+alias ftget="xdg-mime query filetype $1"
+alias mimeget="xdg-mime query default $1"
+alias mimeset="xdg-mime default $1 $2"
+
+alias vga="lspci -k | grep -A 2 -E '(VGA|3D)'"
+alias speed="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
+alias fonts="fc-list | cut -d: -f1 | sort| uniq"
+
+alias gpg-import='gpg --keyserver keys.gnupg.net --recv-keys'
+alias gpg='gpg --keyid-format LONG'
+alias ref="sudo reflector -c "Russia" -c "Belarus" -c "Ukraine" -c "Poland" -f 20 -l 20 -p https -p http -n 20 --save /etc/pacman.d/mirrorlist --sort rate"
+
+alias merge="xrdb -merge $HOME/.Xresources"
+
+alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+alias update-mkinitcpio="sudo mkinitcpio -p linux"
+
+################################################################################
+# -----------------------------      OTHER      ------------------------------ #
+################################################################################
+
+alias ll='exa -al --color=always --group-directories-first'
+alias la='exa -a --color=always --group-directories-first'
+alias ls='exa -l --color=always --group-directories-first'
+alias lt='exa -aT --color=always --group-directories-first'
+alias l.='exa -a | egrep "^\."'
+
+alias ..="cd .."
+alias ...="cd ../.."
+
+alias eh="$EDITOR $HOME/hosts/myhosts"
+alias sb="source $HOME/.bashrc"
+alias eb="$EDITOR $HOME/.bashrc"
+alias eab="$EDITOR $HOME/.alias_bash"
+alias ev="$EDITOR $HOME/.vimrc"
+
+
+################################################################################
+# ------------------------------      GIT      ------------------------------- #
+################################################################################
+
+alias config='git --git-dir=/home/void/.dotfiles/ --work-tree=/home/void'
+
+alias gs="git status"
+alias gl="git log --stat --graph"
+alias gd="git diff --color | diff-so-fancy"
+alias gad="git add --all"
+# alias gc="git clone"
+alias gcm="git commit -m $1"
+alias gac="gad && gcm"
+alias gpm="git push origin master"
+alias gp="git push"
+alias gam="git add . && git commit --amend"
+
+alias g-undo="git reset --soft HEAD~"
+alias g-ssh="git remote add origin git@git.nand.tk:st/$1.git"
+
+
+alias ys="yay"
+alias y="yay -Sy"
+alias yn="yay -S --noconfirm"
+alias yr="yay -Rs"
+alias yrn="yay -Rs --noconfirm"
+alias yu="yay -Qu" 
+alias yay-search='history | grep -E "^.*( ){2}(yay -S|y)+( )(([a-z-]|[0-9]|[\$\(\)])+ *)+"'
+
+# ------------
+
+alias rve="sudo rm -rvf .venv"
+
+alias ve="virtualenv .venv"
+alias vea="source .venv/bin/activate"
+alias ved="deactivate"
+
+alias pipr="pip install -r requirements.txt"
+alias fr="pip freeze > requirements.txt"
+
+alias vef="rve && ve && vea && pipr"
