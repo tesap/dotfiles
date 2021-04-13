@@ -1,0 +1,105 @@
+#!/bin/bash
+
+RED="$(printf '\033[31m')"
+GREEN="$(printf '\033[32m')"
+ORANGE="$(printf '\033[33m')"
+BLUE="$(printf '\033[34m')"
+MAGENTA="$(printf '\033[35m')"
+CYAN="$(printf '\033[36m')"
+WHITE="$(printf '\033[37m')"
+BOLD="$(printf '\033[1m')"
+
+nl() { printf "\n$1\n\n"; }
+clr() { printf "${1}${2}${WHITE}"; }
+
+white() { clr $WHITE "$1"; }
+red() { clr $RED "$1"; }
+green() { clr $GREEN "$1"; }
+blue() { clr $BLUE "$1"; }
+cyan() { clr $CYAN "$1"; }
+orange() { clr $ORANGE "$1"; }
+magenta() { clr $MAGENTA "$1"; }
+
+qemu_params="qemu-system-x86_64 -m 4096 -enable-kvm -smp 2 -cpu host -vga qxl -device AC97 -monitor stdio"
+
+spice_params() { echo "-spice port=$1,disable-ticketing -device virtio-serial-pci -device virtserialport,chardev=spicechannel0,name=com.redhat.spice.0 -chardev spicevmc,id=spicechannel0,name=vdagent"; }
+ssh_params() { echo "-nic user,hostfwd=tcp::$1-:22"; }
+other="-hda $@"
+
+c=$(python -c 'import random; print(random.randint(1, 300))')
+
+let ssh_port=10022+$c
+let spice_port=3000+$c
+
+echo $(red "##### $c ###")
+echo $(orange "spice $spice_port")
+echo $(orange "ssh - $ssh_port")
+echo 
+
+use_ssh=$(ssh_params $ssh_port)
+use_spice=$(spice_params $spice_port)
+
+echo $(orange 'Qemu') $qemu_params
+echo $(magenta 'Spice') $use_spice
+echo $(cyan 'Net') $use_ssh
+echo $(green 'Other') $other
+
+qemu_run="$qemu_params $use_spice $use_ssh $other"
+spice_run="spicy -p $spice_port"
+ssh_run="ssh st@localhost -p $ssh_port"
+
+ww() { eval "watch 'ls -l -a $1 && ls -lah $1'";}
+
+sn_qemu=qemu$c
+sn_spice=spice$c
+sn_ssh=ssh$c
+
+s_create="screen -dmS"
+s_quit="screen -X -S"
+
+s_qemu="$s_create $sn_qemu $qemu_run"
+s_spice="$s_create $sn_spice $spice_run"
+s_ssh="$s_create $sn_ssh $ssh_run"
+
+q_qemu="$s_quit $sn_qemu quit"
+q_spice="$s_quit $sn_spice quit"
+q_ssh="$s_quit $sn_ssh quit"
+
+eval $s_qemu
+
+handle () {
+    read -n1 -s p
+
+    if [[ $p == 's' ]];then
+        echo $(red 'ssh?')
+        read -n1 -s p
+        
+        if [[ $p == 's' ]];then
+            echo $(cyan 'Starting ssh')
+            eval $s_ssh
+        fi
+    fi
+    if [[ $p == 'c' ]];then
+        echo $(magenta 'Starting spice')
+        eval $s_spice
+    fi
+    if [[ $p == 'q' ]];then
+        echo $(red 'Quit?')
+        read -n1 -s p
+    fi
+    if [[ $p == 'w' ]];then
+        echo $(green 'Watch')
+        sleep 0.3 
+        ww $1
+    fi
+}
+
+printf "$(orange "s (ssh)\nc (spice)\nw (watch)\nq (quit)")\n"
+handle $@
+while [[ ! $p == 'q' ]];do
+    handle $@
+done
+
+eval $q_qemu && echo $(green 'Killed qemu')
+eval $q_spice && echo $(green 'Killed spice')
+eval $q_ssh && echo $(green 'Killed ssh')
