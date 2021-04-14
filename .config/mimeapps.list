@@ -1,0 +1,28 @@
+[Added Associations]
+
+
+[Default Applications]
+application/x-partial-download=mpv.desktop;
+
+application/pdf=xreader.desktop;
+
+image/png=sxiv.desktop;
+image/jpeg=sxiv.desktop
+application/x-desktop=sxiv.desktop;
+
+inode/directory=pcmanfm.desktop
+text/plain=mousepad.desktop
+text/x-shellscript=mousepad.desktop
+application/x-shellscript=mousepad.desktop
+
+text/html=firefox.desktop;
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+x-scheme-handler/chrome=firefox.desktop
+application/x-extension-htm=firefox.desktop
+application/x-extension-html=firefox.desktop
+application/x-extension-shtml=firefox.desktop
+application/xhtml+xml=firefox.desktop
+
+application/x-extension-xhtml=firefox.desktop
+application/x-extension-xht=firefox.desktop
