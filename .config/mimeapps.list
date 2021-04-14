@@ -11,9 +11,9 @@ image/jpeg=sxiv.desktop
 application/x-desktop=sxiv.desktop;
 
 inode/directory=pcmanfm.desktop
-text/plain=mousepad.desktop
-text/x-shellscript=mousepad.desktop
-application/x-shellscript=mousepad.desktop
+text/plain=leafpad.desktop
+text/x-shellscript=leafpad.desktop
+application/x-shellscript=leafpad.desktop
 
 text/html=firefox.desktop;
 x-scheme-handler/http=firefox.desktop

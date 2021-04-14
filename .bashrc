@@ -8,5 +8,6 @@ PS1='[\u@\h \W]\$ '
 
 export PATH=$HOME/.bin:$PATH
 export EDITOR=nvim
+export TERM=xterm-256color
 
 source ~/.alias_bash
