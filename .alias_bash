@@ -50,7 +50,7 @@ alias cal="cal -3 -m"
 alias zip="zip -r"
 alias picom="picom --config ~/.config/picom/config"
 
-alias rdu="sudo ncdu / --exclude '/home' --exclude '/swapfile' --exclude '/mnt'"
+alias rdu="sudo ncdu / --exclude '/home' --exclude '/swapfile' --exclude '/mnt' --exclude /media --exclude /run"
 alias hdu="ncdu $HOME"
 
 alias {v,vi}="$EDITOR"

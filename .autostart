@@ -1,12 +1,12 @@
 #! /bin/bash
 
-$HOME/.fehbg
-
 # picom &
-
-# Systray
-redshift &
 # flameshot &
-# nm-applet &
-# pasystray &
+
+$HOME/.fehbg
+dwmblocks &
+
+redshift &
+nm-applet &
+pasystray &
 
