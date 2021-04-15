@@ -31,7 +31,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'dkarter/bullets.vim'
 " Plug 'plasticboy/vim-markdown' " Folding + Styles
 
-Plug 'masukomi/vim-markdown-folding' " Folding
+" Plug 'masukomi/vim-markdown-folding' " Folding
 " Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 
 " --- THEMES ---

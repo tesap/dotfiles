@@ -87,11 +87,14 @@ alias update-mkinitcpio="sudo mkinitcpio -p linux"
 # -----------------------------      OTHER      ------------------------------ #
 ################################################################################
 
-alias ll='exa -al --color=always --group-directories-first'
-alias la='exa -a --color=always --group-directories-first'
-alias ls='exa -l --color=always --group-directories-first'
-alias lt='exa -aT --color=always --group-directories-first'
-alias l.='exa -a | egrep "^\."'
+# alias ll='exa -al --color=always --group-directories-first'
+# alias la='exa -a --color=always --group-directories-first'
+# alias ls='exa -l --color=always --group-directories-first'
+# alias lt='exa -aT --color=always --group-directories-first'
+# alias l.='exa -a | egrep "^\."'
+
+alias ls='exa -lb --color=always --group-directories-first'
+alias ll='ls -a'
 
 alias ..="cd .."
 alias ...="cd ../.."

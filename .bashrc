@@ -10,4 +10,9 @@ export PATH=$HOME/.bin:$PATH
 export EDITOR=nvim
 export TERM=xterm-256color
 
+COMMAND=$(history -a; tail -n 1 $HOME/.bash_history)
+PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
+# PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'echo $PROMPT_COMMAND >> commands.txt'
+# PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'echo ${PROMPT_COMMAND:+$PROMPT_COMMAND; } >> commands.txt'
+
 source ~/.alias_bash
