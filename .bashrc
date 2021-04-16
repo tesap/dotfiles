@@ -10,6 +10,7 @@ export PATH=$HOME/.bin:$PATH
 export EDITOR=nvim
 export TERM=xterm-256color
 # export HARDWARECLOCK=UTC+3
+export SVDIR=$HOME/service
 
 COMMAND=$(history -a; tail -n 1 $HOME/.bash_history)
 PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
