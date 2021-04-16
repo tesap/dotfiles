@@ -60,11 +60,23 @@ def hex_to_bytes(s):
 
 def bytes_to_hex(b):
     # return binascii.hexlify(b)
-    encoded = b if isinstance(b, bytes) else b.encode()
-    return encoded.hex()
+
+    def strip_zeros(s):
+        i = 0
+        while i <= len(s):
+            if s[i] == '0':
+                i += 1
+            else:
+                break
+
+        return s[i:]
+
+    if not isinstance(b, bytes):
+        raise Exception(f'{b} is not bytes')
+
+    return strip_zeros(b.hex())
 
 def hex_to_int(h):
-    # import pdb;pdb.set_trace()
     return int(h, 16)
 
 def int_to_bin(n):
@@ -76,14 +88,18 @@ def bin_to_int(b):
 def bin_to_bytes(x):
     def bin_arr_to_bytes(arr):
         for i in arr:
-            yield chr(bin_to_int(i))
+            yield bin_to_int(i)
+    # import pdb;pdb.set_trace()
 
     res = bin_to_arr(x) if isinstance(x, str) else x
 
-    return ''.join(list(bin_arr_to_bytes(res)))
+    return bytes(bin_arr_to_bytes(res))
 
 def int_to_bytes(n):
     return bin_to_bytes(int_to_bin(n))
+
+def int_to_hex(n):
+    return bytes_to_hex(int_to_bytes(n))
 
 def bytes_to_int(b):
     return hex_to_int(bytes_to_hex(b))
@@ -96,6 +112,9 @@ def bytes_to_bin(b):
 
 def hex_to_bytes(h):
     return bin_to_bytes(hex_to_bin(h))
+
+def bin_to_hex(b):
+    return bytes_to_hex(bin_to_bytes(b))
 
 # ---- ----
 

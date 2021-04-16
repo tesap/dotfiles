@@ -26,7 +26,7 @@ spice_params() { echo "-spice port=$1,disable-ticketing -device virtio-serial-pc
 ssh_params() { echo "-nic user,hostfwd=tcp::$1-:22"; }
 other="-hda $@"
 
-c=$(python -c 'import random; print(random.randint(1, 300))')
+c=$(python -c 'import random; print(random.randint(1, 500))')
 
 let ssh_port=10022+$c
 let spice_port=3000+$c
@@ -48,18 +48,20 @@ qemu_run="$qemu_params $use_spice $use_ssh $other"
 spice_run="spicy -p $spice_port"
 ssh_run="ssh st@localhost -p $ssh_port"
 
-ww() { eval "watch 'ls -l -a $1 && ls -lah $1'";}
+ww() { eval "watch -d 'ls -l -a $1 && ls -lah $1'";}
 
 sn_qemu=qemu$c
 sn_spice=spice$c
 sn_ssh=ssh$c
 
 s_create="screen -dmS"
+s_attach="screen -r"
 s_quit="screen -X -S"
 
 s_qemu="$s_create $sn_qemu $qemu_run"
 s_spice="$s_create $sn_spice $spice_run"
 s_ssh="$s_create $sn_ssh $ssh_run"
+s_cmd="termite -e '$s_attach $sn_qemu'"
 
 q_qemu="$s_quit $sn_qemu quit"
 q_spice="$s_quit $sn_spice quit"
@@ -83,6 +85,10 @@ handle () {
         echo $(magenta 'Starting spice')
         eval $s_spice
     fi
+    if [[ $p == 'v' ]];then
+        echo $(magenta 'Starting qemu terminal')
+        eval $s_cmd
+    fi
     if [[ $p == 'q' ]];then
         echo $(red 'Quit?')
         read -n1 -s p
@@ -94,7 +100,7 @@ handle () {
     fi
 }
 
-printf "$(orange "s (ssh)\nc (spice)\nw (watch)\nq (quit)")\n"
+printf "$(orange "s (start ssh)\nc (spice)\nv (open qemu terminal)\n\nw (watch img size)\nq (quit)")\n"
 handle $@
 while [[ ! $p == 'q' ]];do
     handle $@

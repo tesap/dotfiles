@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 
+alias binwalk="binwalk -D='.*'"
 alias build-dwm="cd ~/build/dwm/ && sudo make install"
 alias dps="docker ps -as"
 
@@ -93,7 +94,7 @@ alias update-mkinitcpio="sudo mkinitcpio -p linux"
 # alias lt='exa -aT --color=always --group-directories-first'
 # alias l.='exa -a | egrep "^\."'
 
-alias ls='exa -lb --color=always --group-directories-first'
+alias ls='exa -lbg --color=always --group-directories-first'
 alias ll='ls -a'
 
 alias ..="cd .."

@@ -114,7 +114,7 @@ let g:move_key_modifier = 'C'
 let g:ycm_add_preview_to_completeopt = 0 
 
 set nu " rnu
-set nowrap
+" set nowrap
 set mouse=a
 set cursorline
 set clipboard=unnamed
