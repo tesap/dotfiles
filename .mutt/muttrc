@@ -1,0 +1,48 @@
+set my_password = `cat ~/.secrets/mutt/password`
+
+# Account
+set from = tox@riseup.net
+
+# Send
+set smtp_url = 'smtps://tox@mail.riseup.net/'
+set smtp_pass = $my_password
+set smtp_authenticators = 'login'
+
+# Connection
+set ssl_force_tls = yes
+set ssl_starttls  = yes
+
+# Receive
+set imap_user = tox@riseup.net
+set imap_pass = $my_password
+set folder    = 'imaps://tox@mail.riseup.net/'
+set imap_check_subscribed
+
+# Folder
+set spoolfile = +INBOX
+set postponed = +Drafts
+set record    = +Sent
+
+set sidebar_visible = yes
+set sidebar_width = 15
+
+# color index_date green default
+color prompt magenta default
+color error red default
+
+color index cyan default "~f github.com"
+
+# color progress white red
+bind index D purge-message
+bind index G imap-fetch-mail
+
+bind index,pager \CP sidebar-prev
+bind index,pager \CN sidebar-next
+bind index,pager \CO sidebar-open
+
+color sidebar_indicator color8 color17
+color sidebar_highlight white   color238
+color sidebar_divider   color8  default
+
+# color sidebar_ordinary  default default
+# set sidebar_on_right = yes
