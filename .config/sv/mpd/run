@@ -1,0 +1,4 @@
+#!/bin/sh
+
+MPDCONF=$HOME/.config/mpd/mpd.conf
+exec mpd --no-daemon $MPDCONF

@@ -81,8 +81,7 @@ case "$1" in
 		close)
 			# suspend-to-ram
 			logger "LID closed, suspending..."
-			/home/void/.scripts/sys/sleep-i3lock.sh
-			# /home/void/.scripts/sys/suspend.sh
+			/etc/acpi/suspend.sh
 			;;
 		open)	logger "LID opened" ;;
 		*) logger "ACPI action undefined (LID): $2";;
