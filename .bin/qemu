@@ -61,7 +61,7 @@ s_quit="screen -X -S"
 s_qemu="$s_create $sn_qemu $qemu_run"
 s_spice="$s_create $sn_spice $spice_run"
 s_ssh="$s_create $sn_ssh $ssh_run"
-s_cmd="termite -e '$s_attach $sn_qemu'"
+s_cmd="$TERMCMD -e '$s_attach $sn_qemu'"
 
 q_qemu="$s_quit $sn_qemu quit"
 q_spice="$s_quit $sn_spice quit"
