@@ -128,13 +128,7 @@ alias g-undo="git reset --soft HEAD~"
 alias g-ssh="git remote add origin git@git.nand.tk:st/$1.git"
 
 
-alias ys="yay"
-alias y="yay -Sy"
-alias yn="yay -S --noconfirm"
-alias yr="yay -Rs"
-alias yrn="yay -Rs --noconfirm"
-alias yu="yay -Qu" 
-alias yay-search='history | grep -E "^.*( ){2}(yay -S|y)+( )(([a-z-]|[0-9]|[\$\(\)])+ *)+"'
+alias ys="sudo xbps-install -Syu"
 
 # ------------
 
