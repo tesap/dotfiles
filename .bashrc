@@ -13,6 +13,9 @@ export TERMCMD=alacritty
 # export HARDWARECLOCK=UTC+3
 export SVDIR=$HOME/.service
 
+# Other
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 COMMAND=$(history -a; tail -n 1 $HOME/.bash_history)
 PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
 # PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'echo $PROMPT_COMMAND >> commands.txt'
