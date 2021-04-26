@@ -3,12 +3,9 @@
 # picom &
 # flameshot &
 
-$HOME/.fehbg
-dwmblocks &
-
 redshift &
 nm-applet &
 pasystray &
 
-parcellite
+parcellite &
 

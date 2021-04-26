@@ -8,8 +8,8 @@ if [ $1 ] ; then
         gz)        gzip -c -9 -n $2 > $2.gz ;;
         zip)       zip -r "$2.zip" $2   ;;
         7z)        7z a $2.7z $2    ;;
-        *)         echo "'$1' не может быть упакован с помощью pk()" ;;
+        *)         echo "'$1' ext not matched" ;;
     esac
 else
-    echo "'$1' не является допустимым файлом"
+    echo "'$1' Error"
 fi
