@@ -1,0 +1,8 @@
+#! /bin/bash
+
+# backup_dir="full-system"
+date_suffix=$(date '+%Y%m%d_%H%M')
+res_dir=$2/${date_suffix}
+
+mkdir $res_dir
+rsync -ravzP --delete --delete-excluded --exclude-from=exclude $1 $res_dir
