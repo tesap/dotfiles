@@ -1,16 +1,18 @@
 #! /bin/python3
 
-import os, sys
-import secrets
-import string
+import os, sys, secrets, string
 
-# import pdb;pdb.set_trace()
+try:
+    args = list(filter(lambda x: os.path.basename(__file__) not in x, sys.argv))
+except Exception:
+    print('Provide int argument')
+    exit()
 
-args = list(filter(lambda x: os.path.basename(__file__) not in x, sys.argv))
+n = int(args[0])
 
-chars_length = int(args[0])
+if len(args) > 1:
+    printable = string.digits + string.ascii_letters
+else:
+    printable = string.printable[:-6]
 
-printable = string.printable[:-5]
-chars = ''.join([secrets.choice(printable) for i in range(chars_length)])
-
-print(chars)
+print(''.join([secrets.choice(printable) for i in range(n)]))
