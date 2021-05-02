@@ -69,7 +69,7 @@ q_ssh="$s_quit $sn_ssh quit"
 
 eval $s_qemu
 
-handle () {
+loop () {
     read -n1 -s p
 
     if [[ $p == 's' ]];then
@@ -103,9 +103,9 @@ handle () {
 }
 
 printf "$(orange "s (start ssh)\nc (spice)\nv (open qemu terminal)\n\nw (watch img size)\nq (quit)")\n"
-handle $@
+loop $@
 while [[ ! $p == 'q' ]];do
-    handle $@
+    loop $@
 done
 
 eval $q_qemu && echo $(green 'Killed qemu')

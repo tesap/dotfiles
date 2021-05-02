@@ -6,8 +6,9 @@
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
-export PATH=$HOME/.bin:$PATH
-export EDITOR=nvim
+export PATH=$HOME/.bin:$HOME/.emacs.d/bin:$PATH
+# export EDITOR=nvim
+export EDITOR=emacs
 export TERM=xterm-256color
 export TERMCMD=alacritty
 # export HARDWARECLOCK=UTC+3
