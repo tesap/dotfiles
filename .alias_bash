@@ -24,9 +24,6 @@ alias vc="sudo veracrypt -t"
 alias vd="vc -d"
 alias vm="vc -k '' --pim=0 --protect-hidden=no"
 alias vf="vc --auto-mount favorites"
-# vn() { sudo veracrypt -t -c --pim=0 --encryption=aes --hash=sha512 --size=$1 $2; }
-
-# alias mz='echo y | sh ~/.mozilla/firefox/s0sa3cb2.default/updater.sh -c'
 
 alias archivebox='docker run -v $PWD:/data -it nikisweeting/archivebox'
 alias archivebox-server="docker run -v $PWD:/data -it -p 8000:8000 nikisweeting/archivebox server 0.0.0.0:8000
@@ -89,12 +86,6 @@ alias update-mkinitcpio="sudo mkinitcpio -p linux"
 ################################################################################
 # -----------------------------      OTHER      ------------------------------ #
 ################################################################################
-
-# alias ll='exa -al --color=always --group-directories-first'
-# alias la='exa -a --color=always --group-directories-first'
-# alias ls='exa -l --color=always --group-directories-first'
-# alias lt='exa -aT --color=always --group-directories-first'
-# alias l.='exa -a | egrep "^\."'
 
 alias ls='exa -lbg --color=always --group-directories-first'
 alias ll='ls -a'

@@ -1,0 +1,32 @@
+#!/usr/bin/bash
+
+hash -d media='//media/st'
+hash -d Netac='/media/Netac'
+# hash -d n='/run/media/st/Netac/Qemu/res'
+hash -d n='/media/st/Qemu/index'
+hash -d f='/home/st/.mozilla/firefox/1'
+hash -d Trash='/home/st/.local/share/Trash/files'
+
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+spc () { spicy -p 300"$1"; }
+req() { rm -v $2; qc -b $1 $2; qemu $2; }
+skl() { screen -X -S $1 quit }
+
+# vn() { sudo veracrypt -t -c --pim=0 --encryption=aes --hash=sha512 --size=$1 $2; }
+
+mkcd () { mkdir -p "$1"; cd "$1" }
+
+alias -g g="| grep"
+alias -g le="| less"
+
+alias /="cd /"
+alias ~="cd ~"
+alias ..="cd .."
+alias ...="cd ../.."
+
+alias sz="source $HOME/.zshrc"
+alias ez="$EDITOR $HOME/.zshrc"
+alias eaz="$EDITOR $HOME/.alias_zsh"
+alias ev="$EDITOR $HOME/.vimrc"
