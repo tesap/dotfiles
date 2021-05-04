@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+# name=$(pwd -P | awk -F- '{ print $2 }')
+name=$(cat NAME)
+
+echo $name
+
+wg-quick up "$name"
+
+exec chpst -b wireguard pause

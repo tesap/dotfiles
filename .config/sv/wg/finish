@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+
+# name=$(pwd | awk -F- '{ print $2 }')
+name=$(cat NAME)
+
+echo $name
+
+wg-quick down "$name"
