@@ -7,10 +7,10 @@ alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
 export PATH=$HOME/.bin:$HOME/.emacs.d/bin:$PATH
-# export EDITOR=nvim
-export EDITOR=emacs
+export EDITOR=nvim
 export TERM=xterm-256color
 export TERMCMD=alacritty
+export BROWSER=firefox
 # export HARDWARECLOCK=UTC+3
 export SVDIR=$HOME/.service
 

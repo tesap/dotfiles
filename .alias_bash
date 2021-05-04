@@ -56,6 +56,8 @@ alias hdu="ncdu $HOME"
 
 alias {v,vi}="$EDITOR"
 alias svi="sudo $EDITOR"
+alias e="emacs"
+alias se="sudo emacs"
 
 alias m="ncmpcpp"
 alias h="htop -s PERCENT_CPU"
