@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-hash -d media='//media/st'
+hash -d media='/media/st'
 hash -d Netac='/media/Netac'
 # hash -d n='/run/media/st/Netac/Qemu/res'
 hash -d n='/media/st/Qemu/index'
