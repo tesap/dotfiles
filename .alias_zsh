@@ -1,14 +1,18 @@
 #!/usr/bin/bash
 
-hash -d media='/media/st'
-hash -d Netac='/media/Netac'
-# hash -d n='/run/media/st/Netac/Qemu/res'
 hash -d n='/media/st/Qemu/index'
-hash -d f='/home/st/.mozilla/firefox/1'
+hash -d f="$HOME/.mozilla/firefox/1"
+hash -d org="$HOME/Projects/dk/org"
+
+hash -d media='/media/st'
+hash -d Music='/media/st/Music'
+hash -d Netac='/media/Netac'
 hash -d Trash='/home/st/.local/share/Trash/files'
 
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# zstyle ':completion:*' matcher-list '' 'r:|[._-]=* r:|=*' '+m:{[:lower:]}={[:upper:]}' 'l:|=* r:|=*'.
 
 spc () { spicy -p 300"$1"; }
 req() { rm -v $2; qc -b $1 $2; qemu $2; }

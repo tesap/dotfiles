@@ -2,14 +2,8 @@
 
 [[ -z $DISPLAY ]] && exec startx
 
-# if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-#   exec startx
-# fi
-
-# exec startx
-
 xrdb -merge $HOME/.Xresources
-export PATH=$HOME/.bin:$HOME/.emacs.d/bin:$PATH
+export PATH=$HOME/.bin:$HOME/.emacs.d/bin:/usr/local/bin:$PATH
 
 export EDITOR="$(if ! command -v nvim &> /dev/null; then echo 'vim'; else echo 'nvim'; fi)"
 
@@ -25,15 +19,15 @@ export LC_ALL="en_US.UTF-8"
 export GPG_TTY=$(tty)
 
 # =============================
-export ZSH="/home/$USER/.zsh"
+export ZSH="$HOME/.zsh"
 DISABLE_AUTO_UPDATE="true"
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 [[ ! -d $ZSH_CACHE_DIR ]] && mkdir $ZSH_CACHE_DIR
 
 
-ZSH_THEME="af-magic"
-# ZSH_THEME="robbyrussell"
+# ZSH_THEME="af-magic"
+ZSH_THEME="robbyrussell"
 
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# _values 'mp3 files' ~/*.mp3
+
 RED="$(printf '\033[31m')"
 GREEN="$(printf '\033[32m')"
 ORANGE="$(printf '\033[33m')"
