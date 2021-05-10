@@ -1,3 +1,4 @@
+autoconf automake libtool
 ffmpeg
 ffmpeg-devel
 zsh

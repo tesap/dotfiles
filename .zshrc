@@ -3,7 +3,7 @@
 [[ -z $DISPLAY ]] && exec startx
 
 xrdb -merge $HOME/.Xresources
-export PATH=$HOME/.bin:$HOME/.emacs.d/bin:/usr/local/bin:$PATH
+export PATH=$HOME/Applications:$HOME/.bin:$HOME/.emacs.d/bin:/usr/local/bin:$PATH
 
 export EDITOR="$(if ! command -v nvim &> /dev/null; then echo 'vim'; else echo 'nvim'; fi)"
 

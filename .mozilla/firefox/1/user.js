@@ -20,7 +20,7 @@ user_pref("extensions.pocket.enabled", false);   // Pocket Integration
 user_pref("identity.fxaccounts.enabled", false); // Account
 // user_pref("media.peerconnection.enabled", false);// WebRTC
 user_pref("dom.serviceWorkers.enabled", false);  // Service Workers
-user_pref("dom.push.enabled", false)
+user_pref("dom.push.enabled", false)             // Notifications
 user_pref("javascript.options.wasm", true);      // WebAssembly = TRUE
 user_pref("media.navigator.enabled", false);     // Microphone, Campera
 user_pref("media.eme.enabled", false);           // DRM
@@ -29,10 +29,9 @@ user_pref("media.eme.enabled", false);           // DRM
 user_pref("browser.startup.homepage", "about:home");
 // user_pref("browser.startup.homepage", "searx.bar");
 user_pref("browser.link.open_newwindow", 3); // 1=most recent window or tab 2=new window, 3=new tab
-user_pref("browser.link.open_newwindow.restriction", 0);
+user_pref("browser.link.open_newwindow.restriction", 0); // 0-disable, 2=enable
 user_pref("browser.toolbars.bookmarks.visibility", "always");
 user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
-// user_pref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-fixed-list\":[],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"home-button\",\"urlbar-container\",\"customizableui-special-spring2\",\"bookmarks-menu-button\",\"downloads-button\",\"sidebar-button\",\"fxa-toolbar-menu-button\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"PersonalToolbar\":[\"preferences-button\",\"developer-button\",\"open-file-button\",\"edit-controls\",\"personal-bookmarks\"]},\"seen\":[\"developer-button\"],\"dirtyAreaCache\":[\"nav-bar\",\"toolbar-menubar\",\"TabsToolbar\",\"PersonalToolbar\",\"widget-overflow-fixed-list\"],\"currentVersion\":16,\"newElementCount\":38}");
 
 // --- Tabs ---
 // user_pref("browser.tabs.allowTabDetach", false);
@@ -87,13 +86,14 @@ user_pref("webgl.vendor-string-override", " ");
 
 // Addons
 user_pref("browser.discovery.enabled", false);
+user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
+user_pref("extensions.getAddons.showPane", false); // [HIDDEN PREF:
 
 // Other
 user_pref("ui.prefersReducedMotion", 1); // [HIDDEN PREF]
 user_pref("security.OCSP.enabled", 0);
-user_pref("dom.allow_cut_copy", false);
+user_pref("dom.allow_cut_copy", true);
 user_pref("browser.aboutConfig.showWarning", false);
-user_pref("network.captive-portal-service.enabled", false);
 user_pref("media.autoplay.default", 5);
 user_pref("layout.spellcheckDefault", 0);
 
@@ -152,7 +152,12 @@ user_pref("browser.send_pings", false);
 user_pref("browser.shell.checkDefaultBrowser", false);
 user_pref("breakpad.reportURL", "");
 
+user_pref("network.captive-portal-service.enabled", false);
+user_pref("network.connectivity-service.enabled", false);
+user_pref("captivedetect.canonicalURL", "");
+user_pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false); // [DEFAULT: false]
 user_pref("browser.tabs.crashReporting.sendReport", false); // [FF44+]
+
 user_pref("browser.crashReports.unsubmittedCheck.autoSubmit", false);
 user_pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false);
 user_pref("browser.crashReports.unsubmittedCheck.enabled", false);
@@ -176,6 +181,10 @@ user_pref("toolkit.telemetry.firstShutdownPing.enabled", false);
 user_pref("toolkit.telemetry.shutdownPingSender.enabled", false);
 user_pref("toolkit.telemetry.unifiedIsOptIn", false);
 user_pref("toolkit.telemetry.updatePing.enabled", false);
+
+user_pref("toolkit.telemetry.coverage.opt-out", true); // [HIDDEN PREF]
+user_pref("toolkit.coverage.opt-out", true); // [FF64+] [HIDDEN PREF]
+user_pref("toolkit.coverage.endpoint.base", "");
 
 // Safe browsing
 
@@ -218,88 +227,87 @@ user_pref("services.settings.server", "");
 // user_pref("extensions.blocklist.addonItemURL", "");
 
 // External links
-+user_pref("accessibility.support.url", "");
-+user_pref("app.feedback.baseURL", "");
-+user_pref("app.normandy.shieldLearnMoreUrl", "");
-+user_pref("app.releaseNotesURL", "");
-+user_pref("app.releaseNotesURL.aboutDialog", "");
-+user_pref("app.support.baseURL", "");
-+user_pref("app.update.url.details", "");
-+user_pref("app.update.url.manual", "");
-+user_pref("browser.chrome.errorReporter.infoURL", "");
-+user_pref("browser.contentblocking.report.cookie.url", "");
-+user_pref("browser.contentblocking.report.cryptominer.url", "");
-+user_pref("browser.contentblocking.report.endpoint_url", "");
-+user_pref("browser.contentblocking.report.fingerprinter.url", "");
-+user_pref("browser.contentblocking.report.lockwise.how_it_works.url", "");
-+user_pref("browser.contentblocking.report.manage_devices.url", "");
-+user_pref("browser.contentblocking.report.mobile-android.url", "");
-+user_pref("browser.contentblocking.report.mobile-ios.url", "");
-+user_pref("browser.contentblocking.report.monitor.home_page_url", "");
-+user_pref("browser.contentblocking.report.monitor.how_it_works.url", "");
-+user_pref("browser.contentblocking.report.monitor.preferences_url", "");
-+user_pref("browser.contentblocking.report.monitor.sign_in_url", "");
-+user_pref("browser.contentblocking.report.monitor.url", "");
-+user_pref("browser.contentblocking.report.proxy_extension.url", "");
-+user_pref("browser.contentblocking.report.social.url", "");
-+user_pref("browser.contentblocking.report.tracker.url", "");
-+user_pref("browser.contentblocking.report.vpn-android.url", "");
-+user_pref("browser.contentblocking.report.vpn-ios.url", "");
-+user_pref("browser.contentblocking.report.vpn-promo.url", "");
-+user_pref("browser.contentblocking.report.vpn.url", "");
-+user_pref("browser.contentblocking.reportBreakage.url", "");
-+user_pref("browser.dictionaries.download.url", "");
-+user_pref("browser.geolocation.warning.infoURL", "");
-+user_pref("browser.hiddenWindowChromeURL", "");
-+user_pref("browser.partnerlink.attributionURL", "");
-+user_pref("browser.privatebrowsing.vpnpromourl", "");
-+user_pref("browser.region.network.url", "");
-+user_pref("browser.safebrowsing.provider.google.gethashURL", "");
-+user_pref("browser.safebrowsing.provider.google.reportMalwareMistakeURL", "");
-+user_pref("browser.safebrowsing.provider.google.reportPhishMistakeURL", "");
-+user_pref("browser.safebrowsing.provider.google.reportURL", "");
-+user_pref("browser.safebrowsing.provider.google.updateURL", "");
-+user_pref("browser.safebrowsing.provider.google4.reportMalwareMistakeURL", "");
-+user_pref("browser.safebrowsing.provider.google4.reportPhishMistakeURL", "");
-+user_pref("browser.safebrowsing.reportPhishURL", "");
-+user_pref("browser.search.searchEnginesURL", "");
-+user_pref("browser.uitour.url", "");
-+user_pref("browser.xr.warning.infoURL", "");
-+user_pref("captivedetect.canonicalURL", "");
-+user_pref("datareporting.healthreport.infoURL", "");
-+user_pref("datareporting.policy.firstRunURL", "");
-+user_pref("devtools.devices.url", "");
-+user_pref("devtools.performance.recording.ui-base-url", "");
-+user_pref("devtools.remote.adb.extensionURL", "");
-+user_pref("dom.push.serverURL", "");
-+user_pref("extensions.abuseReport.amoDetailsURL", "");
-+user_pref("extensions.abuseReport.url", "");
-+user_pref("extensions.blocklist.addonItemURL", "");
-+user_pref("extensions.blocklist.detailsURL", "");
-+user_pref("extensions.blocklist.itemURL", "");
-+user_pref("extensions.getAddons.discovery.api_url", "");
-+user_pref("extensions.getAddons.get.url", "");
-+user_pref("extensions.getAddons.langpacks.url", "");
-+user_pref("extensions.getAddons.link.url", "");
-+user_pref("extensions.getAddons.search.browseURL", "");
-+user_pref("extensions.recommendations.privacyPolicyUrl", "");
-+user_pref("extensions.recommendations.themeRecommendationUrl", "");
-+user_pref("extensions.systemAddon.update.url", "");
-+user_pref("extensions.update.background.url", "");
-+user_pref("extensions.update.url", "");
-+user_pref("identity.fxaccounts.service.monitorLoginUrl", "");
-+user_pref("identity.sendtabpromo.url", "");
-+user_pref("lightweightThemes.getMoreURL", "");
-+user_pref("media.gmp-manager.url", "");
-+user_pref("network.connectivity-service.IPv4.url", "");
-+user_pref("network.connectivity-service.IPv6.url", "");
-+user_pref("signon.management.page.breachAlertUrl", "");
-+user_pref("toolkit.crashreporter.infoURL", "");
-+user_pref("toolkit.datacollection.infoURL", "");
-+user_pref("urlclassifier.disallow_completions", "");
-+user_pref("webchannel.allowObject.urlWhitelist", "");
-+user_pref("webextensions.storage.sync.serverURL", "");
-+user_pref("xpinstall.signatures.devInfoURL", "");
+user_pref("accessibility.support.url", "");
+user_pref("app.feedback.baseURL", "");
+user_pref("app.normandy.shieldLearnMoreUrl", "");
+user_pref("app.releaseNotesURL", "");
+user_pref("app.releaseNotesURL.aboutDialog", "");
+user_pref("app.support.baseURL", "");
+user_pref("app.update.url.details", "");
+user_pref("app.update.url.manual", "");
+user_pref("browser.chrome.errorReporter.infoURL", "");
+user_pref("browser.contentblocking.report.cookie.url", "");
+user_pref("browser.contentblocking.report.cryptominer.url", "");
+user_pref("browser.contentblocking.report.endpoint_url", "");
+user_pref("browser.contentblocking.report.fingerprinter.url", "");
+user_pref("browser.contentblocking.report.lockwise.how_it_works.url", "");
+user_pref("browser.contentblocking.report.manage_devices.url", "");
+user_pref("browser.contentblocking.report.mobile-android.url", "");
+user_pref("browser.contentblocking.report.mobile-ios.url", "");
+user_pref("browser.contentblocking.report.monitor.home_page_url", "");
+user_pref("browser.contentblocking.report.monitor.how_it_works.url", "");
+user_pref("browser.contentblocking.report.monitor.preferences_url", "");
+user_pref("browser.contentblocking.report.monitor.sign_in_url", "");
+user_pref("browser.contentblocking.report.monitor.url", "");
+user_pref("browser.contentblocking.report.proxy_extension.url", "");
+user_pref("browser.contentblocking.report.social.url", "");
+user_pref("browser.contentblocking.report.tracker.url", "");
+user_pref("browser.contentblocking.report.vpn-android.url", "");
+user_pref("browser.contentblocking.report.vpn-ios.url", "");
+user_pref("browser.contentblocking.report.vpn-promo.url", "");
+user_pref("browser.contentblocking.report.vpn.url", "");
+user_pref("browser.contentblocking.reportBreakage.url", "");
+user_pref("browser.dictionaries.download.url", "");
+user_pref("browser.geolocation.warning.infoURL", "");
+user_pref("browser.hiddenWindowChromeURL", "");
+user_pref("browser.partnerlink.attributionURL", "");
+user_pref("browser.privatebrowsing.vpnpromourl", "");
+user_pref("browser.region.network.url", "");
+user_pref("browser.safebrowsing.provider.google.gethashURL", "");
+user_pref("browser.safebrowsing.provider.google.reportMalwareMistakeURL", "");
+user_pref("browser.safebrowsing.provider.google.reportPhishMistakeURL", "");
+user_pref("browser.safebrowsing.provider.google.reportURL", "");
+user_pref("browser.safebrowsing.provider.google.updateURL", "");
+user_pref("browser.safebrowsing.provider.google4.reportMalwareMistakeURL", "");
+user_pref("browser.safebrowsing.provider.google4.reportPhishMistakeURL", "");
+user_pref("browser.safebrowsing.reportPhishURL", "");
+user_pref("browser.search.searchEnginesURL", "");
+user_pref("browser.uitour.url", "");
+user_pref("browser.xr.warning.infoURL", "");
+user_pref("datareporting.healthreport.infoURL", "");
+user_pref("datareporting.policy.firstRunURL", "");
+user_pref("devtools.devices.url", "");
+user_pref("devtools.performance.recording.ui-base-url", "");
+user_pref("devtools.remote.adb.extensionURL", "");
+user_pref("dom.push.serverURL", "");
+user_pref("extensions.abuseReport.amoDetailsURL", "");
+user_pref("extensions.abuseReport.url", "");
+user_pref("extensions.blocklist.addonItemURL", "");
+user_pref("extensions.blocklist.detailsURL", "");
+user_pref("extensions.blocklist.itemURL", "");
+user_pref("extensions.getAddons.discovery.api_url", "");
+user_pref("extensions.getAddons.get.url", "");
+user_pref("extensions.getAddons.langpacks.url", "");
+user_pref("extensions.getAddons.link.url", "");
+user_pref("extensions.getAddons.search.browseURL", "");
+user_pref("extensions.recommendations.privacyPolicyUrl", "");
+user_pref("extensions.recommendations.themeRecommendationUrl", "");
+user_pref("extensions.systemAddon.update.url", "");
+user_pref("extensions.update.background.url", "");
+user_pref("extensions.update.url", "");
+user_pref("identity.fxaccounts.service.monitorLoginUrl", "");
+user_pref("identity.sendtabpromo.url", "");
+user_pref("lightweightThemes.getMoreURL", "");
+user_pref("media.gmp-manager.url", "");
+user_pref("network.connectivity-service.IPv4.url", "");
+user_pref("network.connectivity-service.IPv6.url", "");
+user_pref("signon.management.page.breachAlertUrl", "");
+user_pref("toolkit.crashreporter.infoURL", "");
+user_pref("toolkit.datacollection.infoURL", "");
+user_pref("urlclassifier.disallow_completions", "");
+user_pref("webchannel.allowObject.urlWhitelist", "");
+user_pref("webextensions.storage.sync.serverURL", "");
+user_pref("xpinstall.signatures.devInfoURL", "");
 
 
 user_pref("_user.js.parrot", "DONE!");

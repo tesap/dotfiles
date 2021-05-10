@@ -64,7 +64,7 @@ shift $((OPTIND-1))
 # Validate if ffmpeg is installed
 ! command -v ffmpeg &> /dev/null && echo "ffmpeg is not installed" && exit 1
 
-ext="opus"
+ext="mp3"
 inputaudio="$1"
 tracklist="$2"
 
