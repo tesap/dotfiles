@@ -23,6 +23,10 @@ Plug 'itchyny/lightline.vim'
 " Plug 'PotatoesMaster/i3-vim-syntax'
 " Plug 'kovetskiy/sxhkd-vim'
 
+" --- LATEX ---
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'lervag/vimtex'
+
 " --- MARKDOWN ---
 " Plug 'vimwiki/vimwiki' " Useless funcs
 
@@ -60,6 +64,10 @@ colorscheme gruvbox
 
 let g:lightline = { 'colorscheme': 'darcula' }
 set laststatus=2
+
+" --- LATEX ---
+
+let g:livepreview_previewer = 'xreader'
 
 "################################################################################
 "# ----------------------------      MARKDOWN      ---------------------------- #

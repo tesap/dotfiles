@@ -1,0 +1,11 @@
+#
+# /etc/hosts: static lookup table for host names
+#
+
+#<ip-address>		<hostname.domain.org>	<hostname>
+127.0.0.1		localhost.localdomain	localhost
+::1			localhost.localdomain	localhost ip6-localhost
+
+# End of file
+0.0.0.0 content-signature-2.cdn.mozilla.net
+0.0.0.0 developer.mozilla.org
