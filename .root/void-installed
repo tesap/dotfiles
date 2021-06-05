@@ -1,3 +1,5 @@
+dpkg
+rsync
 autoconf automake libtool
 ffmpeg
 ffmpeg-devel

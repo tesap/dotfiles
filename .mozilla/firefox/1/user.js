@@ -1,3 +1,12 @@
+
+user_pref("browser.urlbar.suggest.calculator", true);
+user_pref("browser.proton.enabled", false);
+
+
+user_pref("_user.js.parrot.mycheck", "OK");
+
+// ############## --- #############
+
 // Spyware
 user_pref("browser.selfsupport.url", "");
 // IMPORTANT
