@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 
+alias reboot="sudo reboot"
 alias binwalk="binwalk -D='.*'"
 alias build-dwm="cd ~/build/dwm/ && sudo make install"
 alias dps="docker ps -as"

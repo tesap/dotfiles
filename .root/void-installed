@@ -1,5 +1,7 @@
+optipng jpegoptim
 dpkg
 rsync
+rclone
 autoconf automake libtool
 ffmpeg
 ffmpeg-devel
@@ -21,7 +23,6 @@ libXft-devel
 libXinerama-devel
 gcc
 xtools
-rclone
 sqlitebrowser
 gvfs gvfs-mtp
 ntfs-3g
