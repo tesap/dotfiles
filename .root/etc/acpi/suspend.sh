@@ -7,7 +7,7 @@
 ## CONFIGURATION ##############################################################
 
 # Options to pass to i3lock
-i3lock_options=""
+i3lock_options="-gp"
 
 # Run before starting the locker
 pre_lock() {
@@ -17,7 +17,9 @@ pre_lock() {
 
 # Run after the locker exits
 post_lock() {
-    zzz
+    # zzz
+    # sudo s2ram -f
+    # loginctl suspend
     return
 }
 

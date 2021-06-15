@@ -1,30 +1,25 @@
-scrot
-cbatticon
-nitrogen
+freetube-bin
+zoxide-bin
+diffr
+wireguard-dkms
+xava 
+xkblayout-state
+gotop
 
-redshift
+
+cbatticon
+redshiftgui-bin
 
 gtk-engines 
 gtk-engine-murrine
 qt5ct
+qt5-styleplugins
 
 polkit-gnome
 gnome-keyring
 gnome-themes-extra
 
-straw-viewer-git
-
-timeshift cronie
-
-transmission-gtk
-file-roller
-telegram-desktop
-
 ddgr
-qt5-styleplugins
 i3lock-fancy-git
-
-insomnia-bin
-lightcord-bin
 
 toot

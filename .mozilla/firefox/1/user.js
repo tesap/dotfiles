@@ -1,3 +1,13 @@
+// Disable the new tab page which pulls remote content
+user_pref("browser.newtabpage.enhanced", false);
+
+// Privacy: enable tracking protection, disable third-party cookies
+// network.cookie.cookieBehavior=1
+// privacy.trackingprotection.enabled=true
+// privacy.trackingprotection.introCount=20
+
+// Disable smooth scroll. It's laggy on every device I've ever used.
+user_pref("general.smoothScroll", false);
 
 user_pref("browser.urlbar.suggest.calculator", true);
 user_pref("browser.proton.enabled", false);
@@ -164,6 +174,8 @@ user_pref("breakpad.reportURL", "");
 user_pref("network.captive-portal-service.enabled", false);
 user_pref("network.connectivity-service.enabled", false);
 user_pref("captivedetect.canonicalURL", "");
+
+user_pref("services.sync.prefs.sync.browser.crashReports.unsubmittedCheck.autoSubmit2", false);
 user_pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false); // [DEFAULT: false]
 user_pref("browser.tabs.crashReporting.sendReport", false); // [FF44+]
 

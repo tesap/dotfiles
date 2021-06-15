@@ -1,14 +1,15 @@
 #!/usr/bin/bash
 
+alias ssh="TERM='vt100' ssh"
 alias reboot="sudo reboot"
 alias binwalk="binwalk -D='.*'"
-alias build-dwm="cd ~/build/dwm/ && sudo make install"
+alias build-dwm="cd ~/gh/dwm-flexipatch/ && sudo make install && cd ~"
 alias dps="docker ps -as"
 
 # alias g++="g++ -Wall -Weffc++ -Wextra -Wsign-conversion"
 alias mtree="tree --dirsfirst -L 3"
 alias qrencode-utf="qrencode -t ansiutf8"
-alias qrencode-png="qrencode -t PNG"
+alias qrencode-png="cat $1 | qrencode -t PNG -o $2"
 
 alias ympd="ympd -w localhost:1111 -h 0.0.0.0"
 
@@ -90,6 +91,8 @@ alias update-mkinitcpio="sudo mkinitcpio -p linux"
 
 alias ls='exa -lbg --color=always --group-directories-first'
 alias ll='ls -a'
+alias l1='ls --tree -L 1'
+alias l2='ls --tree -L 2'
 
 alias ..="cd .."
 alias ...="cd ../.."
@@ -109,7 +112,7 @@ alias config='git --git-dir=/home/void/.dotfiles/ --work-tree=/home/void'
 
 alias gs="git status"
 alias gl="git log --stat --graph"
-alias gd="git diff --color | diff-so-fancy"
+alias gd="git diff --color | diffr | less"
 alias gad="git add --all"
 # alias gc="git clone"
 alias gr="git restore"
@@ -122,8 +125,19 @@ alias gam="git add . && git commit --amend"
 alias g-undo="git reset --soft HEAD~"
 alias g-ssh="git remote add origin git@git.nand.tk:st/$1.git"
 
+################################################################################
+# ------------------------      PACKAGE MANAGERS      ------------------------ #
+################################################################################
 
-alias ys="sudo xbps-install -Syu"
+if [ -f /bin/pacman ]; then
+    alias ys="yay -Syu"
+    alias yn="yay -S --noconfirm"
+
+    alias pacman-clean="sudo pacman -Scc --noconfirm"
+
+elif [ -f /bin/xpbs-install ]; then
+    alias ys="sudo xbps-install -Suy"
+fi
 
 # ------------
 

@@ -1,3 +1,6 @@
+picom
+iptables
+openresolv
 parcellite
 optipng jpegoptim
 dpkg
@@ -13,7 +16,6 @@ maim
 engrampa
 mutt
 whois
-xkblayout-state
 
 gcc
 
@@ -32,7 +34,6 @@ cmatrix
 conky
 curl
 
-diffr
 dunst
 exa
 exiv2
@@ -44,10 +45,8 @@ gparted
 grub-customizer
 
 
-
 qemu
 newsboat
-gotop
 bashtop
 simplescreenrecorder
 xreader
@@ -64,7 +63,6 @@ netcat
 net-tools
 screen
 openssh
-socklog
 
 spice
 spice-gtk
@@ -93,7 +91,7 @@ xsel neovim exa xclip
 dbus-glib dconf
 
 xf86-video-intel
-jq xz tor feh htop ncdu tree gvfs gvfs-mtp tlp xava
+jq xz tor feh htop ncdu tree gvfs gvfs-mtp tlp
 xorg xorg-xinit
 neofetch
 reflector
@@ -104,4 +102,3 @@ ranger
 ueberzug
 
 wireguard-tools
-wireguard-dkms

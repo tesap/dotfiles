@@ -2,8 +2,11 @@
 colors:
   # Default colors
   primary:
-    background: '0x27292b'
-    foreground: '0xD8DEE9'
+    # background: '0x27292b'
+    background: '0x1b1b1b'
+
+    # foreground: '0xD8DEE9'
+    foreground: '0xc7c7c7'
 
   # Normal colors
   normal:
@@ -14,34 +17,40 @@ colors:
     blue:    '0x81A1C1'
     magenta: '0xB48EAD'
     cyan:    '0x88C0D0'
-    white:   '0xE5E9F0'
+    white:   '0xd1d1d1'
 
   # Bright colors
   bright:
-    black:   '0x4C566A'
+    # black:   '0x4C566A'
+    black:   '0x545f75'
     red:     '0xBF616A'
     green:   '0xA3BE8C'
     yellow:  '0xEBCB8B'
     blue:    '0x81A1C1'
     magenta: '0xB48EAD'
     cyan:    '0x8FBCBB'
-    white:   '0xECEFF4'
+    white:   '0xd1d1d1'
+
 
 font:
   normal:
-    family: monospace
+    # family: monospace
+    family: UbuntuMono Nerd Font
     style: Regular
 
   bold:
-    family: monospace
+    # family: monospace
+    family: UbuntuMono Nerd Font
     style: Bold
 
   italic:
-    family: monospace
+    # family: monospace
+    family: UbuntuMono Nerd Font
     style: Italic
 
   bold_italic:
-    family: monospace
+    # family: monospace
+    family: UbuntuMono Nerd Font
     style: Bold Italic
 
-  size: 10
+  size: 13

@@ -35,3 +35,5 @@ source $ZSH/oh-my-zsh.sh
 
 source ~/.alias_bash
 source ~/.alias_zsh
+
+eval "$(zoxide init zsh)"

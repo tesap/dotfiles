@@ -3,9 +3,14 @@
 picom &
 # flameshot &
 
-redshift &
+redshiftgui --min &
+# redshift &
 # nm-applet &
 # pasystray &
 
 parcellite &
 
+mpd --no-daemon -v --stderr &
+mpc pause &
+
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
