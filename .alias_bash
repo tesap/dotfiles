@@ -78,7 +78,7 @@ alias fonts="fc-list | cut -d: -f1 | sort| uniq"
 
 alias gpg-import='gpg --keyserver keys.gnupg.net --recv-keys'
 alias gpg='gpg --keyid-format LONG'
-alias ref="sudo reflector -c "Russia" -c "Belarus" -c "Ukraine" -c "Poland" -f 20 -l 20 -p https -p http -n 20 --save /etc/pacman.d/mirrorlist --sort rate"
+alias ref="sudo reflector -c "Russia" -c "Belarus" -c "Ukraine" -c "Poland" -f 20 -l 20 -p https -p http -n 20 --save /etc/pacman.d/mirrorlist-arch --sort rate"
 
 alias merge="xrdb -merge $HOME/.Xresources"
 

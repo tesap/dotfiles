@@ -1,3 +1,4 @@
+udiskie
 picom
 iptables
 openresolv
@@ -23,7 +24,7 @@ ntfs-3g
 
 arandr
 leafpad
-zip unzip
+zip unzip unrar
 
 veracrypt
 acpi

@@ -8,7 +8,7 @@ if [ $1 ] ; then
         gz)        gzip -c -9 -n $2 > $2.gz ;;
         zip)       zip -r "$2.zip" $2   ;;
         7z)        7z a $2.7z $2    ;;
-        *)         echo "'$1' ext not matched" ;;
+        zip)       zip -r "$1.zip" $1   ;;
     esac
 else
     echo "'$1' Error"

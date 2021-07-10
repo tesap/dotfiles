@@ -1,20 +1,16 @@
 [Added Associations]
-
+application/pdf=firefox.desktop;xreader.desktop;
 
 [Default Applications]
 application/x-partial-download=mpv.desktop;
-
 application/pdf=xreader.desktop;
-
 image/png=sxiv.desktop;
 image/jpeg=sxiv.desktop
 application/x-desktop=sxiv.desktop;
-
 inode/directory=pcmanfm.desktop
 text/plain=leafpad.desktop
 text/x-shellscript=leafpad.desktop
 application/x-shellscript=leafpad.desktop
-
 text/html=firefox.desktop
 x-scheme-handler/http=firefox.desktop
 x-scheme-handler/https=firefox.desktop
@@ -24,7 +20,6 @@ application/x-extension-htm=firefox.desktop
 application/x-extension-html=firefox.desktop
 application/x-extension-shtml=firefox.desktop
 application/xhtml+xml=firefox.desktop
-
 application/x-extension-xhtml=firefox.desktop
 application/x-extension-xht=firefox.desktop
 x-scheme-handler/about=firefox.desktop

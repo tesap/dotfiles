@@ -64,7 +64,3 @@ for zipped_filename in files:
     run(['bash', pack_script_path, 'zip', result_filename])
 
     run(['rm', result_filename])
-    
-    # created = run('/bin/ls *.fb2', out=True)
-    # created = subprocess.check_output(['pwd'])
-    # print('Created: ', created)
