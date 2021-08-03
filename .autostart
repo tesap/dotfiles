@@ -6,7 +6,7 @@ picom &
 
 redshiftgui --min &
 # redshift &
-# nm-applet &
+nm-applet &
 # pasystray &
 
 parcellite &

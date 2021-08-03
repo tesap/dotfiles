@@ -7,7 +7,7 @@ filetype off
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer' }
 
 Plug 'preservim/nerdtree'
 " Plug 'ryanoasis/vim-devicons'

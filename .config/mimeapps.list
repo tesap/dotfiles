@@ -1,5 +1,6 @@
 [Added Associations]
 application/pdf=firefox.desktop;xreader.desktop;
+image/png=gimp.desktop;
 
 [Default Applications]
 application/x-partial-download=mpv.desktop;
