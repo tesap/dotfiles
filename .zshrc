@@ -36,4 +36,12 @@ source $ZSH/oh-my-zsh.sh
 source ~/.alias_bash
 source ~/.alias_zsh
 
-eval "$(zoxide init zsh)"
+# eval "$(zoxide init zsh)"
+
+autoload -Uz compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' rehash true  
+zmodload zsh/complist
+compinit

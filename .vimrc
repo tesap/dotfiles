@@ -7,6 +7,15 @@ filetype off
 
 call plug#begin('~/.vim/plugged')
 
+" if has('nvim')
+"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+"   Plug 'Shougo/deoplete.nvim'
+"   Plug 'roxma/nvim-yarp'
+"   Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+" let g:deoplete#enable_at_startup = 1
+
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer' }
 
 Plug 'preservim/nerdtree'
@@ -24,7 +33,7 @@ Plug 'itchyny/lightline.vim'
 " Plug 'kovetskiy/sxhkd-vim'
 
 " --- LATEX ---
-Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+" Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'lervag/vimtex'
 
 " --- MARKDOWN ---
@@ -67,7 +76,12 @@ set laststatus=2
 
 " --- LATEX ---
 
-let g:livepreview_previewer = 'xreader'
+" let g:livepreview_previewer = 'xreader'
+let g:tex_flavor='latex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
 
 "################################################################################
 "# ----------------------------      MARKDOWN      ---------------------------- #

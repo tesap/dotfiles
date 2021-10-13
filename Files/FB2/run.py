@@ -1,3 +1,4 @@
+#!/bin/python3
 import os, time, subprocess
 
 extract_script_path = '/home/void/.bin/ex.sh'

@@ -112,7 +112,7 @@ alias config='git --git-dir=/home/void/.dotfiles/ --work-tree=/home/void'
 
 alias gs="git status"
 alias gl="git log --stat --graph"
-alias gd="git diff --color | diffr | less"
+alias gd="git diff --color"
 alias gad="git add --all"
 # alias gc="git clone"
 alias gr="git restore"
