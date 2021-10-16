@@ -1,17 +1,30 @@
 #! /bin/bash
 
-udiskie &
-picom &
-# flameshot &
-
-redshiftgui --min &
-# redshift &
-nm-applet &
-# pasystray &
+setxkbmap -layout us,ru -option 'grp:shifts_toggle' &
+$HOME/.fehbg
+picom --config ~/.config/picom/config &
 
 parcellite &
+redshiftgui --min &
+nm-applet &
+pasystray &
+cbatticon &
+blueman-applet &
 
-mpd --no-daemon -v --stderr &
+# mpd --no-daemon -v --stderr &
 mpc pause &
 
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+
+# udiskie &
+# variety &
+# pcmanfm -d &
+# nitrogen --restore &
+# redshift &
+# flameshot &
+# optimus-manager-qt &
+# redshift-gtk &
+
+# $HOME/.config/polybar/launch.sh &
+# $HOME/.bin/lock.sh &
