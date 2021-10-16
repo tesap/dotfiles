@@ -1,0 +1,232 @@
+client.focused          #364670 #364670 #93CFBD #364670 #364670
+client.focused_inactive #2F2F38 #2F2F38 #CCCCCC #2F2F38 #2F2F38
+client.unfocused        #2F2F38 #2F2F38 #93CFBD #2F2F38 #2F2F38
+client.urgent           #6B3659 #6B3659 #93CFBD #6B3659 #6B3659
+client.placeholder      #666666 #666666 #CCCCCC #666666 #666666
+client.background       #364670
+
+set $mod Mod4
+set $border 3 
+set $gs 2
+
+# smart_gaps on
+# gaps inner 5 
+# gaps outer 0 
+
+# new_window pixel 4
+# new_float pixel 4
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+################################################################################
+# --------------------------      KEYBINDINGS      --------------------------- #
+################################################################################
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+Shift+c kill
+bindsym Ctrl+q exec /bin/true
+
+bindsym $mod+r mode "resize"
+bindsym $mod+Shift+x reload
+bindsym $mod+Shift+r restart
+bindsym $mod+f fullscreen toggle
+
+bindsym Ctrl+$mod+l exec i3lock-fancy -p
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Shift+f exec --no-startup-id flameshot gui
+bindsym $mod+Shift+d exec dmenu_run
+bindsym $mod+d exec --no-startup-id rofi -show run
+
+
+################################################################################
+# --------------------------      WINDOW RULES      -------------------------- #
+################################################################################
+
+for_window [class="^.*"] border pixel $border
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+
+set $lw class="LibreWolf"
+set $torb class="Tor Browser"
+set $tg class="Telegram"
+set $ds class="Tor Browser"
+
+set $ranger title="ranger"
+set $pcmanfm class="Pcmanfm"
+set $gparted class="GParted"
+set $transmission class="Transmission-gtk" title="Transmission"
+
+set $vm_main class="Virt-manager" title="Virtual Machine Manager"
+set $vm_instance title="on QEMU/KVM"
+set $qemu_isntance class="Qemu-system-x86_64"
+
+for_window [$ranger] floating enable 
+for_window [$gparted] floating enable 
+for_window [$pcmanfm] floating enable
+for_window [$vm_main] floating enable
+for_window [$qemu_isntance] floating enable
+
+for_window [$vm_main] resize set 500 300 
+for_window [$vm_main] move absolute position 1400 735 
+
+set $term "Termite"
+
+set $vim1 "nvim .config/i3/config"
+set $vim2 "nvim .config/polybar/config.ini"
+set $htop "htop"
+
+
+assign [$lw] $ws1
+assign [$torb] $ws2
+
+assign [$vm_instance] $ws4
+assign [$qemu_isntance] $ws4
+
+assign [$tg] $ws8
+assign [$ds] $ws8
+
+assign [class=$term title=$vim1] $ws9
+assign [class=$term title=$vim2] $ws9
+
+assign [class=$term title=$htop] $ws10
+
+################################################################################
+# ----------------------------      STARTUP      ----------------------------- #
+################################################################################
+
+exec --no-startup-id termite -t $vim1 -e $vim1
+exec --no-startup-id termite -t $vim2 -e $vim2
+exec --no-startup-id termite -t $htop -e $htop
+
+exec --no-startup-id dunst
+exec --no-startup-id clipit
+exec --no-startup-id pasystray
+exec --no-startup-id nm-applet
+exec --no-startup-id blueman-tray
+exec --no-startup-id cbatticon
+exec --no-startup-id redshift-gtk 
+
+exec_always --no-startup-id setxkbmap -layout us,ru
+exec_always --no-startup-id setxkbmap -option 'grp:shifts_toggle'
+
+exec --no-startup-id feh --bg-fill .wall/f.jpg
+exec --no-startup-id xss-lock -l ~/.config/i3/transfer-sleep-lock-i3lock.sh -- i3lock-fancy -p
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id picom --config ~/.config/picom/config
+
+exec_always --no-startup-id $HOME/.config/i3/alternating_layouts.py
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+################################################################################
+# -----------------------      VOLUME & BACKLIGHT      ----------------------- #
+################################################################################
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 10"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
+
+
+################################################################################
+# -----------------------------      OTHER      ------------------------------ #
+################################################################################
+
+floating_modifier $mod
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+
+mode "resize" {
+    bindsym h resize shrink width $gs px or $gs ppt
+    bindsym j resize grow height $gs px or $gs ppt
+    bindsym k resize shrink height $gs px or $gs ppt
+    bindsym l resize grow width $gspx or $gs ppt
+
+    bindsym Left resize shrink width $gs px or $gs ppt
+    bindsym Down resize grow height $gs px or $gs ppt
+    bindsym Up resize shrink height $gs px or $gs ppt
+    bindsym Right resize grow width $gs px or $gs ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps_inner"
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+
+################################################################################
+# ------------------------      DEFAULT SETTINGS      ------------------------ #
+################################################################################
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10

@@ -1,8 +1,37 @@
 #! /bin/bash
 
+# $1 is target dir
+# $2 is $tag
+# $3 is includes file
+# $4 is gpg email
+
+target=$1
+tag=$2
+includes=$3
+
 # backup_dir="full-system"
-date_suffix=$(date '+%Y%m%d_%H%M')
-res_dir=$2/${date_suffix}
+if [ ! -d ./$tag ]; then
+    mkdir ./$tag
+fi
+
+date_suffix=$(date '+%Y%m%d_%H%M%S')
+res_dir=$tag/${date_suffix}
 
 mkdir $res_dir
-rsync -ravzP --delete --delete-excluded --exclude-from=exclude $1 $res_dir
+
+# rsync -ravzP --delete --delete-excluded --exclude-from=$3 $1 $res_dir
+
+    # --list-only \
+    # --include-from $includes \
+    # --exclude '*' \
+rsync -arvP \
+    --verbose --human-readable \
+    --archive --compress \
+    --files-from=$includes \
+    $1 $res_dir
+
+pk.sh zip $res_dir
+rm $res_dir
+res_a=$res_dir.zip
+
+gpg -r $4 --encrypt $res_a
