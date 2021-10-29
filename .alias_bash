@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+alias scp-wg="scp do:wg0-client-$1.conf /dev/stdout | qrencode -t PNG -o /dev/stdout | feh -"
+
 alias ssh="TERM='vt100' ssh"
 alias reboot="sudo reboot"
 alias binwalk="binwalk -D='.*'"

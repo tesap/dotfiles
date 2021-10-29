@@ -3,23 +3,25 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
--- Standard awesome library
-local gears = require("gears")
-local awful = require("awful")
+local gears     = require("gears")
+local awful     = require("awful")
 require("awful.autofocus")
--- Widget and layout library
-local wibox = require("wibox")
--- Theme handling library
+
+local wibox     = require("wibox")
 local beautiful = require("beautiful")
--- Notification library
-local naughty = require("naughty")
--- Declarative object management
-local ruled = require("ruled")
-local menubar = require("menubar")
+local naughty   = require("naughty")
+local ruled     = require("ruled")
+local menubar   = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
+
+-- local lain      = require("lain")
+
+if awesome.startup_errors then
+    naughty.notify({ preset = naughty.config.presets.critical,
+                     title = "Oops, there were errors during startup!",
+                     text = awesome.startup_errors })
+end
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -82,7 +84,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 tag.connect_signal("request::default_layouts", function()
     awful.layout.append_default_layouts({
         awful.layout.suit.max,
-        awful.layout.suit.floating,
+        -- awful.layout.suit.floating,
         awful.layout.suit.tile,
         awful.layout.suit.tile.bottom,
         awful.layout.suit.fair,
@@ -123,10 +125,52 @@ end)
 
 
 
+-- cpu_graph = blingbling.line_graph({ height = 18,
+--                                         width = 200,
+--                                         show_text = true,
+--                                         label = "Load: $percent %",
+--                                         rounded_size = 0.3,
+--                                         graph_background_color = "#00000033"
+--                                       })
+
+-- Net
+-- neticon = wibox.widget.imagebox(beautiful.widget_net)
+-- neticon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(iptraf) end)))
+-- netwidget = lain.widgets.net({
+--     settings = function()
+--         widget:set_markup(markup("#ffffff", " " .. net_now.received)
+--                           .. " " ..
+--                           markup("#ffffff", " " .. net_now.sent .. " "))
+--     end
+-- })
 
 
+-- local blingbling = require("blingbling")
+-- local cpu_graph = blingbling.line_graph({height = 30,
+--                                         width = 200,
+--                                         show_text = true,
+--                                         label = "Load: $percent %",
+--                                         rounded_size = 0.3,
+--                                       })
 
+local systray_color_1 = "#4A4A4A"
+beautiful.bg_systray = systray_color_1
+beautiful.systray_icon_spacing = 10
 
+local my_round_systray = wibox.widget {
+    {
+        wibox.widget.systray(),
+        left   = 10,
+        top    = 2,
+        bottom = 2,
+        right  = 10,
+        widget = wibox.container.margin,
+    },
+    bg         = systray_color_1,
+    shape      = gears.shape.rounded_rect,
+    shape_clip = true,
+    widget     = wibox.container.background,
+}
 
 
 
@@ -210,7 +254,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
                 mykeyboardlayout,
-                wibox.widget.systray(),
+                -- wibox.widget.systray(),
+                my_round_systray,
+                netwidget,
                 mytextclock,
                 s.mylayoutbox,
             },
@@ -286,7 +332,7 @@ awful.keyboard.append_global_keybindings({
               {description = "view previous", group = "tag"}),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
+    awful.key({ modkey,           }, "Tab", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 })
 
@@ -304,7 +350,7 @@ awful.keyboard.append_global_keybindings({
         end,
         {description = "focus previous by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "Tab",
+    awful.key({ modkey,           }, "Escape",
         function ()
             awful.client.focus.history.previous()
             if client.focus then

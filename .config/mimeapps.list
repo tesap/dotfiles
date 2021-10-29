@@ -2,10 +2,11 @@
 application/pdf=firefox.desktop;xreader.desktop;
 image/png=gimp.desktop;
 application/zip=firefox.desktop;
+application/octet-stream=mpv.desktop;
 
 [Default Applications]
 application/x-partial-download=mpv.desktop;
-application/pdf=xreader.desktop;
+application/pdf=xreader.desktop
 image/png=sxiv.desktop;
 image/jpeg=sxiv.desktop
 application/x-desktop=sxiv.desktop;
@@ -28,3 +29,4 @@ x-scheme-handler/about=firefox.desktop
 x-scheme-handler/unknown=firefox.desktop
 application/octet-stream=mpv.desktop
 audio/mpegapplication/octet-stream=mpv.desktop
+x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
