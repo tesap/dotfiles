@@ -1,7 +1,7 @@
 [Added Associations]
 application/pdf=firefox.desktop;xreader.desktop;
 image/png=gimp.desktop;
-application/zip=firefox.desktop;
+application/zip=engrampa.desktop;firefox.desktop;
 application/octet-stream=mpv.desktop;
 
 [Default Applications]

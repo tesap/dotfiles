@@ -20,3 +20,5 @@ source ~/.alias_zsh
 
 
 source ~/.vars
+
+[[ -z $DISPLAY ]] && startx
