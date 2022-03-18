@@ -8,6 +8,7 @@ hash -d kin="/run/media/$USER/Kindle/documents/Downloads"
 hash -d media='/media/st'
 hash -d Music='/media/st/Music'
 hash -d Netac='/media/Netac'
+hash -d Nextcloud='/media/st/Nextcloud'
 hash -d Trash='/home/st/.local/share/Trash/files'
 
 zstyle ':completion:*' rehash true

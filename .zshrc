@@ -21,4 +21,6 @@ source ~/.alias_zsh
 
 source ~/.vars
 
-[[ -z $DISPLAY ]] && startx
+# [[ -z $DISPLAY ]] && startx
+
+export QSYS_ROOTDIR="/home/void/.cache/yay/quartus-free/pkg/quartus-free-quartus/opt/intelFPGA/21.1/quartus/sopc_builder/bin"

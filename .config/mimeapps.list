@@ -3,6 +3,8 @@ application/pdf=firefox.desktop;xreader.desktop;
 image/png=gimp.desktop;
 application/zip=engrampa.desktop;firefox.desktop;
 application/octet-stream=mpv.desktop;
+x-scheme-handler/tg=userapp-Telegram Desktop-1DTXF1.desktop;
+image/jpeg=libreoffice-draw.desktop;
 
 [Default Applications]
 application/x-partial-download=mpv.desktop;
@@ -30,3 +32,5 @@ x-scheme-handler/unknown=firefox.desktop
 application/octet-stream=mpv.desktop
 audio/mpegapplication/octet-stream=mpv.desktop
 x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
+x-scheme-handler/postman=Postman.desktop
+x-scheme-handler/tg=userapp-Telegram Desktop-1DTXF1.desktop

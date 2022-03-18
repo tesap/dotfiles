@@ -25,7 +25,7 @@ magenta() { clr $MAGENTA "$1"; }
 qemu_params="qemu-system-x86_64 -m 4096 -enable-kvm -smp 4 -cpu host -vga qxl -device AC97 -monitor stdio"
 
 spice_params() { echo "-spice port=$1,disable-ticketing -device virtio-serial-pci -device virtserialport,chardev=spicechannel0,name=com.redhat.spice.0 -chardev spicevmc,id=spicechannel0,name=vdagent"; }
-ssh_params() { echo "-nic user,hostfwd=tcp::$1-:22 -nic user,hostfwd=tcp::8000-:8000"; }
+ssh_params() { echo "-nic user,hostfwd=tcp::$1-:22"; }
 other="-hda $@"
 
 c=$(python -c 'import random; print(random.randint(1, 500))')
