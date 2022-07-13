@@ -32,6 +32,8 @@ Plug 'L3MON4D3/LuaSnip'
 
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer' }
 
+Plug 'neovimhaskell/haskell-vim'
+
 Plug 'preservim/nerdtree'
 " Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
