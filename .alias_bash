@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+alias mv="mv -i"
+
 alias paste-copied-png="xclip -se c -o -t image/png > screenshot.png"
 alias scp-wg="scp do:wg0-client-$1.conf /dev/stdout | qrencode -t PNG -o /dev/stdout | feh -"
 
@@ -67,9 +69,10 @@ alias b="bashtop"
 alias fm="ranger"
 alias rss="newsboat"
 
-alias ytv="straw-viewer"
-alias ytx="youtube-dl --extract-audio --audio-format mp3"
-alias ytdd="youtube-dl --prefer-free-formats"
+# alias ytv="straw-viewer"
+# alias ytx="youtube-dl --extract-audio --audio-format mp3"
+# alias ytdd="youtube-dl --prefer-free-formats"
+alias ytd="yt-dlp --recode-video mp4"
 
 alias ftget="xdg-mime query filetype $1"
 alias mimeget="xdg-mime query default $1"
@@ -111,6 +114,7 @@ alias ev="$EDITOR $HOME/.vimrc"
 # ------------------------------      GIT      ------------------------------- #
 ################################################################################
 
+alias author-lines='git log --author="$(git config user.email)" --pretty=tformat: --numstat | awk "{ print $1 }" | python -c "import sys; print(sum(list(map(lambda x: int(x.strip() if x != \"-\" else \"0\"), sys.stdin.readlines()))))"'
 alias config='git --git-dir=/home/void/.dotfiles/ --work-tree=/home/void'
 
 alias gs="git status"
