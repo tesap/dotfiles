@@ -7,3 +7,4 @@ $HOME/.autostart &
 # exec dbus-launch --exit-with-session dwm
 # exec i3
 exec awesome
+# exec gnome-session
