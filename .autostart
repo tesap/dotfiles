@@ -12,7 +12,9 @@ cbatticon &
 blueman-applet &
 
 # mpd --no-daemon -v --stderr &
-mpc pause &
+# mpc pause &
+mpc play &
+mpc volume 60 &
 
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
@@ -22,7 +24,7 @@ mpc pause &
 # udiskie &
 # variety &
 # pcmanfm -d &
-# nitrogen --restore &
+nitrogen --restore &
 # redshift &
 # flameshot &
 # optimus-manager-qt &
