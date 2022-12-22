@@ -1,3 +1,6 @@
 #! /bin/bash
 
+mysql -u nextcloud --password=password nextcloud -e "DELETE FROM oc_files_trash;;"
 mysql -u nextcloud --password=password nextcloud -e "DELETE FROM oc_filecache;"
+
+sudo -u www-data php /var/www/html/nextcloud/occ files:scan --all -vvv
