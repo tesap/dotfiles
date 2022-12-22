@@ -1,6 +1,10 @@
 #!/usr/bin/bash
 
+alias python="ipython"
+
 alias mv="mv -i"
+alias cp="cp -i" 
+alias rm="rm -v"
 
 alias paste-copied-png="xclip -se c -o -t image/png > screenshot.png"
 alias scp-wg="scp do:wg0-client-$1.conf /dev/stdout | qrencode -t PNG -o /dev/stdout | feh -"
@@ -46,8 +50,6 @@ alias umount='sudo umount'
 
 alias grep="grep -i --color=always"
 alias free='free -m'
-alias cp="cp -i" 
-alias rm="rm -v"
 alias mkdir="mkdir -p"
 alias tt="trash"
 alias df='df -h'

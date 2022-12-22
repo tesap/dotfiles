@@ -1,7 +1,7 @@
 [Added Associations]
 application/pdf=firefox.desktop;xreader.desktop;
-image/png=gimp.desktop;
-application/zip=engrampa.desktop;firefox.desktop;
+#image/png=gimp.desktop;
+application/zip=engrampa.desktop;
 application/octet-stream=mpv.desktop;
 x-scheme-handler/tg=userapp-Telegram Desktop-1DTXF1.desktop;
 image/jpeg=libreoffice-draw.desktop;

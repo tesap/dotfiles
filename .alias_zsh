@@ -22,6 +22,8 @@ skl() { screen -X -S $1 quit }
 
 # vn() { sudo veracrypt -t -c --pim=0 --encryption=aes --hash=sha512 --size=$1 $2; }
 
+alias tg="cd ~/Downloads/Telegram && ./a"
+alias lsblk="lsblk --fs"
 mkcd () { mkdir -p "$1"; cd "$1" }
 
 alias -g g="| grep"

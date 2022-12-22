@@ -1,5 +1,8 @@
 #! /bin/bash
 
+
+udiskie &
+
 setxkbmap -layout us,ru -option 'grp:shifts_toggle' &
 $HOME/.fehbg
 picom --config ~/.config/picom/config &
@@ -13,8 +16,8 @@ blueman-applet &
 
 # mpd --no-daemon -v --stderr &
 # mpc pause &
-mpc play &
-mpc volume 60 &
+# mpc play &
+# mpc volume 60 &
 
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 

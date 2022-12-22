@@ -13,6 +13,10 @@ filetype off
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'francoiscabrol/ranger.vim'
+Plug 'rbgrouleff/bclose.vim'
+
+
 " === LSP Plugins ===
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-cmp'
@@ -34,7 +38,7 @@ Plug 'L3MON4D3/LuaSnip'
 
 Plug 'neovimhaskell/haskell-vim'
 
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
 " Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
 " Plug 'Yggdroot/indentLine'
@@ -266,21 +270,21 @@ set conceallevel=2
 " ################################################################################
 
 inoremap jk <Esc>
-" vnoremap jk <Esc> 
+"" vnoremap jk <Esc> 
 
 map <C-_> :Commentary<CR>
-map <C-n> :NERDTreeToggle<CR>
+"" map <C-n> :NERDTreeToggle<CR>
 
 map <C-t> :tabnew<CR>
 nnoremap td  :tabclose<CR>
-" nnoremap H gT
+"" nnoremap H gT
 nnoremap L gt
 
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
 
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 let g:move_key_modifier = 'C'
 " let g:ycm_add_preview_to_completeopt = 0 
