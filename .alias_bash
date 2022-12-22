@@ -117,7 +117,7 @@ alias ev="$EDITOR $HOME/.vimrc"
 ################################################################################
 
 alias author-lines='git log --author="$(git config user.email)" --pretty=tformat: --numstat | awk "{ print $1 }" | python -c "import sys; print(sum(list(map(lambda x: int(x.strip() if x != \"-\" else \"0\"), sys.stdin.readlines()))))"'
-alias config='git --git-dir=/home/void/.dotfiles/ --work-tree=/home/void'
+alias config="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 
 alias gs="git status"
 alias gl="git log --stat --graph"
