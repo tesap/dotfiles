@@ -34,7 +34,7 @@ Plug 'L3MON4D3/LuaSnip'
 " endif
 " let g:deoplete#enable_at_startup = 1
 
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer' }
 
 Plug 'neovimhaskell/haskell-vim'
 

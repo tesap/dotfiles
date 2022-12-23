@@ -121,9 +121,17 @@ def get_widgets():
             w,
         ]
 
+    def multi_window_title():
+        w = widget.TaskList()
+        return [
+            sep(20),
+            w,
+        ]
+
+
 
     graph_settings = {
-        'graph_color': Colors.RED,
+        # 'graph_color': Colors.RED,
         # 'fill_color': Colors.DARK_RED,
         'border_width': 0,
         'padding': 10,
@@ -158,11 +166,12 @@ def get_widgets():
 
         *groups(),
         *layout_widgets(),
-        *window_title(),
+        # *window_title(),
+        *multi_window_title(),
         *cpu_graph(),
         *net_graph(),
         
-        # *systray(),
+        *systray(),
         sep(20),
 
         ]

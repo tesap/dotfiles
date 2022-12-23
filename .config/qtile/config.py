@@ -6,7 +6,6 @@ from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
 
 from bars import get_screens
-from keys import default_keys
 
 TERMINAL_CMD = 'alacritty'
 
@@ -129,10 +128,68 @@ control_alt_keys = {
     'l': Apps.LOCK,
 }
 
-keys = [
-    *default_keys(),
+def latest_group(qtile):
+    qtile.current_screen.set_group(qtile.current_screen.previous_group)
 
-    *map_keys([mod, alt], mod_alt_keys),
+keys = [
+    # *default_keys(),
+
+    Key([mod], "Tab",
+        # lazy.next_layout()
+        lazy.function(latest_group)
+    ),
+
+    Key([mod, "shift"], "c", lazy.window.kill()),
+    Key([mod, "shift"], "q", lazy.shutdown()),
+    # Key([mod, "shift"], "r", 
+    #     lazy.restart(), 
+    # ),
+
+    Key([mod, "control"], "r", 
+        lazy.restart(), 
+        # lazy.spawn('./.config/polybar/launch.sh')
+    ),
+
+    Key([mod], "k", lazy.layout.previous()),
+    Key([mod], "j", lazy.layout.next()), 
+
+    Key([mod], "h",
+        lazy.layout.grow(), # (MonadTall)
+        lazy.layout.increase_nmaster(), # (Tile)
+        lazy.layout.grow_left(), # (Columns)
+    ),
+
+    Key([mod], "l",
+        lazy.layout.shrink(), # (MonadTall)
+        lazy.layout.decrease_nmaster(), # (Tile)
+        lazy.layout.grow_right(), # (Columns)
+    ),
+
+    Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
+    Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
+    Key([mod, "shift"], "h", lazy.layout.shuffle_left()),
+    Key([mod, "shift"], "l", lazy.layout.shuffle_right()),
+
+    Key(
+        [mod], "m",
+        # lazy.window.toggle_fullscreen()
+        lazy.layout.maximize()
+    ),
+
+    Key(
+        [mod], "space",
+        # lazy.window.toggle_floating()
+        lazy.layout.next()
+    ),
+
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")),
+    Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
+    Key([], "XF86AudioMicMute", lazy.spawn("pactl set-source-mute @DEFAULT_SOURCE@ toggle")),
+    Key([], "XF86MonBrightnessUp", lazy.spawn("xbacklight -inc 10")),
+    Key([], "XF86MonBrightnessDown", lazy.spawn("xbacklight -dec 10")),
+
+    # *map_keys([mod, alt], mod_alt_keys),
     *map_keys([mod, ctrl], mod_control_keys),
     *map_keys([ctrl, alt], control_alt_keys),
 
@@ -150,7 +207,7 @@ keys = [
 ################################################################################
 
 layout_theme = {
-    "border_width": 3,
+    "border_width": 1,
     "margin": 3,
     "border_focus": "aa75c8",
     "border_normal": "1D2330"
@@ -344,7 +401,7 @@ focus_on_window_activation = True # "smart"
 
 @hook.subscribe.startup_once
 def start_once():
-    cmd_run(home + '/.config/qtile/autostart.sh')
+    cmd_run(f'{home}/.autostart')
 
 
 @hook.subscribe.focus_change
@@ -358,4 +415,4 @@ def float_to_front(qtile):
 def float_mpv():
     subprocess.Popen(os.path.expanduser('~/.config/qtile/mpv.py'))
 
-wmname = "Wayland"
+wmname = "Qtile"
