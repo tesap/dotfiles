@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import os, random
 import subprocess
 from libqtile.config import Key, Screen, Group, Match, Drag, Click, ScratchPad, DropDown
