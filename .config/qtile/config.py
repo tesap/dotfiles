@@ -71,9 +71,11 @@ class Apps:
     SCREENSHOT = App('flameshot gui')
 
     DMENU = App("dmenu_run -p 'Run: '")
-    ROFI = App("rofi -show run")
+    ROFI = App("rofi -show drun")
 
-    HIBERRNATION = App('systemctl hibernate')
+    HIBERNATE = App('systemctl hibernate')
+    SUSPEND = App('systemctl suspend')
+
     LOCK = App('i3lock-fancy -p')
 
     THUNDERBIRD = App('thunderbird', 'Thunderbird', frame=(1100, 600))
@@ -102,51 +104,59 @@ def map_keys(mod_keys, keys_dict):
 
 # === MOD + ALT + KEY ===
 mod_alt_keys = {
-    'l': Apps.BROWSER,
-    'c': Apps.CHROMIUM,
-    't': Apps.TOR_BROWSER,
-    'p': Apps.FM,
-    'f': Apps.SCREENSHOT,
-    'm': Apps.NCMPCPP,
-    'n': Apps.TG,
-    'r': Apps.RANGER,
-    'k': Apps.KEEPASS,
-    'v': Apps.VIRT_MANAGER,
-    'e': Apps.MUTT,
+    # 'c': Apps.CHROMIUM,
+    # 't': Apps.TOR_BROWSER,
+    # 'n': Apps.TG,
+    # 'r': Apps.RANGER,
+    # 'v': Apps.VIRT_MANAGER,
+    # 'e': Apps.MUTT,
 }
 
 # === MOD + CONTROL + KEY ===
 mod_control_keys = {
-    'v': Apps.TIMESHIFT,
-    'g': Apps.GPARTED,
+    'l': Apps.BROWSER,
+    'p': Apps.FM,
+    # 'f': Apps.SCREENSHOT,
+    'm': Apps.NCMPCPP,
+    'k': Apps.KEEPASS,
+    # 'v': Apps.TIMESHIFT,
+    # 'g': Apps.GPARTED,
+    # 'k': Apps.HIBERNATE,
+    # 'l': Apps.LOCK,
     # 'e': Apps.DMENU,
 }
 
 # === CONTROL + ALT + KEY ===
 control_alt_keys = {
-    'k': Apps.HIBERRNATION,
+    'k': Apps.SUSPEND,
     'l': Apps.LOCK,
 }
 
 def latest_group(qtile):
     qtile.current_screen.set_group(qtile.current_screen.previous_group)
 
-keys = [
-    # *default_keys(),
+def restart_qtile(qtile):
+    lazy.restart()
+    cmd_run('notify-send Restarted')
 
+keys = [
     Key([mod], "Tab",
-        # lazy.next_layout()
         lazy.function(latest_group)
     ),
 
-    Key([mod, "shift"], "c", lazy.window.kill()),
-    Key([mod, "shift"], "q", lazy.shutdown()),
-    # Key([mod, "shift"], "r", 
-    #     lazy.restart(), 
-    # ),
+    Key([mod], "m",
+        lazy.next_layout()
+    ),
 
-    Key([mod, "control"], "r", 
-        lazy.restart(), 
+    Key([mod, "shift"], "c", lazy.window.kill()),
+    Key([mod, ctrl], "q", 
+        lazy.shutdown()
+    ),
+
+    Key([mod, ctrl], "r", 
+    # Key([mod, "shift"], "r", 
+        lazy.function(restart_qtile)
+        # lazy.restart(), 
         # lazy.spawn('./.config/polybar/launch.sh')
     ),
 
@@ -170,16 +180,15 @@ keys = [
     Key([mod, "shift"], "h", lazy.layout.shuffle_left()),
     Key([mod, "shift"], "l", lazy.layout.shuffle_right()),
 
-    Key(
-        [mod], "m",
-        # lazy.window.toggle_fullscreen()
-        lazy.layout.maximize()
-    ),
+    # Key(
+    #     [mod], "m",
+    #     # lazy.window.toggle_fullscreen()
+    #     lazy.layout.maximize()
+    # ),
 
-    Key(
-        [mod], "space",
-        # lazy.window.toggle_floating()
-        lazy.layout.next()
+    Key([mod], "space",
+        lazy.window.toggle_floating()
+        # lazy.layout.next()
     ),
 
     Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%")),
@@ -195,11 +204,11 @@ keys = [
 
     # --- MY ---
     Key([mod], "Return", Apps.TERM.spawn()),
-    # Key([mod, "shift"], "Return", Apps.ROFI.spawn()),
+    Key([mod], "p", Apps.ROFI.spawn()),
     Key([mod, "shift"], "Return", Apps.DMENU.spawn()),
-    Key(["control"], "q", None),
+    Key([ctrl], "q", None),
 
-    # Key([], 'F12', lazy.group['scratchpad'].dropdown_toggle('term')),
+    Key([], 'F12', lazy.group['scratchpad'].dropdown_toggle('term')),
 ]
 
 ################################################################################
@@ -214,24 +223,9 @@ layout_theme = {
 }
 
 layouts = [
-    # layout.Zoomy(**layout_theme),
-    # layout.RatioTile(**layout_theme),
-    # layout.VerticalTile(**layout_theme),
-    # layout.Bsp(**layout_theme),
-    # layout.Matrix(**layout_theme),
-    # laout.MonadWide(**layout_theme),
-    # layout.Slice(),
-
-
-    # layout.MonadTall(
-    #     ratio=0.55,
-    #     **layout_theme
-    # ),
-
-
+    layout.Max(**layout_theme),
     layout.Columns(**layout_theme),
     layout.Tile(shift_windows=True, **layout_theme),
-    layout.Max(**layout_theme),
 ]
 
 
@@ -242,7 +236,7 @@ layouts = [
 class GroupCreator:
     __groups = []
     cur_ind = 0
-    GROUP_NAMES = 'asdfuiop123456789qwert'
+    GROUP_NAMES = 'asdfuio123456789qwert'
 
     @staticmethod
     def label(name, icon):
@@ -284,20 +278,21 @@ group = creator.new
 # === Groups declare ===
 #                                     🎲 🏆🎧🎮🧩      v     😱 🛠
 #                
+#  
 
 
-group("", layout='max')
-group("")
-group("")
+group("") # a
+group("") # s
+group("") # d
 
-group("")
-group("")
+group("") # f
+group("") # u
 
-group("")
-group("")
+group("", [Apps.KEEPASS]) # i
+group("", [Apps.HTOP], [Apps.TG]) # o
+# group("")
 
-group(" ", [Apps.HTOP], [Apps.TG])
-group("") # 1
+group("", [Apps.BROWSER]) # 1
 group("") # 2
 # group("") # Royal
 group("") # 3 Comet
@@ -313,7 +308,7 @@ group("", custom_name='{', layout='max')
 group("", custom_name='{', layout='max')
 group("", custom_name='(', layout='max')
 group("", custom_name=')', layout='max')
-group("+", [], [Apps.TOR_BROWSER], layout='max')
+group("+", [], [Apps.TOR_BROWSER])
 
 
 # === --- ===
@@ -324,7 +319,7 @@ groups = [
     ScratchPad("scratchpad", [
         # define a drop down terminal.
         # it is placed in the upper third of screen by default.
-        DropDown("term", "termite", opacity=0.8, on_focus_lost_hide=False),
+        DropDown("term", TERMINAL_CMD, opacity=0.8, on_focus_lost_hide=False),
 
         # define another terminal exclusively for qshell at different position
         # DropDown("qshell", "urxvt -hold -e qshell",
@@ -346,7 +341,7 @@ floating_windows = [
     Apps.TIMESHIFT,
     Apps.NITROGEN,
     # Apps.MPV,
-    Apps.THUNDERBIRD,
+    # Apps.THUNDERBIRD,
     # Apps.ELECTRUM,
 ]
 

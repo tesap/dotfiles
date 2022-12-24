@@ -2,6 +2,7 @@
 
 
 udiskie &
+dunst &
 
 setxkbmap -layout us,ru -option 'grp:shifts_toggle' &
 $HOME/.fehbg
