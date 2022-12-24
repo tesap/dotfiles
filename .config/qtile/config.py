@@ -289,8 +289,8 @@ group("") # d
 group("") # f
 group("") # u
 
-group("", [Apps.KEEPASS]) # i
-group("", [Apps.HTOP], [Apps.TG]) # o
+group("") # i
+group("", [Apps.HTOP, Apps.KEEPASS], [Apps.TG]) # o
 # group("")
 
 group("", [Apps.BROWSER]) # 1
@@ -305,10 +305,10 @@ group("")
 group("")
 # group("         ")
 
-group("", custom_name='{', layout='max')
-group("", custom_name='{', layout='max')
-group("", custom_name='(', layout='max')
-group("", custom_name=')', layout='max')
+group("", custom_name='{')
+group("", custom_name='{')
+group("", custom_name='(')
+group("+")
 group("+", [], [Apps.TOR_BROWSER])
 
 

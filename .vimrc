@@ -13,6 +13,19 @@ filetype off
 
 call plug#begin('~/.vim/plugged')
 
+" (optional) for completion:
+Plug 'hrsh7th/nvim-cmp'
+
+" (optional) for :ObsidianSearch command unless you use telescope:
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" (optional) for :ObsidianSearch command if you prefer this over fzf.vim:
+Plug 'nvim-telescope/telescope.nvim'
+
+Plug 'epwalsh/obsidian.nvim'
+Plug 'preservim/vim-markdown'
+
 Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
 
@@ -34,7 +47,7 @@ Plug 'L3MON4D3/LuaSnip'
 " endif
 " let g:deoplete#enable_at_startup = 1
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer' }
 
 Plug 'neovimhaskell/haskell-vim'
 
@@ -94,8 +107,30 @@ nnoremap H :bd<CR>
 " # ------------------------------      LSP      ------------------------------- #
 " ################################################################################
 
-
 lua << EOF
+
+vim.keymap.set(
+  "n",
+  "gl",
+  function()
+    if require('obsidian').util.cursor_on_markdown_link() then
+      return "<cmd>ObsidianFollowLink<CR>"
+    else
+      return "gl"
+    end
+  end,
+  { noremap = false, expr = true}
+)
+
+
+
+require("obsidian").setup({
+  dir = "~/gh/Obsidian",
+  completion = {
+    nvim_cmp = true,
+  }
+})
+
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
