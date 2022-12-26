@@ -9,7 +9,8 @@ $HOME/.fehbg
 picom --config ~/.config/picom/config &
 
 parcellite &
-redshiftgui --min &
+# redshiftgui --min &
+redshift-gtk &
 nm-applet &
 pasystray &
 # cbatticon &

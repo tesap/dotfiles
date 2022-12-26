@@ -1,35 +1,103 @@
-# Colors (Nord)
+
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x1d1f21'
+#     foreground: '0xc5c8c6'
+
+#   # Normal colors
+#   normal:
+#     black:   '0x282a2e'
+#     red:     '0xa54242'
+#     green:   '0x8c9440'
+#     yellow:  '0xde935f'
+#     blue:    '0x5f819d'
+#     magenta: '0x85678f'
+#     cyan:    '0x5e8d87'
+#     white:   '0x707880'
+
+#   # Bright colors
+#   bright:
+#     black:   '0x373b41'
+#     red:     '0xcc6666'
+#     green:   '0xb5bd68'
+#     yellow:  '0xf0c674'
+#     blue:    '0x81a2be'
+#     magenta: '0xb294bb'
+#     cyan:    '0x8abeb7'
+#     white:   '0xc5c8c6'
+
+
+# # Colors (Nord)
+# colors:
+#   # Default colors
+#   primary:
+#     # background: '0x27292b'
+#     background: '0x1b1b1b'
+
+#     # foreground: '0xD8DEE9'
+#     foreground: '0xc7c7c7'
+
+#   # Normal colors
+#   normal:
+#     black:   '0x3B4252'
+#     red:     '0xBF616A'
+#     green:   '0xA3BE8C'
+#     yellow:  '0xEBCB8B'
+#     blue:    '0x81A1C1'
+#     magenta: '0xB48EAD'
+#     cyan:    '0x88C0D0'
+#     white:   '0xd1d1d1'
+
+#   # Bright colors
+#   bright:
+#     # black:   '0x4C566A'
+#     black:   '0x545f75'
+#     red:     '0xBF616A'
+#     green:   '0xA3BE8C'
+#     yellow:  '0xEBCB8B'
+#     blue:    '0x81A1C1'
+#     magenta: '0xB48EAD'
+#     cyan:    '0x8FBCBB'
+#     white:   '0xd1d1d1'
+
+
 colors:
   # Default colors
   primary:
-    # background: '0x27292b'
-    background: '0x1b1b1b'
-
-    # foreground: '0xD8DEE9'
-    foreground: '0xc7c7c7'
+    background: '0x0f1112'
+    foreground: '0xc1c6c9'
 
   # Normal colors
   normal:
-    black:   '0x3B4252'
-    red:     '0xBF616A'
-    green:   '0xA3BE8C'
-    yellow:  '0xEBCB8B'
-    blue:    '0x81A1C1'
-    magenta: '0xB48EAD'
-    cyan:    '0x88C0D0'
-    white:   '0xd1d1d1'
+    black:   '0x1c1f21'
+    # black:   '0x545961'
+    red:     '0xcc6464'
+    green:   '0xa7bd7b'
+    yellow:  '0xf0cb81'
+    blue:    '0x81a1c1'
+    magenta: '0xb594bb'
+    cyan:    '0x8abeb7'
+    white:   '0xc3c5c7'
+
+    # red:     '0xab5b5b'
+    # green:   '0x8da479'
+    # yellow:  '0xcfad6b'
+    # blue:    '0x7290ab'
+    # magenta: '0x9d80a2'
+    # cyan:    '0x77b7b2'
+    # white:   '0xb8b9bb'
 
   # Bright colors
   bright:
-    # black:   '0x4C566A'
-    black:   '0x545f75'
-    red:     '0xBF616A'
-    green:   '0xA3BE8C'
-    yellow:  '0xEBCB8B'
-    blue:    '0x81A1C1'
-    magenta: '0xB48EAD'
-    cyan:    '0x8FBCBB'
-    white:   '0xd1d1d1'
+    black:   '0x545961'
+    red:     '0xcc6464'
+    green:   '0xa7bd7b'
+    yellow:  '0xf0cb81'
+    blue:    '0x81a1c1'
+    magenta: '0xb594bb'
+    cyan:    '0x8abeb7'
+    white:   '0xc3c5c7'
 
 
 font:
