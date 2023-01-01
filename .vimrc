@@ -23,8 +23,8 @@ Plug 'junegunn/fzf.vim'
 " (optional) for :ObsidianSearch command if you prefer this over fzf.vim:
 Plug 'nvim-telescope/telescope.nvim'
 
-Plug 'epwalsh/obsidian.nvim'
-Plug 'preservim/vim-markdown'
+" Plug 'epwalsh/obsidian.nvim'
+" Plug 'preservim/vim-markdown'
 
 Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
@@ -120,7 +120,7 @@ syntax on
 " let ayucolor="mirage"
 " colorscheme gruvbox
 " colorscheme neon
-" colorscheme sonokai
+colorscheme sonokai
 " colorscheme ayu
 " colorscheme one 
 " vim.cmd[[colorscheme neon]]

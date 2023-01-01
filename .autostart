@@ -10,7 +10,7 @@ picom --config ~/.config/picom/config &
 
 parcellite &
 # redshiftgui --min &
-redshift-gtk &
+# redshift-gtk &
 nm-applet &
 pasystray &
 # cbatticon &
