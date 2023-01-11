@@ -13,7 +13,7 @@ parcellite &
 # redshift-gtk &
 nm-applet &
 pasystray &
-# cbatticon &
+cbatticon &
 blueman-applet &
 
 # mpd --no-daemon -v --stderr &
