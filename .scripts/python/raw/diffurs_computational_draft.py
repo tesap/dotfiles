@@ -1,6 +1,8 @@
 import math
 import pprint
 import sys
+import matplotlib
+from matplotlib import pyplot as plt
 
 n = 5
 a = 0
@@ -33,7 +35,6 @@ pprint.pprint([(
 
 x_axis = [i * h for i in range(int(n))]
 
-from matplotlib import pyplot as plt
 # plt.rcParams["figure.figsize"] = [7.00, 3.50]
 plt.rcParams["figure.autolayout"] = True
 plt.xlim(a, b)
@@ -47,4 +48,6 @@ plt.plot(x_axis, [abs(yk_analyt_arr[i] - yk_num_arr[i]) for i in range(int(n))],
 plt.plot(x_axis, yk_num_arr, marker="o", color="black")
 # plt.plot(x_axis, list(map(lambda x: x / 10000, yk_num_arr)), marker="o")
 plt.plot(x_axis, yk_analyt_arr, marker="o")
+
 plt.show()
+# matplotlib.pyplot.show()
