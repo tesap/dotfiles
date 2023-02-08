@@ -9,3 +9,4 @@ TERM=alacritty
 PS1='[\u@\h \W]\$ '
 
 source .alias_bash
+

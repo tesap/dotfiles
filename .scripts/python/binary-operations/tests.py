@@ -9,6 +9,7 @@ multireverse = lambda arr: [reversed(i) for i in arr]
 convert_logger = logging.getLogger('convert')
 convert_logger.setLevel(logging.DEBUG)
 
+
 # hex, bin, int, bytes
 class Tests:
     hex_bin = [
@@ -34,7 +35,6 @@ class Tests:
 
 class TestBin(unittest.TestCase):
     def base_test(self, test_func, tests_arr: list):
-
         def assert_convert(from_value, to_value, convert_func):
             converted = convert_func(from_value)
 
@@ -51,7 +51,6 @@ class TestBin(unittest.TestCase):
         self.base_test(func1, tests_arr)
         self.base_test(func2, tests_arr_reversed)
 
-
     def test_hex_bin(self):
         self._test_both(Tests.hex_bin, hex_to_bin, bin_to_hex)
 
@@ -60,6 +59,7 @@ class TestBin(unittest.TestCase):
 
     def test_hex_int(self):
         self._test_both(Tests.hex_int, hex_to_int, int_to_hex)
+
 
 if __name__ == '__main__':
     unittest.main()

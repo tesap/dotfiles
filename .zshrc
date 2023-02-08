@@ -1,5 +1,6 @@
 #!/usr/bin/sh
 
+PATH=$PATH:$HOME/.bin/bin
 export EDITOR="$(if ! command -v nvim &> /dev/null; then echo 'vim'; else echo 'nvim'; fi)"
 
 export ZSH="$HOME/.zsh"
