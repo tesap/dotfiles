@@ -47,12 +47,12 @@ Plug 'L3MON4D3/LuaSnip'
 " endif
 " let g:deoplete#enable_at_startup = 1
 
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer' }
 
 Plug 'neovimhaskell/haskell-vim'
 
-" Plug 'preservim/nerdtree'
-" Plug 'ryanoasis/vim-devicons'
+Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
 " Plug 'Yggdroot/indentLine'
 
@@ -175,7 +175,7 @@ inoremap jk <Esc>
 "" vnoremap jk <Esc> 
 
 map <C-_> :Commentary<CR>
-"" map <C-n> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeToggle<CR>
 
 map <C-t> :tabnew<CR>
 nnoremap td  :tabclose<CR>

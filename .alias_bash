@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 
+alias mm="neomutt"
 alias python="ipython"
 
 alias mv="mv -i"
