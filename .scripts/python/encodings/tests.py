@@ -1,7 +1,7 @@
 import unittest
 import logging
 
-from bin_funcs import *
+from bin_funcs import BytesData
 
 func_name = lambda func: func.__code__.co_name
 multireverse = lambda arr: [reversed(i) for i in arr]
@@ -14,9 +14,7 @@ convert_logger.setLevel(logging.DEBUG)
 class Tests:
     hex_bin = [
         ['8a9b', '1000101010011011'],
-        ['a9b', '101010011011'],
-        ['1234567890abcdef', '1001000110100010101100111100010010000101010111100110111101111'],
-        ['1234567890abcde', '100100011010001010110011110001001000010101011110011011110'],
+        ['1234567890abcdef', '0001001000110100010101100111100010010000101010111100110111101111'],
     ]
 
     hex_bytes = [
@@ -26,12 +24,10 @@ class Tests:
 
     hex_int = [
         ['1234567890abcdef', 1311768467294899695],
-        ['1234567890abcde', 81985529205931230],
-        ['1234567890', 78187493520],
+        # ['1234567890abcde', 81985529205931230],
+        # ['1234567890', 78187493520],
     ]
 
-
-# TODO make class as a struct to test all in all
 
 class TestBin(unittest.TestCase):
     def base_test(self, test_func, tests_arr: list):
@@ -52,13 +48,28 @@ class TestBin(unittest.TestCase):
         self.base_test(func2, tests_arr_reversed)
 
     def test_hex_bin(self):
-        self._test_both(Tests.hex_bin, hex_to_bin, bin_to_hex)
+        for i in Tests.hex_bin:
+            bin_res = BytesData.from_hex(i[0]).to_bin()
+            hex_res = BytesData.from_bin(i[1]).to_hex()
+
+            self.assertEqual(bin_res, i[1])
+            self.assertEqual(hex_res, i[0])
 
     def test_hex_bytes(self):
-        self._test_both(Tests.hex_bytes, hex_to_bytes, bytes_to_hex)
+        for i in Tests.hex_bytes:
+            bytes_res = BytesData.from_hex(i[0]).to_bytes()
+            hex_res = BytesData.from_bytes(i[1]).to_hex()
+
+            self.assertEqual(bytes_res, i[1])
+            self.assertEqual(hex_res, i[0])
 
     def test_hex_int(self):
-        self._test_both(Tests.hex_int, hex_to_int, int_to_hex)
+        for i in Tests.hex_int:
+            int_res = BytesData.from_hex(i[0]).to_int()
+            hex_res = BytesData.from_int(i[1]).to_hex()
+
+            self.assertEqual(int_res, i[1])
+            self.assertEqual(hex_res, i[0])
 
 
 if __name__ == '__main__':

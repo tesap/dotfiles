@@ -1,9 +1,37 @@
 import functools
 import math
 import os
+from typing import Literal
 
 
-class BytesData:
+class DataInterface:
+    @classmethod
+    def from_bytes(cls, b: bytes):
+        pass
+
+    @classmethod
+    def from_hex(cls, h: str):
+        pass
+
+    @classmethod
+    def from_bin(cls, bin_str: str):
+        pass
+
+    @classmethod
+    def from_int(cls, n: int):
+        pass
+
+    def to_bytes(self) -> bytes:
+        pass
+
+    def to_hex(self) -> str:
+        pass
+
+    def to_bin(self) -> str:
+        pass
+
+
+class BytesData(DataInterface):
     __bytes_arr = bytes()
 
     def __init__(self, b: bytes):
@@ -15,86 +43,57 @@ class BytesData:
 
     @classmethod
     def from_hex(cls, h: str):
+        """
+        bytes <- hex
+        """
         b = hex_to_bytes(h)
         return cls(b)
 
     @classmethod
     def from_bin(cls, bin_str: str):
-        raise NotImplementedError
+        """
+        bytes <- bin
+        """
+        b = bin_to_bytes(bin_str)
+        return cls(b)
 
     @classmethod
     def from_int(cls, n: int):
-        b = int_to_bytes(n)
+        """
+        bytes <- bin <- int
+        """
+        bin_str = int_to_bin(n)
+        b = bin_to_bytes(bin_str)
+
         return cls(b)
 
     def to_bytes(self) -> bytes:
         return self.__bytes_arr
 
     def to_hex(self) -> str:
+        """
+        bytes -> hex
+        """
         h = bytes_to_hex(self.__bytes_arr)
         return h
 
     def to_bin(self) -> str:
-        raise NotImplementedError
-        # bin_str = bytes_to_bin(self.__bytes_arr)
-        # return bin_str
+        """
+        bytes -> bin
+        """
+        return bytes_to_bin(self.__bytes_arr)
 
     def to_int(self) -> int:
-        n = bytes_to_int(self.__bytes_arr)
+        """
+        bytes -> bin -> int
+        """
+        bin_str = bytes_to_bin(self.__bytes_arr)
+        n = bin_to_int(bin_str)
         return n
 
 
-class HexData:
-    __hex_str = ''
-
-    def __init__(self, hex_str: str):
-        if len(hex_str) % 2 != 0:
-            raise Exception
-
-        self.__hex_str = hex_str
-
-    @classmethod
-    def from_hex(cls, hex_str: str):
-        return cls(hex_str)
-
-    @classmethod
-    def from_bytes(cls, b: bytes):
-        return cls(
-            bytes_to_hex(b)
-        )
-
-    @classmethod
-    def from_bin(cls, b: str):
-        return cls(
-            bin_to_hex(b)
-        )
-
-    @classmethod
-    def from_int(cls, n: int):
-        return cls(
-            int_to_hex(n)
-        )
-
-    def to_bytes(self) -> bytes:
-        return hex_to_bytes(self.__hex_str)
-
-    def to_int(self) -> int:
-        return hex_to_int(self.__hex_str)
-
-    def to_hex(self) -> str:
-        return self.__hex_str
-
-    def to_bin(self) -> str:
-        return hex_to_bin(self.__hex_str)
-
-    def __str__(self):
-        return self.to_hex()
-
-    def __repr__(self):
-        return self.__str__()
-
-
 BLOCK_SIZE = 8
+ENDIANNESS: Literal['big', 'little'] = 'big'
 
 
 # ---- Utils funcs ----
@@ -114,10 +113,13 @@ def generator_to_list(func):
 
 # ---- Main funcs ----
 
-def split_to_chunks(s, block_size=BLOCK_SIZE, fill_marginal_chunk=False, is_fill_marginal_left=True) -> list:
+def split_to_chunks(string,
+                    block_size=BLOCK_SIZE,
+                    fill_marginal_chunk=False,
+                    is_fill_marginal_left=True) -> list:
     """
     split given string to chunks of block_size, additionally filling with zeros to right of left
-    :param s: input string
+    :param string: input string
     :param block_size: chunk size
     :param fill_marginal_chunk: whether to fill with zeros
     :param is_fill_marginal_left: on which side to fill
@@ -136,86 +138,19 @@ def split_to_chunks(s, block_size=BLOCK_SIZE, fill_marginal_chunk=False, is_fill
             return s[::-1].zfill(zero_pad)[::-1]
 
     if fill_marginal_chunk:
-        s = fill_zeros(
-            s,
+        string = fill_zeros(
+            string,
             block_size,
             to_left=is_fill_marginal_left
         )
 
-    chunks_arr = split_to_chunks(s, block_size)
+    chunks_arr = split_by(string, block_size)
     return chunks_arr
 
 
 def bytes_to_hex(b: bytes) -> str:
     # return binascii.hexlify(b)
     return b.hex()
-
-
-def hex_to_int(h: str) -> int:
-    return int(h, 16)  # zeros are filled to left automatically
-
-
-def int_to_bin(n: int, to_bytes_size=True):
-    """
-    zeros are added to the left
-    """
-    res = bin(n)[2:]
-
-    if to_bytes_size:
-        to_add_cnt = 8 - (len(res) % 8)
-        if to_add_cnt == 8:
-            to_add_cnt = 0
-
-        res = to_add_cnt * "0" + res
-
-    return res
-
-
-def bin_to_int(b: str) -> int:
-    return int(b, 2)
-
-
-def bin_to_bytes(s: str, fill_bin_to_left=True) -> bytes:
-    def bin_arr_to_bytes(arr) -> [int]:
-        for i in arr:
-            yield bin_to_int(i)
-
-    res = split_to_chunks(
-        s,
-        is_fill_marginal_left=fill_bin_to_left
-    ) if isinstance(s, str) else s
-
-    return bytes(
-        bin_arr_to_bytes(res)
-    )
-
-
-def int_to_bytes(n: int) -> bytes:
-    return bin_to_bytes(
-        int_to_bin(n),  # already filled on left
-        fill_bin_to_left=True
-    )
-
-
-def int_to_hex(n: int) -> str:
-    return bytes_to_hex(int_to_bytes(n))
-
-
-# def hex_to_bin(h: str) -> str:
-#     return bytes_to_bin(hex_to_bytes(h))
-#     return int_to_bin(  # zeros filled to left
-#         hex_to_int(h)
-#     )
-
-
-# def bytes_to_bin(b: bytes) -> str:
-#     return hex_to_bin(bytes_to_hex(b))
-
-
-def bytes_to_int(b: bytes) -> int:
-    return hex_to_int(
-        bytes_to_hex(b)
-    )
 
 
 def hex_to_bytes(hex_str: str) -> bytes:
@@ -239,11 +174,62 @@ def hex_to_bytes(hex_str: str) -> bytes:
     return bytes.fromhex(hex_str)
 
 
-def bin_to_hex(b: str) -> str:
-    if len(b) % 8 != 0:
+def int_to_bin(n: int, to_bytes_size=True):
+    """
+    zeros are added to the left
+    """
+    res = bin(n)[2:]
+
+    if to_bytes_size:
+        to_add_cnt = 8 - (len(res) % 8)
+        if to_add_cnt == 8:
+            to_add_cnt = 0
+
+        res = to_add_cnt * "0" + res
+
+    return res
+
+
+def bin_to_int(b: str) -> int:
+    return int(b, 2)
+
+
+def bin_to_bytes(bin_str: str) -> bytes:
+    if len(bin_str) % 8 != 0:
         raise Exception
 
-    return bytes_to_hex(bin_to_bytes(b))
+    splitted_list: list[str] = split_to_chunks(bin_str)
+
+    int_list: list[int] = list(map(bin_to_int, splitted_list))
+    return bytes(int_list)
+
+
+def bytes_to_bin(b: bytes) -> str:
+    res = ""
+    byte_int: int
+    for byte_int in b:
+        # byte.to_bytes(1, ENDIANNESS)
+
+        bin_str: str = int_to_bin(byte_int)
+        res += bin_str
+
+    return res
+
+
+# ----
+
+
+def _hex_to_int(h: str) -> int:
+    return int(h, 16)
+
+
+def _bytes_to_int(b: bytes) -> int:
+    return int.from_bytes(b, ENDIANNESS)
+
+
+def _int_to_bytes(n: int) -> bytes:
+    raise NotImplementedError
+    # return n.to_bytes()
 
 
 # ---- ----
@@ -268,7 +254,7 @@ def random_bin(bytes_n: int) -> str:
 
     rand_bytes = random_bytes(bytes_n)
 
-    hd = HexData.from_bytes(rand_bytes)
+    hd = BytesData.from_bytes(rand_bytes)
     bin_string = hd.to_bin()
 
     assert len(bin_string) == bytes_n * 8
