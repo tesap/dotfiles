@@ -1,0 +1,39 @@
+#!/bin/bash
+
+url=$1
+
+if [[ -z $url ]]; then
+    echo "No url provided"
+    exit 1
+fi
+
+echo "Available formats:"
+yt-dlp --quiet -F $url 2>/dev/null
+
+read -p "Enter format choice: " ask
+
+format_str='YT_DLP/%(upload_date>%Y)s_%(upload_date>%m)s_%(upload_date>%d)s_%(title)s.%(ext)s'
+cmd="yt-dlp -f $ask $url -o $format_str"
+echo "Starting download"
+echo "Format: $ask"
+echo "CMD: $cmd"
+
+ask() {
+    rstr="[y/<blank> = yes] "
+    ask_str="Start? $rstr > "
+
+    echo -en $ask_str
+    read -n 1 ask </dev/tty
+    echo
+
+    if [[ -z $ask || $ask == 'y' ]]; then
+        $1 # 2>/dev/null"
+    else
+        echo "Exiting..."
+    fi
+    sleep 1
+}
+
+ask "$cmd"
+
+

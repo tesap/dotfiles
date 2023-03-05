@@ -1,0 +1,9 @@
+#!/bin/bash
+
+as_pg="sudo -iu postgres"
+
+$as_pg sudo chown postgres:postgres -R /var/lib/postgres/
+$as_pg sudo mkdir /run/postgresql
+$as_pg sudo chown postgres:postgres -R /run/postgresql
+
+$as_pg pg_ctl -D /var/lib/postgres/data -l logfile start

@@ -47,7 +47,7 @@ Plug 'L3MON4D3/LuaSnip'
 " endif
 " let g:deoplete#enable_at_startup = 1
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer' }
 
 Plug 'neovimhaskell/haskell-vim'
 
@@ -94,6 +94,13 @@ Plug 'ifsmirnov/vim-searchindex'
 " Plug 'RRethy/vim-illuminate'
 Plug 'rafamadriz/neon'
 
+
+" === Python Setup ===
+" Plug 'dense-analysis/ale'
+Plug 'davidhalter/jedi-vim'
+Plug 'tmhedberg/SimpylFold'
+" Plug 'terryma/vim-multiple-cursors'
+
 call plug#end()
 
 
@@ -118,9 +125,9 @@ syntax on
 
 
 " let ayucolor="mirage"
-" colorscheme gruvbox
+colorscheme gruvbox
 " colorscheme neon
-colorscheme sonokai
+" colorscheme sonokai
 " colorscheme ayu
 " colorscheme one 
 " vim.cmd[[colorscheme neon]]
@@ -246,3 +253,24 @@ endif
 
 
 lua require'colorizer'.setup()
+
+
+let g:ale_linters = {'python': 'all'}
+let g:ale_fixers = {'python': ['isort', 'yapf', 'remove_trailing_lines', 'trim_whitespace']}
+
+let g:ale_lsp_suggestions = 1
+let g:ale_fix_on_save = 1
+let g:ale_go_gofmt_options = '-s'
+let g:ale_go_gometalinter_options = '— enable=gosimple — enable=staticcheck'
+let g:ale_completion_enabled = 1
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] [%severity%] %code: %%s'
+
+
+" disable autocompletion, because we use deoplete for completion
+" let g:jedi#completions_enabled = 0
+
+" open the go-to function in split, not another buffer
+" let g:jedi#use_splits_not_buffers = "right"
+" let g:jedi#popup_on_dot = 0

@@ -50,6 +50,7 @@ alias mount='sudo mount'
 alias umount='sudo umount'
 
 alias grep="grep -i --color=always"
+alias grepfiles="grep -nrI --exclude-dir='.venv' --exclude-dir='.git' --exclude-dir='.idea'"
 alias free='free -m'
 alias mkdir="mkdir -p"
 alias tt="trash"
