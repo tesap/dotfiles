@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+alias gcc="gcc -Wall"
+
 alias mm="neomutt"
 alias python="ipython"
 

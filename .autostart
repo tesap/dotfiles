@@ -1,5 +1,6 @@
 #! /bin/bash
 
+yay -Rs asdf123
 
 udiskie &
 dunst &
@@ -37,3 +38,5 @@ nitrogen --restore &
 
 # $HOME/.config/polybar/launch.sh &
 # $HOME/.bin/lock.sh &
+
+sudo nmcli device modify wlan0 ipv4.dns "127.0.0.1"
