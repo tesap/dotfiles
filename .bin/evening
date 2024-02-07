@@ -1,0 +1,4 @@
+#!/bin/bash
+
+xbacklight -set 60
+redshift -O 5000

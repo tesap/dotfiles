@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# backup_dir="/var/backups"
+backup_dir="/media/pi/1cb94648-180a-4532-9c20-c6b464bdd1bf/backups"
+
+DB_NAME=metrics
+DB_USER=postgres
+
+pg_dump -U $DB_USER -d $DB_NAME --inserts -v > "$backup_dir"/dump_"$DB_NAME"_$(date +%Y_%m_%d__%H_%M_%S).sql

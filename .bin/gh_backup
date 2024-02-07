@@ -1,0 +1,6 @@
+#!/bin/bash
+
+backup_dir="pi:/media/pi/1cb94648-180a-4532-9c20-c6b464bdd1bf/backups"
+to_backup="$HOME/gh/Obsidian"
+
+rsync -rv --archive --progress --exclude=*.git/ --exclude=*.obsidian/ $to_backup $backup_dir
