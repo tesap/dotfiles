@@ -11,7 +11,7 @@ alias aurora_psdk=$PLATFORM_SDK_ROOT/sdks/sfossdk/mer-sdk-chroot
 alias gcc="gcc -Wall"
 
 alias mm="neomutt"
-alias python="ipython"
+# alias python="ipython"
 
 alias mv="mv -i"
 alias cp="cp -i" 

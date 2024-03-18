@@ -8,3 +8,4 @@ $HOME/.autostart &
 # exec i3
 exec awesome
 # exec gnome-session
+# exec /home/void/gh/cpp/wmcpp/build/wmcpp

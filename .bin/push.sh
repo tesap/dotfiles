@@ -1,15 +1,16 @@
 #!/bin/bash
 
-aurora_psdk="$PLATFORM_SDK_ROOT/sdks/sfossdk/mer-sdk-chroot"
+TARGET="Aurora_Target_armv7hl_5.2.0_35"
+AURORA_PSDK="$PLATFORM_SDK_ROOT/sdks/sfossdk/mer-sdk-chroot"
+PEM_PATH="$HOME/omp/pem"
 
-$aurora_psdk bash -c "mb2 -t Aurora_Target_5.1.0_284 build"
+# --- Push ---
 
-cd RPMS
+$AURORA_PSDK rpmsign-external sign --key $PEM_PATH/system-developer-key.pem --cert $PEM_PATH/system-developer-cert.pem $1/*.rpm
+# $AURORA_PSDK rpmsign-external sign --key $PEM_PATH/developer-regular-key.pem --cert $PEM_PATH/developer-regular-cert.pem $1/*.rpm
+$AURORA_PSDK rpmsign-external sign --key $PEM_PATH/client-key.pem --cert $PEM_PATH/client-cert.pem $1/*.rpm
 
-$aurora_psdk rpmsign-external sign --key ~/omp/pem/system-developer-key.pem --cert ~/omp/pem/system-developer-cert.pem *.rpm
-$aurora_psdk rpmsign-external sign --key ~/omp/pem/client-key.pem --cert ~/omp/pem/client-cert.pem *.rpm
+ssh aurora-device "rm -r $1"
+rsync -rav $1 aurora-device:
 
-ssh aurora-device "rm softhsm*"
-rsync -av *.rpm aurora-device:
-cd ..
-ssh -t aurora-device "devel-su pkcon install-local softhsm-2*"
+ssh -t aurora-device "cd $1; devel-su pkcon install-local *"

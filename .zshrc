@@ -35,3 +35,10 @@ export QSYS_ROOTDIR="/home/void/.cache/yay/quartus-free/pkg/quartus-free-quartus
 [[ -f /home/void/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/void/.config/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 
+
+# The next line updates PATH for Yandex Cloud CLI.
+if [ -f '/home/void/yandex-cloud/path.bash.inc' ]; then source '/home/void/yandex-cloud/path.bash.inc'; fi
+
+# The next line enables shell command completion for yc.
+if [ -f '/home/void/yandex-cloud/completion.zsh.inc' ]; then source '/home/void/yandex-cloud/completion.zsh.inc'; fi
+

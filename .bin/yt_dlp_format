@@ -12,7 +12,7 @@ yt-dlp --quiet -F $url 2>/dev/null
 
 read -p "Enter format choice: " ask
 
-format_str='YT_DLP/%(upload_date>%Y)s_%(upload_date>%m)s_%(upload_date>%d)s_%(title)s.%(ext)s'
+format_str='~/YT_DLP/%(upload_date>%Y)s_%(upload_date>%m)s_%(upload_date>%d)s_%(title)s.%(ext)s'
 cmd="yt-dlp -f $ask $url -o $format_str"
 echo "Starting download"
 echo "Format: $ask"
