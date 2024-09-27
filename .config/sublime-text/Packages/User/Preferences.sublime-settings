@@ -1,0 +1,10 @@
+{
+	"font_size": 14,
+	"theme": "Adaptive.sublime-theme",
+	"ignored_packages":
+	[
+		"Vintage",
+	],
+	"color_scheme": "Packages/1337 Color Scheme/1337.tmTheme",
+	"save_on_focus_lost": true,
+}

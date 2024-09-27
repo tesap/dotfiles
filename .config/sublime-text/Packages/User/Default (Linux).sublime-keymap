@@ -1,0 +1,8 @@
+[
+	{ "keys": ["ctrl+shift+-"], "command": "fold" },
+	{ "keys": ["ctrl+shift+="], "command": "unfold" },
+	// { "keys": ["ctrl+]"], "command": "indent" },
+	{ "keys": ["shift+tab"], "command": "unindent" },
+	{ "keys": ["ctrl+h"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
+	{ "keys": ["ctrl+r"], "command": "show_panel", "args": {"panel": "replace", "reverse": false} },
+]
