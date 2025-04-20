@@ -9,7 +9,6 @@ require("cmp_buffer")
 -- require("cmp_nvim_ultisnips")
 
 cmp.setup {
-
   mapping = cmp.mapping.preset.insert {
     ["<Tab>"] = function(fallback)
       if cmp.visible() then
