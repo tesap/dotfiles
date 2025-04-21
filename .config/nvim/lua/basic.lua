@@ -15,6 +15,8 @@ opt.fixeol = true
 opt.termguicolors = true
 
 vim.cmd [[set nu]]
+vim.cmd [[set undofile]]
+vim.cmd [[set noswapfile]]
 
 -- vim.cmd [[map <C-_> :Commentary<CR>]]
 
@@ -35,6 +37,26 @@ map("n", "H", "<cmd>bprev<cr>", { desc = "Previous tab" })
 
 map("n", "<C-/>", function() Snacks.terminal(nil, { cwd = "" }) end, { desc = "Terminal (Root Dir)" })
 map("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
+-- map("t", "<C-S-/>", "<Esc><Esc><C-w>T", { desc = "Maximize Terminal" })
+
+
+-- ################################################################################
+-- # -----------------------------      TYPST      ------------------------------ #
+-- ################################################################################
+
+map(
+    "n",
+    "<leader>tc", 
+    function() 
+	pwd = vim.loop.cwd()
+	file_path = string.gsub(vim.api.nvim_buf_get_name(0), pwd.."/", '')
+	shell_exec = "/bin/typst compile --root "..pwd.." "..file_path
+	vimscript_exec = "call system('"..shell_exec.."')"
+	
+	vim.cmd(vimscript_exec)
+    end, 
+    { desc = "Compile current file" }
+)
 
 
 -- ################################################################################
@@ -45,6 +67,9 @@ map("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "Fzf: dir files" })
 map("n", "<leader>fo", "<cmd>FzfLua oldfiles<cr>", { desc = "Fzf: recent files" })
 map("n", "<leader>fg", "<cmd>FzfLua live_grep<cr>", { desc = "Fzf: grep" })
 map("n", "<leader>fb", "<cmd>FzfLua buffers<cr>", { desc = "Fzf: buffers" })
+
+map("n", "<leader>fv", "<cmd>FzfLua grep_visual<cr>", { desc = "Fzf: selection" })
+map("v", "<leader>fv", "<cmd>FzfLua grep_visual<cr>", { desc = "Fzf: selection" })
 
 -- ################################################################################
 -- # ---------------------------      NERD TREE      ---------------------------- #

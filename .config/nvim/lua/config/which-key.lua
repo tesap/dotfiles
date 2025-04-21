@@ -2,6 +2,7 @@
 require("which-key").setup()
 require("which-key").add({
     { "<leader>f", group = "Fuzzy" },
+    { "<leader>t", group = "Typst" },
     {
 	"<leader>b",
 	group = "buffer",

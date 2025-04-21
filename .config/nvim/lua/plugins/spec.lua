@@ -102,4 +102,21 @@ return {
 	  max_join_length = 150
       },
     },
+
+    
+    {
+	"Myriad-Dreamin/tinymist",
+	config = function()
+	    require("config.tinymist")
+	end,
+    },
+
+    {
+	"williamboman/mason.nvim",
+	opts = {
+	    ensure_installed = {
+		"tinymist",
+	    },
+	},
+    }
 }
