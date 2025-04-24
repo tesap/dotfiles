@@ -1,15 +1,17 @@
 
 require("which-key").setup()
 require("which-key").add({
-    { "<leader>f", group = "Fuzzy" },
-    { "<leader>t", group = "Typst" },
-    {
-	"<leader>b",
-	group = "buffer",
-	expand = function()
-	    return require("which-key.extras").expand.buf()
-	end,
-    },
+    { "<leader>f", group = "File" },
+    { "<leader>s", group = "Search" },
+    { "<leader>b", group = "Buffers" },
+ --    {
+	-- "<leader>b",
+	-- group = "buffer",
+	-- expand = function()
+	--     return require("which-key.extras").expand.buf()
+	-- end,
+	-- -- map("n", "<leader>b", "<cmd>FzfLua buffers<cr>", { desc = "[B]uffers" })
+ --    },
     {
 	"<leader>w",
 	group = "windows",

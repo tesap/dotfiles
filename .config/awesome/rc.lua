@@ -182,6 +182,8 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+-- mytextclock.forced_height = 10
+mytextclock.font = "Sans 13"
 
 screen.connect_signal("request::desktop_decoration", function(s)
     -- Each screen has its own tag table.

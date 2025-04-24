@@ -74,6 +74,7 @@ return {
     {
 	"ibhagwan/fzf-lua",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
+	pin = true,
 	lazy = true,
 	cmd = { "FzfLua" },
 	opts = {}
@@ -104,6 +105,12 @@ return {
     },
 
     
+    {
+	'chomosuke/typst-preview.nvim',
+	ft = 'typst',
+	version = '1.*',
+	opts = {},
+    },
     {
 	"Myriad-Dreamin/tinymist",
 	config = function()
