@@ -8,6 +8,21 @@ require("cmp_buffer")
 -- require("cmp_omni")
 -- require("cmp_nvim_ultisnips")
 
+local function lsp_filter(type)
+    return cmp.mapping.complete({
+        config = {
+            sources = {
+                {
+                    name = 'nvim_lsp',
+                    entry_filter = function(entry)
+                        return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] == type
+                    end
+                }
+            }
+        }
+    })
+end
+
 cmp.setup {
   mapping = cmp.mapping.preset.insert {
     ["<Tab>"] = function(fallback)
@@ -25,17 +40,20 @@ cmp.setup {
       end
     end,
     -- ["<CR>"] = cmp.mapping.confirm { select = true },
-    ["<C-e>"] = cmp.mapping.abort(),
+    -- ["<C-e>"] = cmp.mapping.abort(),
     ["<Esc>"] = cmp.mapping.close(),
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-  },
+    -- ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ['<C-f>'] = lsp_filter("Field"),
+    ['<C-v>'] = lsp_filter("Variable"),
+    -- ['<C-m>'] = lsp_filter("Method"),
+},
 
   sources = {
-    { name = "nvim_lsp" }, -- For nvim-lsp
-    { name = "ultisnips" }, -- For ultisnips user.
-    { name = "path" }, -- for path completion
-    { name = "buffer", keyword_length = 3 }, -- for buffer word completion
+    { name = "nvim_lsp" },
+    { name = "ultisnips" },
+    { name = "path" },
+    { name = "buffer", keyword_length = 3 },
   },
 
   completion = {

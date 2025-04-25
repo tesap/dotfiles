@@ -53,9 +53,10 @@ map(
         pwd = vim.loop.cwd()
         file_path = string.gsub(vim.api.nvim_buf_get_name(0), pwd.."/", '')
         shell_exec = "/bin/typst compile --root "..pwd.." "..file_path
-        vimscript_exec = "call system('"..shell_exec.."')"
-        
-        vim.cmd(vimscript_exec)
+
+        -- vimscript_exec = "call system('"..shell_exec.."')"
+        -- vim.cmd(vimscript_exec)
+        v = Snacks.terminal(shell_exec, { cwd = "" })
     end, 
     { desc = "Manually [C]ompile" }
 )
