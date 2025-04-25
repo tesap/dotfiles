@@ -4,6 +4,8 @@ require("which-key").add({
     { "<leader>f", group = "File" },
     { "<leader>s", group = "Search" },
     { "<leader>b", group = "Buffers" },
+    { "<leader>l", group = "LSP" },
+    { "<leader>t", group = "Typst" },
  --    {
 	-- "<leader>b",
 	-- group = "buffer",

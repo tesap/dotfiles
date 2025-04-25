@@ -106,24 +106,24 @@ return {
 
     
     {
-	'chomosuke/typst-preview.nvim',
-	ft = 'typst',
-	version = '1.*',
-	opts = {},
+        'chomosuke/typst-preview.nvim',
+        ft = 'typst',
+        version = '1.*',
+        opts = {},
     },
     {
-	"Myriad-Dreamin/tinymist",
-	config = function()
-	    require("config.tinymist")
-	end,
+        "Myriad-Dreamin/tinymist",
+        -- build = {
+        --     "cargo build --release",
+        --     timeout = 3600,
+        -- -- },
+        -- build = function()
+        --     -- vim.cmd [[cargo build --release]]
+        --     os.execute("cargo build --release")
+        -- end,
+	    pin = true,
+        config = function()
+            require("config.tinymist")
+        end,
     },
-
-    {
-	"williamboman/mason.nvim",
-	opts = {
-	    ensure_installed = {
-		"tinymist",
-	    },
-	},
-    }
 }

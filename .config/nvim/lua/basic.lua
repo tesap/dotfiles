@@ -46,33 +46,39 @@ map("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
 -- # -----------------------------      TYPST      ------------------------------ #
 -- ################################################################################
 
--- map(
---     "n",
---     "<leader>tc", 
---     function() 
--- 	pwd = vim.loop.cwd()
--- 	file_path = string.gsub(vim.api.nvim_buf_get_name(0), pwd.."/", '')
--- 	shell_exec = "/bin/typst compile --root "..pwd.." "..file_path
--- 	vimscript_exec = "call system('"..shell_exec.."')"
--- 	
--- 	vim.cmd(vimscript_exec)
---     end, 
---     { desc = "Compile current file" }
--- )
---
+map(
+    "n",
+    "<leader>tc", 
+    function() 
+        pwd = vim.loop.cwd()
+        file_path = string.gsub(vim.api.nvim_buf_get_name(0), pwd.."/", '')
+        shell_exec = "/bin/typst compile --root "..pwd.." "..file_path
+        vimscript_exec = "call system('"..shell_exec.."')"
+        
+        vim.cmd(vimscript_exec)
+    end, 
+    { desc = "Manually [C]ompile" }
+)
+
 
 -- ################################################################################
 -- # ----------------------------      FZF-LUA      ----------------------------- #
 -- ################################################################################
 
+-- Files
 map("n", "<leader>b", "<cmd>FzfLua buffers<cr>", { desc = "[B]uffers" })
 map("n", "<leader>fd", "<cmd>FzfLua files<cr>", { desc = "Find [F]ile in ([D]ir)" })
 map("n", "<leader>fr", "<cmd>FzfLua oldfiles<cr>", { desc = "Find [F]ile in ([R]ecent Global)" })
 
+-- Search
 map("n", "<leader>so", "<cmd>FzfLua lines<cr>", { desc = "[S]earch in [O]pen files (Buffers)" })
 map("n", "<leader>sg", "<cmd>FzfLua live_grep<cr>", { desc = "[G]rep (Dir)" })
 map("n", "<leader>sv", "<cmd>FzfLua grep_visual<cr>", { desc = "[S]earch selection (Dir)" })
 map("v", "<leader>sv", "<cmd>FzfLua grep_visual<cr>", { desc = "[S]earch selection (Dir)" })
+
+-- LSP
+map("n", "<leader>ld", "<cmd>FzfLua lsp_workspace_diagnostics<cr>", { desc = "[L]SP [D]iagnostics" })
+map("n", "<leader>ls", "<cmd>FzfLua lsp_document_symbols<cr>", { desc = "[L]SP [S]ymbols (Document)" })
 
 -- ################################################################################
 -- # ---------------------------      NERD TREE      ---------------------------- #
