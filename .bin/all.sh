@@ -9,16 +9,25 @@ trap "echo '==== Script interrupted by user ==='; exit 1" SIGINT
 
 # 5.2.0
 # BUILD_TARGET="Aurora-aarch64-5.2.0.835"
-BUILD_TARGET="Aurora-armv7hl-5.2.0.580"
-# BUILD_TARGET="Aurora-x86_64-5.2.0.794"
+# BUILD_TARGET="Aurora-armv7hl-5.2.0.580"
+# --BUILD_TARGET="Aurora-x86_64-5.2.0.794"
 # BUILD_TARGET="Aurora_Target_armv7hl_5.2.0_35"
 # BUILD_TARGET="Aurora_Target_x86_64_5.1.0_431"
+
+# BUILD_TARGET="Aurora-armv7hl-5.1.6.120"
+# BUILD_TARGET="Aurora-armv7hl-4.0.2.1023"
+# BUILD_TARGET="Aurora-armv7hl-5.2.0.1531"
+BUILD_TARGET="Aurora-armv7hl-5.3.0.87"
+# BUILD_TARGET="Aurora-aarch64-5.2.0.1852"
+# BUILD_TARGET="Aurora-aarch64-5.1.6.120"
+# BUILD_TARGET="Aurora-x86_64-5.2.0.196"
 
 # 5.1.0
 # BUILD_TARGET="Aurora_Target_5.1.0_284"
 
 # === SSH ===
 SSH_TARGET=aurora-device
+# SSH_TARGET="defaultuser@192.168.111.193"
 # SSH_TARGET=defaultuser@10.185.68.164
 # === SSH ===
 
@@ -122,12 +131,15 @@ echo "============================"
 # --- Patch ---
 if $PATCH; then
 	echo "=========== PATCH ==========="
+    if [[ $PROJECT_NAME == systemd* ]]; then
+        EXTRA_ARGS="-s rpm/systemd.spec"
+    fi
 
-	exec_aurora_cmd mb2 -t $BUILD_TARGET build-init || {
+	exec_aurora_cmd mb2 -t $BUILD_TARGET $EXTRA_ARGS build-init || {
 		echo "--- BUILD_INIT ERROR ---"
 		exit 1
 	}
-	exec_aurora_cmd mb2 -t $BUILD_TARGET prepare || {
+	exec_aurora_cmd mb2 -t $BUILD_TARGET $EXTRA_ARGS prepare || {
 		echo "--- PREPARE ERROR ---"
 		exit 1
 	}
@@ -147,8 +159,31 @@ fi
 if $BUILD; then
 	echo "=========== BUILD ==========="
 	if [[ $PROJECT_NAME == qtlocation* ]]; then
-		# exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/qtlocation-plugin-position-geoclue.spec build || {
-		exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/qtlocation.spec build || {
+		# exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/qtlocation.spec build || {
+		# exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/qtlocation-plugin-position-fused.spec build || {
+		exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/qtlocation-plugin-position-geoclue.spec build || {
+			echo "--- BUILD ERROR ---"
+			exit 1
+		}
+    elif [[ $PROJECT_NAME == geoclue-provider-yandex* ]]; then
+		exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/geoclue-provider-yandex.spec build || {
+			echo "--- BUILD ERROR ---"
+			exit 1
+		}
+    elif [[ $PROJECT_NAME == geoclue-provider-2gis* ]]; then
+		exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/geoclue-provider-2gis.spec build || {
+			echo "--- BUILD ERROR ---"
+			exit 1
+		}
+    elif [[ $PROJECT_NAME == geoclue-providers-hybris* ]]; then
+		# exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/geoclue-provider-gpsd3.spec build || {
+		exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/geoclue-providers-hybris-binder.spec build || {
+			echo "--- BUILD ERROR ---"
+			exit 1
+		}
+    elif [[ $PROJECT_NAME == systemd* ]]; then
+		# exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/geoclue-provider-gpsd3.spec build || {
+		exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/systemd.spec build || {
 			echo "--- BUILD ERROR ---"
 			exit 1
 		}
@@ -165,7 +200,9 @@ if $SIGN; then
 	echo "=========== SIGN ==========="
 
 	exec_aurora_cmd rpmsign-external sign --key $PEM_PATH/system-developer-key.pem --cert $PEM_PATH/system-developer-cert.pem $RPMS_PATH/*.rpm
-	exec_aurora_cmd rpmsign-external sign --key $PEM_PATH/developer-regular-key.pem --cert $PEM_PATH/developer-regular-cert.pem $RPMS_PATH/*.rpm
+	# exec_aurora_cmd rpmsign-external sign --key $PEM_PATH/developer-auth-key.pem --cert $PEM_PATH/developer-auth-cert.pem $RPMS_PATH/*.rpm
+	# exec_aurora_cmd rpmsign-external sign --key $PEM_PATH/developer-regular-key.pem --cert $PEM_PATH/developer-regular-cert.pem $RPMS_PATH/*.rpm
+	# exec_aurora_cmd rpmsign-external sign --key $PEM_PATH/developer-mdm-key.pem --cert $PEM_PATH/developer-mdm-cert.pem $RPMS_PATH/*.rpm
 
 	# PEM_PATH="$HOME/AuroraOS/package-signing"
 	# $AURORA_PSDK rpmsign-external sign --key $PEM_PATH/regular_key.pem --cert $PEM_PATH/regular_cert.pem $RPMS_PATH/*.rpm
@@ -177,6 +214,7 @@ fi
 # --- Push ---
 if $PUSH; then
 	echo "=========== PUSH ==========="
+    ls $RPMS_PATH || exit 1
 	exec_cmd ssh-copy-id $SSH_TARGET
 	exec_ssh_cmd rm -r $DEVICE_RPMS_PATH
 	exec_cmd rsync -rav $RPMS_PATH $SSH_TARGET:

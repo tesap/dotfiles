@@ -1,10 +1,5 @@
 [user]
-	name = tsepanx
-	email = 77626319+tsepanx@users.noreply.github.com
+	name = Stepan Tsepa
+	email = s.tsepa@omp.ru
 [core]
 	quotepath = false
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true

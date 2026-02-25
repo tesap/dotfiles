@@ -2,19 +2,30 @@
 
 export CPATH="$(clang -v 2>&1 | grep "Selected GCC installation" | rev | cut -d' ' -f1 | rev)/include"
 
+export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib64:/usr/local/lib
+# export PATH="/home/void/pdfium/manual-build/depot_tools:$PATH"
+
+alias unsleep="sudo systemctl mask sleep.target suspend.target"
+alias resleep="sudo systemctl unmask sleep.target suspend.target"
+
+alias docker-rm-full="docker image rm --force $(docker images -aq); docker container rm $(docker container ps -aq)"
+alias telegram-desktop=Telegram
+
 ### OMP (Aurora
 
-alias aurora_psdk=$PLATFORM_SDK_ROOT/sdks/sfossdk/mer-sdk-chroot
+alias aurora_psdk="TERM=vt100 $PLATFORM_SDK_ROOT/sdks/sfossdk/mer-sdk-chroot"
+alias push.sh="all.sh -s -p -i -P"
 
 ###
 
+alias hosts="dont do it"
 alias gcc="gcc -Wall"
 
 alias mm="neomutt"
 # alias python="ipython"
 
 alias mv="mv -i"
-alias cp="cp -i" 
+alias cp="cp -i"
 alias rm="rm -v"
 
 alias paste-copied-png="xclip -se c -o -t image/png > screenshot.png"
@@ -123,7 +134,6 @@ alias eb="$EDITOR $HOME/.bashrc"
 alias eab="$EDITOR $HOME/.alias_bash"
 alias ev="$EDITOR $HOME/.vimrc"
 
-
 ################################################################################
 # ------------------------------      GIT      ------------------------------- #
 ################################################################################
@@ -152,13 +162,13 @@ alias g-ssh="git remote add origin git@git.nand.tk:st/$1.git"
 ################################################################################
 
 if [ -f /bin/pacman ]; then
-    alias ys="yay -Syu"
-    alias yn="yay -S --noconfirm"
+	alias ys="yay -Syu"
+	alias yn="yay -S --noconfirm"
 
-    alias pacman-clean="sudo pacman -Scc --noconfirm"
+	alias pacman-clean="sudo pacman -Scc --noconfirm"
 
 elif [ -f /bin/xpbs-install ]; then
-    alias ys="sudo xbps-install -Suy"
+	alias ys="sudo xbps-install -Suy"
 fi
 
 # ------------

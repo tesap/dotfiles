@@ -2,7 +2,7 @@
 # ~/.bashrc
 #
 
-export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$PATH":"$HOME/.pub-cache/bin":"$HOME/.local/bin"
 export PLATFORM_SDK_ROOT=$HOME/PlatformSDK
 
 # If not running interactively, don't do anything
