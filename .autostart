@@ -4,6 +4,7 @@
 
 udiskie &
 dunst &
+xbindkeys &
 
 setxkbmap -layout us,ru -option 'grp:shifts_toggle' &
 $HOME/.fehbg

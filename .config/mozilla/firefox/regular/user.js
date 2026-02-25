@@ -1081,8 +1081,8 @@ user_pref("_user.js.parrot", "7000 syntax error: the parrot's pushing up daisies
  * Location-Aware Browsing, Full Screen
  * [WHY] The API state is easily fingerprintable.
  * Geo is behind a prompt (7002). Full screen requires user interaction ***/
-   // user_pref("geo.enabled", false);
-   // user_pref("full-screen-api.enabled", false);
+   user_pref("geo.enabled", false);
+   user_pref("full-screen-api.enabled", false);
 /* 7002: set default permissions
  * Location, Camera, Microphone, Notifications [FF58+] Virtual Reality [FF73+]
  * 0=always ask (default), 1=allow, 2=block
@@ -1090,22 +1090,22 @@ user_pref("_user.js.parrot", "7000 syntax error: the parrot's pushing up daisies
  * exceptions as allow/block for frequently visited/annoying sites: i.e. not global
  * [SETTING] to add site exceptions: Ctrl+I>Permissions>
  * [SETTING] to manage site exceptions: Options>Privacy & Security>Permissions>Settings ***/
-   // user_pref("permissions.default.geo", 0);
+   user_pref("permissions.default.geo", 0);
    // user_pref("permissions.default.camera", 0);
    // user_pref("permissions.default.microphone", 0);
-   // user_pref("permissions.default.desktop-notification", 0);
-   // user_pref("permissions.default.xr", 0); // Virtual Reality
+   user_pref("permissions.default.desktop-notification", 0);
+   user_pref("permissions.default.xr", 0); // Virtual Reality
 /* 7003: disable non-modern cipher suites [1]
  * [WHY] Passive fingerprinting. Minimal/non-existent threat of downgrade attacks
  * [1] https://browserleaks.com/ssl ***/
-   // user_pref("security.ssl3.ecdhe_ecdsa_aes_128_sha", false);
-   // user_pref("security.ssl3.ecdhe_ecdsa_aes_256_sha", false);
-   // user_pref("security.ssl3.ecdhe_rsa_aes_128_sha", false);
-   // user_pref("security.ssl3.ecdhe_rsa_aes_256_sha", false);
-   // user_pref("security.ssl3.rsa_aes_128_gcm_sha256", false); // no PFS
-   // user_pref("security.ssl3.rsa_aes_256_gcm_sha384", false); // no PFS
-   // user_pref("security.ssl3.rsa_aes_128_sha", false); // no PFS
-   // user_pref("security.ssl3.rsa_aes_256_sha", false); // no PFS
+   user_pref("security.ssl3.ecdhe_ecdsa_aes_128_sha", false);
+   user_pref("security.ssl3.ecdhe_ecdsa_aes_256_sha", false);
+   user_pref("security.ssl3.ecdhe_rsa_aes_128_sha", false);
+   user_pref("security.ssl3.ecdhe_rsa_aes_256_sha", false);
+   user_pref("security.ssl3.rsa_aes_128_gcm_sha256", false); // no PFS
+   user_pref("security.ssl3.rsa_aes_256_gcm_sha384", false); // no PFS
+   user_pref("security.ssl3.rsa_aes_128_sha", false); // no PFS
+   user_pref("security.ssl3.rsa_aes_256_sha", false); // no PFS
 /* 7004: control TLS versions
  * [WHY] Passive fingerprinting and security ***/
    // user_pref("security.tls.version.min", 3); // [DEFAULT: 3]
@@ -1128,17 +1128,17 @@ user_pref("_user.js.parrot", "7000 syntax error: the parrot's pushing up daisies
    // user_pref("network.http.altsvc.enabled", false);
 /* 7011: disable website control over browser right-click context menu
  * [WHY] Just use Shift-Right-Click ***/
-   // user_pref("dom.event.contextmenu.enabled", false);
+   user_pref("dom.event.contextmenu.enabled", false);
 /* 7012: disable icon fonts (glyphs) and local fallback rendering
  * [WHY] Breakage, font fallback is equivalency, also RFP
  * [1] https://bugzilla.mozilla.org/789788
  * [2] https://gitlab.torproject.org/legacy/trac/-/issues/8455 ***/
-   // user_pref("gfx.downloadable_fonts.enabled", false); // [FF41+]
-   // user_pref("gfx.downloadable_fonts.fallback_delay", -1);
+   user_pref("gfx.downloadable_fonts.enabled", false); // [FF41+]
+   user_pref("gfx.downloadable_fonts.fallback_delay", -1);
 /* 7013: disable Clipboard API
  * [WHY] Fingerprintable. Breakage. Cut/copy/paste require user
  * interaction, and paste is limited to focused editable fields ***/
-   // user_pref("dom.event.clipboardevents.enabled", false);
+   user_pref("dom.event.clipboardevents.enabled", false);
 /* 7014: disable System Add-on updates
  * [WHY] It can compromise security. System addons ship with prefs, use those ***/
    // user_pref("extensions.systemAddon.update.enabled", false); // [FF62+]
@@ -1163,16 +1163,16 @@ user_pref("_user.js.parrot", "7000 syntax error: the parrot's pushing up daisies
    // user_pref("privacy.trackingprotection.fingerprinting.enabled", true); // [DEFAULT: true]
 /* 7017: disable service workers
  * [WHY] Already isolated with TCP (2701) behind a pref ***/
-   // user_pref("dom.serviceWorkers.enabled", false);
+   user_pref("dom.serviceWorkers.enabled", false);
 /* 7018: disable Web Notifications [FF22+]
  * [WHY] Web Notifications are behind a prompt (7002)
  * [1] https://blog.mozilla.org/en/products/firefox/block-notification-requests/ ***/
-   // user_pref("dom.webnotifications.enabled", false);
+   user_pref("dom.webnotifications.enabled", false);
 /* 7019: disable Push Notifications [FF44+]
  * [WHY] Website "push" requires subscription, and the API is required for CRLite (1224)
  * [NOTE] To remove all subscriptions, reset "dom.push.userAgentID"
  * [1] https://support.mozilla.org/kb/push-notifications-firefox ***/
-   // user_pref("dom.push.enabled", false);
+   user_pref("dom.push.enabled", false);
 /* 7020: disable WebRTC (Web Real-Time Communication)
  * [WHY] Firefox desktop uses mDNS hostname obfuscation and the private IP is never exposed until
  * required in TRUSTED scenarios; i.e. after you grant device (microphone or camera) access
