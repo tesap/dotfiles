@@ -17,7 +17,8 @@ trap "echo '==== Script interrupted by user ==='; exit 1" SIGINT
 # BUILD_TARGET="Aurora-armv7hl-5.1.6.120"
 # BUILD_TARGET="Aurora-armv7hl-4.0.2.1023"
 # BUILD_TARGET="Aurora-armv7hl-5.2.0.1531"
-BUILD_TARGET="Aurora-armv7hl-5.3.0.87"
+# BUILD_TARGET="5.3.0.499_armv7hl"
+BUILD_TARGET="Aurora-armv7hl-5.2.0.262"
 # BUILD_TARGET="Aurora-aarch64-5.2.0.1852"
 # BUILD_TARGET="Aurora-aarch64-5.1.6.120"
 # BUILD_TARGET="Aurora-x86_64-5.2.0.196"
@@ -26,13 +27,14 @@ BUILD_TARGET="Aurora-armv7hl-5.3.0.87"
 # BUILD_TARGET="Aurora_Target_5.1.0_284"
 
 # === SSH ===
-SSH_TARGET=aurora-device
+# SSH_TARGET=aurora-device
+SSH_TARGET="defaultuser@192.168.2.15"
 # SSH_TARGET="defaultuser@192.168.111.193"
 # SSH_TARGET=defaultuser@10.185.68.164
 # === SSH ===
 
 AURORA_PSDK="$PLATFORM_SDK_ROOT/sdks/sfossdk/mer-sdk-chroot"
-PEM_PATH="$HOME/OMP/other/pem"
+PEM_PATH="$HOME/Aurora/other/pem"
 PROJECT_NAME=$(basename $PWD)
 
 # Flags for execution

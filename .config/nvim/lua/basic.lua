@@ -18,6 +18,11 @@ vim.cmd [[set nu]]
 vim.cmd [[set undofile]]
 vim.cmd [[set noswapfile]]
 
+-- /// Add line continuation indent for bullet lists
+opt.breakindent = true
+opt.breakindentopt = "shift:2"
+-- ///
+
 -- vim.cmd [[map <C-_> :Commentary<CR>]]
 
 -- Preserving selection after shifting lines

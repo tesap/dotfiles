@@ -1,0 +1,45 @@
+[colors.bright]
+black = "0x545961"
+blue = "0x81a1c1"
+cyan = "0x8abeb7"
+green = "0xa7bd7b"
+magenta = "0xb594bb"
+red = "0xcc6464"
+white = "0xc3c5c7"
+yellow = "0xf0cb81"
+
+[colors.normal]
+black = "0x1c1f21"
+blue = "0x81a1c1"
+cyan = "0x8abeb7"
+green = "0xa7bd7b"
+magenta = "0xb594bb"
+red = "0xcc6464"
+white = "0xc3c5c7"
+yellow = "0xf0cb81"
+
+[colors.primary]
+background = "0x0f1112"
+foreground = "0xc1c6c9"
+
+[font]
+size = 20
+
+[font.bold]
+family = "UbuntuMono Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "UbuntuMono Nerd Font"
+style = "Bold Italic"
+
+[font.italic]
+family = "UbuntuMono Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "UbuntuMono Nerd Font"
+style = "Regular"
+
+[env]
+WINIT_X11_SCALE_FACTOR = "1.0"

@@ -2,13 +2,16 @@
 # ~/.bashrc
 #
 
-export PATH="$PATH":"$HOME/.pub-cache/bin":"$HOME/.local/bin"
-export PLATFORM_SDK_ROOT=$HOME/PlatformSDK
+export PATH="$PATH":"$HOME/.pub-cache/bin":"$HOME/.local/bin":"$HOME/.bin"
+export PLATFORM_SDK_ROOT=/home/void/Aurora/psdk
+export PLATFORM_SDK_OPENFORTIVPN_CONF=/home/$USER/.config/PlatformSDK/openfortivpn_config
+
+export TERM=alacritty
+export EDITOR="$(if ! command -v nvim &> /dev/null; then echo 'vim'; else echo 'nvim'; fi)"
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# TERM=alacritty
 # PS1='[\u@\h \W]\$ '
 
 source ~/.alias_bash

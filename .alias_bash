@@ -1,15 +1,18 @@
 #!/usr/bin/bash
 
-export CPATH="$(clang -v 2>&1 | grep "Selected GCC installation" | rev | cut -d' ' -f1 | rev)/include"
-
-export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib64:/usr/local/lib
+# export CPATH="\$(clang -v 2>&1 | grep \"Selected GCC installation\" | rev | cut -d' ' -f1 | rev)/include"
+# export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib64:/usr/local/lib
 # export PATH="/home/void/pdfium/manual-build/depot_tools:$PATH"
+
+alias rsync="rsync --fsync"
+alias sus="systemctl suspend"
+alias lsblk="lsblk --fs"
+export FM="vifm"
 
 alias unsleep="sudo systemctl mask sleep.target suspend.target"
 alias resleep="sudo systemctl unmask sleep.target suspend.target"
 
-alias docker-rm-full="docker image rm --force $(docker images -aq); docker container rm $(docker container ps -aq)"
-alias telegram-desktop=Telegram
+alias docker-rm-full="docker image rm --force \$(docker images -aq); docker container rm \$(docker container ps -aq)"
 
 ### OMP (Aurora
 
@@ -91,7 +94,7 @@ alias se="sudo emacs"
 alias m="ncmpcpp"
 alias h="htop -s PERCENT_CPU"
 alias b="bashtop"
-alias fm="ranger"
+alias fm="$FM ./"
 alias rss="newsboat"
 
 # alias ytv="straw-viewer"

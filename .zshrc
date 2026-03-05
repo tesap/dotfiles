@@ -2,7 +2,6 @@
 #
 PATH=$PATH:$HOME/.bin/bin:$HOME/.applications:$HOME/.cargo/bin
 export PATH="$PATH":"$HOME/.pub-cache/bin"
-export EDITOR="$(if ! command -v nvim &> /dev/null; then echo 'vim'; else echo 'nvim'; fi)"
 export HISTSIZE=1000000
 
 export ZSH="$HOME/.zsh"
@@ -43,6 +42,3 @@ if [ -f '/home/void/yandex-cloud/path.bash.inc' ]; then source '/home/void/yande
 # The next line enables shell command completion for yc.
 if [ -f '/home/void/yandex-cloud/completion.zsh.inc' ]; then source '/home/void/yandex-cloud/completion.zsh.inc'; fi
 
-
-
-. "$HOME/.local/bin/env"

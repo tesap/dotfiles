@@ -40,4 +40,6 @@ nitrogen --restore &
 # $HOME/.config/polybar/launch.sh &
 # $HOME/.bin/lock.sh &
 
-sudo nmcli device modify wlan0 ipv4.dns "127.0.0.1"
+# sudo nmcli device modify wlan0 ipv4.dns "127.0.0.1"
+
+.bin/setup/thinkpad-trackpoint-sensitivity.sh

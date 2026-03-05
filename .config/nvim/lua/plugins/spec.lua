@@ -18,6 +18,9 @@ return {
     },
 
     { "nvim-treesitter/nvim-treesitter", lazy = true },
+    -- { "bullets-vim/bullets.vim", lazy = true },
+    -- { "vim-pandoc/vim-pandoc", lazy = true },
+    -- { "vim-pandoc/vim-pandoc-syntax", lazy = true },
 
     {
 	"hrsh7th/nvim-cmp",
