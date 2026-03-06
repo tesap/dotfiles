@@ -35,15 +35,16 @@ naughty.connect_signal("request::display_error", function(message, startup)
 end)
 -- }}}
 
--- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.init("/home/void/.config/awesome/theme.lua")
-
-
 -- This is used later as the default terminal and editor to run.
+home_dir= os.getenv("HOME") or "/home/void"
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "vi"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
+
+-- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(home_dir .."/.config/awesome/theme.lua")
+
 
 -- }}}
 
@@ -153,24 +154,24 @@ end)
 --                                         rounded_size = 0.3,
 --                                       })
 
-local systray_color_1 = "#4A4A4A"
-beautiful.bg_systray = systray_color_1
-beautiful.systray_icon_spacing = 8
+-- local systray_color_1 = "#4A4A4A"
+-- beautiful.bg_systray = systray_color_1
+-- beautiful.systray_icon_spacing = 8
 
-local my_round_systray = wibox.widget {
-    {
-        wibox.widget.systray(),
-        left   = 10,
-        top    = 2,
-        bottom = 2,
-        right  = 10,
-        widget = wibox.container.margin,
-    },
-    bg         = systray_color_1,
-    shape      = gears.shape.rounded_rect,
-    shape_clip = true,
-    widget     = wibox.container.background,
-}
+-- local my_round_systray = wibox.widget {
+--     {
+--         wibox.widget.systray(),
+--         left   = 10,
+--         top    = 2,
+--         bottom = 2,
+--         right  = 10,
+--         widget = wibox.container.margin,
+--     },
+--     bg         = systray_color_1,
+--     shape      = gears.shape.rounded_rect,
+--     shape_clip = true,
+--     widget     = wibox.container.background,
+-- }
 
 
 
@@ -183,7 +184,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 -- mytextclock.forced_height = 10
-mytextclock.font = "Sans 13"
+-- mytextclock.font = "Sans 17"
 
 screen.connect_signal("request::desktop_decoration", function(s)
     -- Each screen has its own tag table.
@@ -235,9 +236,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
             -- awful.titlebar.widget.stickybutton   (c),
             -- awful.titlebar.widget.ontopbutton    (c),
             -- awful.titlebar.widget.closebutton    (c),
-            -- awful.button({ }, 1, function (c)
-            --     c:activate { context = "tasklist", action = "toggle_minimization" }
-            -- end),
+            awful.button({ }, 1, function (c)
+                c:activate { context = "tasklist", action = "toggle_minimization" }
+            end),
             -- awful.button({ }, 3, function() awful.menu.client_list { theme = { width = 250 } } end),
             -- awful.button({ }, 4, function() awful.client.focus.byidx(-1) end),
             -- awful.button({ }, 5, function() awful.client.focus.byidx( 1) end),
@@ -249,6 +250,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         position = "top",
         screen   = s,
 	visible  = false,
+	height 	 = 36,
         widget   = {
             layout = wibox.layout.align.horizontal,
             { -- Left widgets
@@ -262,8 +264,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 layout = wibox.layout.fixed.horizontal,
                 mykeyboardlayout,
                 -- wibox.widget.systray(),
-                my_round_systray,
-                netwidget,
+                -- my_round_systray,
+                -- netwidget,
                 mytextclock,
                 s.mylayoutbox,
             },
@@ -331,7 +333,7 @@ awful.keyboard.append_global_keybindings({
     --           {description = "run prompt", group = "launcher"}),
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
-    awful.key({ modkey, "Shift" }, "p", function() awful.spawn("dmenu-recent-aliases") end,
+    awful.key({ modkey, "Shift" }, "p", function() awful.spawn(home_dir .. "/.scripts/dmenu-run.sh") end,
               {description = "Run dmenu", group = "launcher"}),
 })
 

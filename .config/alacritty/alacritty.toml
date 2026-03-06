@@ -23,7 +23,7 @@ background = "0x0f1112"
 foreground = "0xc1c6c9"
 
 [font]
-size = 20
+size = 19
 
 [font.bold]
 family = "UbuntuMono Nerd Font"

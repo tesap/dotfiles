@@ -13,10 +13,10 @@ picom --config ~/.config/picom/config &
 parcellite &
 # redshiftgui --min &
 # redshift-gtk &
-nm-applet &
-pasystray &
-cbatticon &
-blueman-applet &
+# nm-applet &
+# pasystray &
+# cbatticon &
+# blueman-applet &
 
 # mpd --no-daemon -v --stderr &
 # mpc pause &
@@ -42,4 +42,4 @@ nitrogen --restore &
 
 # sudo nmcli device modify wlan0 ipv4.dns "127.0.0.1"
 
-.bin/setup/thinkpad-trackpoint-sensitivity.sh
+~/.scripts/setup/t480-input-setup.sh

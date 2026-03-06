@@ -7,12 +7,15 @@ local xresources = require("beautiful.xresources")
 local rnotification = require("ruled.notification")
 local dpi = xresources.apply_dpi
 
+local gears = require("gears")
+local gears_surface = require("gears.surface")
+local gears_shape = require("gears.shape")
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "sans 12"
+theme.font          = "sans 16"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
@@ -45,12 +48,21 @@ theme.border_color_marked = "#91231c"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
+local taglist_square_size = 36
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
 )
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
+-- theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
+--     taglist_square_size, theme.fg_normal
+-- )
+
+local sq_size = 8
+theme.taglist_squares_unsel = gears_surface.load_from_shape(
+    sq_size, sq_size, function(cr, w, h)
+        gears_shape.rectangle(cr, w, h)
+        cr:set_line_width(2) -- Толщина линий вашей "O"
+        cr:stroke()
+    end, theme.fg_normal
 )
 
 -- Variables set for theming notifications:

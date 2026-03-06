@@ -50,23 +50,26 @@
 "xterm"
   control + b:2
 
-"pulseaudio-ctl mute"
+"~/.scripts/keys/audio-mute.sh"
   XF86AudioMute
 
-"pulseaudio-ctl mute-input"
+"~/.scripts/keys/mic-mute.sh"
   XF86AudioMicMute
 
-"pulseaudio-ctl down 10"
+"~/.scripts/keys/volume-down.sh"
   XF86AudioLowerVolume
 
-"pulseaudio-ctl up 10"
+"~/.scripts/keys/volume-up.sh"
   XF86AudioRaiseVolume
 
-"xbacklight -dec 10"
+"~/.scripts/keys/light-down.sh"
   XF86MonBrightnessDown
 
-"xbacklight -inc 10"
+"~/.scripts/keys/light-up.sh"
   XF86MonBrightnessUp
+
+"xdotool key Delete"
+  Insert
 
 #"xterm -geom 50x20+20+20"
 #   Shift+Mod2+alt + s

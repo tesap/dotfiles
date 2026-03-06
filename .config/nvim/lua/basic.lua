@@ -20,8 +20,20 @@ vim.cmd [[set noswapfile]]
 
 -- /// Add line continuation indent for bullet lists
 opt.breakindent = true
-opt.breakindentopt = "shift:2"
+vim.opt.breakindentopt = { 'list:2', 'sbr', 'min:40' }
+-- // proper breaks at EOL
+vim.opt.breakat = ' \t;:,!?'
+opt.linebreak = true
 -- ///
+
+-- /// Formatting for proper line continuation in bullet lists
+vim.opt.formatoptions = 'tcqn'
+-- vim.opt.textwidth = 100
+vim.g.autoformat = false
+-- vim.opt.formatprg = 'fmt'
+-- vim.opt.formatlistpat = [[^\s*[\d\+\-\*]\+[\.\)]*\s\+]]
+-- ///
+
 
 -- vim.cmd [[map <C-_> :Commentary<CR>]]
 

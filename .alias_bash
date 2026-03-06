@@ -4,8 +4,8 @@
 # export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib64:/usr/local/lib
 # export PATH="/home/void/pdfium/manual-build/depot_tools:$PATH"
 
+alias rofi_dmenu="rofi -dmenu -font 'Noto Sans 20'"
 alias rsync="rsync --fsync"
-alias sus="systemctl suspend"
 alias lsblk="lsblk --fs"
 export FM="vifm"
 
