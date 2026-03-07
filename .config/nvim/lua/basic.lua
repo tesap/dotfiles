@@ -2,6 +2,7 @@ local opt = vim.opt
 local g = vim.g
 local map = vim.keymap.set 
 
+vim.opt.clipboard = "unnamedplus"
 opt.ignorecase = true
 opt.smartcase = true
 
@@ -34,6 +35,10 @@ vim.g.autoformat = false
 -- vim.opt.formatlistpat = [[^\s*[\d\+\-\*]\+[\.\)]*\s\+]]
 -- ///
 
+-- /// Set title to editing file
+vim.opt.title = true
+vim.opt.titlestring = [[nvim %{expand("%:p")}]]
+-- ///
 
 -- vim.cmd [[map <C-_> :Commentary<CR>]]
 

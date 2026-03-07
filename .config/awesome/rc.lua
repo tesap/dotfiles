@@ -11,7 +11,7 @@ local wibox     = require("wibox")
 local beautiful = require("beautiful")
 local naughty   = require("naughty")
 local ruled     = require("ruled")
-local menubar   = require("menubar")
+-- local menubar   = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
@@ -45,6 +45,19 @@ modkey = "Mod4"
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 beautiful.init(home_dir .."/.config/awesome/theme.lua")
 
+-- Does not work
+-- beautiful.gap_single_client   = false
+-- Remove window borders when layout is 'max'
+screen.connect_signal("arrange", function(s)
+    local t = s.selected_tag
+    for _, c in ipairs(t:clients()) do
+	if t.layout == awful.layout.suit.max then
+	    c.border_width = 0
+	else 
+	    c.border_width = beautiful.border_width
+	end
+    end
+end)
 
 -- }}}
 
@@ -77,7 +90,7 @@ beautiful.init(home_dir .."/.config/awesome/theme.lua")
 --                                      menu = mymainmenu })
 
 -- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
+-- menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
 -- {{{ Tag layout
@@ -298,11 +311,11 @@ end)
 
 
 -- {{{ Mouse bindings
-awful.mouse.append_global_mousebindings({
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    -- awful.button({ }, 4, awful.tag.viewprev),
-    -- awful.button({ }, 5, awful.tag.viewnext),
-})
+-- awful.mouse.append_global_mousebindings({
+--     awful.button({ }, 3, function () mymainmenu:toggle() end),
+--     awful.button({ }, 4, awful.tag.viewprev),
+--     awful.button({ }, 5, awful.tag.viewnext),
+-- })
 -- }}}
 
 -- {{{ Key bindings
@@ -311,8 +324,8 @@ awful.mouse.append_global_mousebindings({
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
+    -- awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
+              -- {description = "show main menu", group = "awesome"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
@@ -329,12 +342,16 @@ awful.keyboard.append_global_keybindings({
     --           {description = "lua execute prompt", group = "awesome"}),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey, "Shift"   }, "Return", function () awful.spawn(home_dir .. "/.scripts/dmenu-run-terminal.sh") end,
+              {description = "open a terminal (in selected dir)", group = "launcher"}),
     -- awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
     --           {description = "run prompt", group = "launcher"}),
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"}),
-    awful.key({ modkey, "Shift" }, "p", function() awful.spawn(home_dir .. "/.scripts/dmenu-run.sh") end,
-              {description = "Run dmenu", group = "launcher"}),
+    awful.key({ modkey }, "w", function() awful.spawn("rofi -show window") end,
+              {description = "Run rofi -window", group = "launcher"}),
+    awful.key({ modkey }, "p", function() awful.spawn("rofi -show drun") end,
+              {description = "Run rofi -drun", group = "launcher"}),
+    awful.key({ modkey, "Shift" }, "p", function() awful.spawn(home_dir .. "/.scripts/dmenu-run-script.sh") end,
+              {description = "Run my dmenu-run-script.sh", group = "launcher"}),
 })
 
 -- Tags related keybindings

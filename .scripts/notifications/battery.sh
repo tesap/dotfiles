@@ -20,7 +20,7 @@ ICON_CHARGING="/usr/share/icons/buuf-nestort/status/battery-charging.png"
 
 upower_stats=$(upower -i /org/freedesktop/UPower/devices/DisplayDevice)
 
-battery=$(echo "$upower_stats" | /bin/grep percentage | awk '{ print $2 }' | awk -F. '{ print $1 }')
+battery=$(echo "$upower_stats" | /bin/grep percentage | awk '{ print $2 }' | awk -F. '{ print $1 }' | awk -F% '{ print $1 }')
 state=$(echo "$upower_stats" | /bin/grep state | awk '{ print $2 }')
 time=$(echo "$upower_stats" | /bin/grep "time to" | awk '{$1=$2=$3=""; gsub(/^[ \t]*/, ""); print $0 }')
 
@@ -29,15 +29,15 @@ if [[ $state == "charging" ]]; then
     icon=$ICON_CHARGING
 else
     state='-'
-    if [[ $battery -ge 98 ]]; then
+    if [[ $battery -ge 90 ]]; then
 	icon=$ICON_DISCHARGING_100
-    elif [[ $battery -ge 80 ]]; then
+    elif [[ $battery -ge 70 ]]; then
 	icon=$ICON_DISCHARGING_80
-    elif [[ $battery -ge 60 ]]; then
+    elif [[ $battery -ge 50 ]]; then
 	icon=$ICON_DISCHARGING_60
-    elif [[ $battery -ge 40 ]]; then
+    elif [[ $battery -ge 30 ]]; then
 	icon=$ICON_DISCHARGING_40
-    elif [[ $battery -ge 20 ]]; then
+    elif [[ $battery -ge 10 ]]; then
 	icon=$ICON_DISCHARGING_20
     elif [[ $battery -le 5 ]]; then
 	icon=$ICON_DISCHARGING_CRIT

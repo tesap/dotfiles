@@ -14,16 +14,25 @@ ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 
 # ZSH_THEME="af-magic"
 ZSH_THEME="robbyrussell"
-
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
-
 source $ZSH/oh-my-zsh.sh
 
-export QSYS_ROOTDIR="/home/void/.cache/yay/quartus-free/pkg/quartus-free-quartus/opt/intelFPGA/21.1/quartus/sopc_builder/bin"
-# [ -f "/home/void/.ghcup/env" ] && source "/home/void/.ghcup/env" # ghcup-env
+# /// Setup title
+DISABLE_AUTO_TITLE="true"
+autoload -Uz add-zsh-hook
+lastcmd=""
 
-## [Completion] 
-## Completion scripts setup. Remove the following line to uninstall
-[[ -f /home/void/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/void/.config/.dart-cli-completion/zsh-config.zsh || true
-## [/Completion]
+function set_title() {
+    source ~/.scripts/bin/set-title-zsh.sh "($(pwd)) $lastcmd"
+}
+function preexec() {
+    lastcmd=$1
+    set_title
+}
+function precmd() {
+    set_title
+}
+add-zsh-hook -Uz preexec preexec
+add-zsh-hook -Uz precmd precmd
+# ///
 

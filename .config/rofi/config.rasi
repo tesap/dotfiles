@@ -1,2 +1,6 @@
+configuration {
+    modes: "window,drun,run,filebrowser";
+    font: "Noto Sans 20";
+}
 
 @theme "/usr/share/rofi/themes/gruvbox-dark-hard.rasi"
