@@ -44,7 +44,11 @@ else
     fi
 fi
 
-text="$battery$state ($time)"
+if [[ -n $time ]]; then
+    text="$battery$state ($time)"
+else
+    text="$battery$state"
+fi
 
 dunstify \
     -u low \

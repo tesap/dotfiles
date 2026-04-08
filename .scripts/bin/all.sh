@@ -17,14 +17,17 @@ trap "echo '==== Script interrupted by user ==='; exit 1" SIGINT
 # BUILD_TARGET="Aurora-armv7hl-5.1.6.120"
 # BUILD_TARGET="Aurora-armv7hl-4.0.2.1023"
 # BUILD_TARGET="Aurora-armv7hl-5.2.0.1531"
-# BUILD_TARGET="5.3.0.499_armv7hl"
-BUILD_TARGET="Aurora-armv7hl-5.2.0.262"
 # BUILD_TARGET="Aurora-aarch64-5.2.0.1852"
 # BUILD_TARGET="Aurora-aarch64-5.1.6.120"
 # BUILD_TARGET="Aurora-x86_64-5.2.0.196"
 
 # 5.1.0
 # BUILD_TARGET="Aurora_Target_5.1.0_284"
+
+# === NEW ===
+# BUILD_TARGET="5.3.0.499_armv7hl"
+# BUILD_TARGET="Aurora-armv7hl-5.2.0.262"
+BUILD_TARGET="Aurora-aarch64-5.2.1.228"
 
 # === SSH ===
 # SSH_TARGET=aurora-device
@@ -167,6 +170,11 @@ if $BUILD; then
 			echo "--- BUILD ERROR ---"
 			exit 1
 		}
+    elif [[ $PROJECT_NAME == streamcamera ]]; then
+		exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/streamcamera.spec build || {
+			echo "--- BUILD ERROR ---"
+			exit 1
+		}
     elif [[ $PROJECT_NAME == geoclue-provider-yandex* ]]; then
 		exec_aurora_cmd mb2 -t $BUILD_TARGET -s rpm/geoclue-provider-yandex.spec build || {
 			echo "--- BUILD ERROR ---"
@@ -219,7 +227,8 @@ if $PUSH; then
     ls $RPMS_PATH || exit 1
 	exec_cmd ssh-copy-id $SSH_TARGET
 	exec_ssh_cmd rm -r $DEVICE_RPMS_PATH
-	exec_cmd rsync -rav $RPMS_PATH $SSH_TARGET:
+	# exec_cmd rsync -rav $RPMS_PATH $SSH_TARGET:
+	exec_cmd scp -r $RPMS_PATH $SSH_TARGET:
 fi
 
 # --- Install ---

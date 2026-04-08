@@ -8,11 +8,10 @@ CRITICAL_NOTIFICATION_HOLD=8000
 
 rm -f $ERR_FILE
 
-input_known=$(nmcli connection show | grep wifi | awk '{ print $1 }')
+# input_known=$(nmcli connection show | grep wifi | awk '{ print $1 }')
 nmcli device wifi rescan
 input_scanned=$(nmcli device wifi list | colrm 1 8 | tail -n +2 | grep -v '\-\-' | awk '{ printf "%s %s\n", $1, $2 }')
-
-nmcli_input="$(echo -e "$input_known\n$input_scanned" | $DMENUCMD | awk '{ print $1 }')"
+nmcli_input="$(echo "$input_scanned" | $DMENUCMD | awk '{ print $1 }')"
 if [[ -z $nmcli_input ]]; then
     exit 1
 fi

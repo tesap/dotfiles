@@ -6,15 +6,16 @@
 file=$(echo $1 | cut -d: -f 1) 
 line=$(echo $1 | cut -d: -f 2) 
 
-wsize=2
-l1=$((line - $wsize))
-l2=$((line + $wsize))
+lines_up=2
+lines_down=5
+l1=$((line - $lines_up))
+l2=$((line + $lines_down))
 
 awk -v l1=$l1 \
     -v l2=$l2 \
-    -v wsize=$wsize \
+    -v lines_up=$lines_up \
     'FNR>=l1 && FNR<=l2 {
-        if (NR==l1+wsize)
+        if (NR==l1+lines_up)
             print "\033[31m" $0 "\033[0m";
         else
             print $0 
