@@ -1,74 +1,21 @@
 #!/usr/bin/bash
 
-# export CPATH="\$(clang -v 2>&1 | grep \"Selected GCC installation\" | rev | cut -d' ' -f1 | rev)/include"
-# export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib64:/usr/local/lib
-# export PATH="/home/void/pdfium/manual-build/depot_tools:$PATH"
-
 alias rofi_dmenu="rofi -dmenu -font 'Noto Sans 20'"
 alias rsync="rsync --fsync"
 alias lsblk="lsblk --fs"
-export FM="vifm"
-
-alias unsleep="sudo systemctl mask sleep.target suspend.target"
-alias resleep="sudo systemctl unmask sleep.target suspend.target"
-
-alias docker-rm-full="docker image rm --force \$(docker images -aq); docker container rm \$(docker container ps -aq)"
-
-### OMP (Aurora
-
-alias aurora_psdk="TERM=vt100 $PLATFORM_SDK_ROOT/sdks/sfossdk/mer-sdk-chroot"
-alias push.sh="all.sh -s -p -i -P"
-
-###
-
-alias startx="sudo ls; startx"
-alias gcc="gcc -Wall"
-
-alias mm="neomutt"
-# alias python="ipython"
 
 alias mv="mv -i"
-alias cp="cp -i"
 alias rm="rm -v"
-
-alias paste-copied-png="xclip -se c -o -t image/png > screenshot.png"
-alias scp-wg="scp do:wg0-client-$1.conf /dev/stdout | qrencode -t PNG -o /dev/stdout | feh -"
 
 alias ssh="TERM='vt100' ssh"
 alias reboot="sudo reboot"
-alias binwalk="binwalk -D='.*'"
-alias build-dwm="cd ~/gh/dwm-flexipatch/ && sudo make install && cd ~"
-alias dps="docker ps -as"
 
-# alias g++="g++ -Wall -Weffc++ -Wextra -Wsign-conversion"
 alias mtree="tree --dirsfirst -L 3"
 alias qrencode-utf="qrencode -t ansiutf8"
 alias qrencode-png="cat $1 | qrencode -t PNG -o $2"
 
-alias ympd="ympd -w localhost:1111 -h 0.0.0.0"
-
-# --- Qemu ---
-alias qi="qemu-img"
-alias qc="qi create -f qcow2"
-alias qb="qi rebase -u -f qcow2 -b"
-
 alias xclip="xclip -se c"
 alias xclip-png="xclip -t image/png -o"
-
-# alias genvc='python -c "import random; print(''.join([random.choice('qwertyuiop[]asdfghjkl;zxcvbnm,./1234567890-=') for i in range(320)]))"'
-alias vc="sudo veracrypt -t"
-alias vd="vc -d"
-alias vm="vc -k '' --pim=0 --protect-hidden=no"
-alias vf="vc --auto-mount favorites"
-
-alias archivebox='docker run -v $PWD:/data -it nikisweeting/archivebox'
-alias archivebox-server="docker run -v $PWD:/data -it -p 8000:8000 nikisweeting/archivebox server 0.0.0.0:8000
-open http://127.0.0.1:8000"
-
-alias xss='xss-lock -l ~/.config/i3/transfer-sleep-lock-i3lock.sh -- i3lock-fancy -p &'
-
-alias ufw='sudo ufw'
-alias us='sudo ufw status verbose'
 
 alias mount='sudo mount'
 alias umount='sudo umount'
@@ -77,88 +24,56 @@ alias grep="grep -i --color=always"
 alias grepfiles="grep -nrI --exclude-dir='.venv' --exclude-dir='.git' --exclude-dir='.idea'"
 alias free='free -m'
 alias mkdir="mkdir -p"
-alias tt="trash"
 alias df='df -h'
 alias cal="cal -3 -m"
 alias zip="zip -r"
-alias picom="picom --config ~/.config/picom/config"
 
 alias rdu="sudo ncdu / --exclude /home --exclude /swapfile --exclude /mnt --exclude /media --exclude /run --exclude /proc"
 alias hdu="ncdu $HOME"
 
 alias {v,vi}="$EDITOR"
 alias svi="sudo $EDITOR"
-alias e="emacs"
-alias se="sudo emacs"
 
 alias m="ncmpcpp"
 alias h="htop -s PERCENT_CPU"
-alias b="bashtop"
-alias fm="$FM ./"
-alias rss="newsboat"
 
-# alias ytv="straw-viewer"
-# alias ytx="youtube-dl --extract-audio --audio-format mp3"
-# alias ytdd="youtube-dl --prefer-free-formats"
-alias ytd="yt-dlp --recode-video mp4"
-
-alias ftget="xdg-mime query filetype $1"
-alias mimeget="xdg-mime query default $1"
-alias mimeset="xdg-mime default $1 $2"
-
-alias vga="lspci -k | grep -A 2 -E '(VGA|3D)'"
-alias speed="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
 alias fonts="fc-list | cut -d: -f1 | sort| uniq"
 
 alias gpg-import='gpg --keyserver keys.gnupg.net --recv-keys'
 alias gpg='gpg --keyid-format LONG'
-alias ref="sudo reflector -c "Russia" -c "Belarus" -c "Ukraine" -c "Poland" -f 20 -l 20 -p https -p http -n 20 --save /etc/pacman.d/mirrorlist-arch --sort rate"
-
-alias merge="xrdb -merge $HOME/.Xresources"
 
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
-alias update-mkinitcpio="sudo mkinitcpio -p linux"
 
 ################################################################################
 # -----------------------------      OTHER      ------------------------------ #
 ################################################################################
 
-alias ls='exa -lbg --color=always --group-directories-first'
 alias ll='ls -a'
-alias l1='ls --tree -L 1'
-alias l2='ls --tree -L 2'
 
 alias ..="cd .."
 alias ...="cd ../.."
 
-alias eh="$EDITOR $HOME/hosts/myhosts"
 alias sb="source $HOME/.bashrc"
+alias sz="source $HOME/.zshrc"
 alias eb="$EDITOR $HOME/.bashrc"
 alias eab="$EDITOR $HOME/.alias_bash"
+alias eaz="$EDITOR $HOME/.alias_zsh"
 alias ev="$EDITOR $HOME/.vimrc"
+alias ez="$EDITOR $HOME/.zshrc"
+
 
 ################################################################################
 # ------------------------------      GIT      ------------------------------- #
 ################################################################################
 
 alias author-lines='git log --author="$(git config user.email)" --pretty=tformat: --numstat | awk "{ print $1 }" | python -c "import sys; print(sum(list(map(lambda x: int(x.strip() if x != \"-\" else \"0\"), sys.stdin.readlines()))))"'
-alias config="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 
 alias gs="git status"
 alias gl="git log --stat --graph"
 alias gd="git diff --color"
 alias gad="git add --all"
-# alias gc="git clone"
-alias gr="git restore"
-alias gcm="git commit -m $1"
-# alias gac="gad && gcm"
-alias gac="git add . && git commit -m"
-alias gacc="git add core && git commit -m"
-alias gp="git push -u origin"
+alias gac="git add . && git commit"
 alias gam="git add . && git commit --amend"
-
-alias g-undo="git reset --soft HEAD~"
-alias g-ssh="git remote add origin git@git.nand.tk:st/$1.git"
 
 ################################################################################
 # ------------------------      PACKAGE MANAGERS      ------------------------ #
@@ -174,15 +89,3 @@ elif [ -f /bin/xpbs-install ]; then
 	alias ys="sudo xbps-install -Suy"
 fi
 
-# ------------
-
-alias rve="sudo rm -rvf .venv"
-
-alias ve="virtualenv .venv"
-alias vea="source .venv/bin/activate"
-alias ved="deactivate"
-
-alias pipr="pip install -r requirements.txt"
-alias fr="pip freeze > requirements.txt"
-
-alias vef="rve && ve && vea && pipr"

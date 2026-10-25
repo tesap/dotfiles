@@ -1,38 +1,20 @@
 #!/usr/bin/sh
 
-# source ~/.alias_bash
-# source ~/.vars
-source ~/.alias_zsh
 source ~/.bashrc
 
 export HISTSIZE=1000000
-export ZSH="$HOME/.zsh"
 
 DISABLE_AUTO_UPDATE="true"
-ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
-[[ ! -d $ZSH_CACHE_DIR ]] && mkdir $ZSH_CACHE_DIR
 
-# ZSH_THEME="af-magic"
-ZSH_THEME="robbyrussell"
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
 
-# /// Setup title
-DISABLE_AUTO_TITLE="true"
-autoload -Uz add-zsh-hook
-lastcmd=""
+# WHat ??? TODO
+# autoload -Uz compinit && compinit
 
-function set_title() {
-    source ~/.scripts/bin/set-title-zsh.sh "($(pwd)) $lastcmd"
-}
-function preexec() {
-    lastcmd=$1
-    set_title
-}
-function precmd() {
-    set_title
-}
-add-zsh-hook -Uz preexec preexec
-add-zsh-hook -Uz precmd precmd
-# ///
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+PROMPT='%F{green}[%n]%f %F{blue}%~%f $ '
+
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
