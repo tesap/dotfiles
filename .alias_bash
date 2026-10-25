@@ -3,6 +3,7 @@
 alias rofi_dmenu="rofi -dmenu -font 'Noto Sans 20'"
 alias rsync="rsync --fsync"
 alias lsblk="lsblk --fs"
+alias ls="ls --color=always --group-directories-first"
 
 alias mv="mv -i"
 alias rm="rm -v"
@@ -31,7 +32,7 @@ alias zip="zip -r"
 alias rdu="sudo ncdu / --exclude /home --exclude /swapfile --exclude /mnt --exclude /media --exclude /run --exclude /proc"
 alias hdu="ncdu $HOME"
 
-alias {v,vi}="$EDITOR"
+alias vi="$EDITOR"
 alias svi="sudo $EDITOR"
 
 alias m="ncmpcpp"

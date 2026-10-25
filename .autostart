@@ -2,5 +2,8 @@
 
 xbacklight -set 100 &
 setxkbmap -layout us,ru -option 'grp:shifts_toggle' &
+xbindkeys &
+
+$HOME/.scripts/setup/x230-fhd-mod.sh &
 
 

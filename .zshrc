@@ -2,19 +2,29 @@
 
 source ~/.bashrc
 
-export HISTSIZE=1000000
-
-DISABLE_AUTO_UPDATE="true"
-
+export HISTSIZE=100000
+export SAVEHIST=100000
+HISTFILE=~/.zsh_history
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 
-# WHat ??? TODO
-# autoload -Uz compinit && compinit
-
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-PROMPT='%F{green}[%n]%f %F{blue}%~%f $ '
-
+autoload -Uz compinit && compinit
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+bindkey -e
+PROMPT='%F{green}[%n]%f %F{blue}%~%f $ '
+
+# Beginning search in history
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search
+bindkey "^[[B" down-line-or-beginning-search
+# Jump by words with ctrl+arrows
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+# ===
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh

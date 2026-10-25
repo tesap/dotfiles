@@ -1,1 +1,16 @@
+
+*
+!\.*
+
 __pycache__
+.Xauthority
+.bash_history
+.bash_logout
+.bash_profile
+.config/htop/htop_history
+.inputrc
+.lesshst
+.local/
+.ssh/
+.zcompdump
+.zsh_history
