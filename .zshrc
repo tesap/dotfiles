@@ -8,10 +8,16 @@ HISTFILE=~/.zsh_history
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 
+# Completion
 autoload -Uz compinit && compinit
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+# Selection menu in completion
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# Ctrl+A
 bindkey -e
+# Prompt
 PROMPT='%F{green}[%n]%f %F{blue}%~%f $ '
 
 # Beginning search in history

@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 
+alias history="history 0"
 alias rofi_dmenu="rofi -dmenu -font 'Noto Sans 20'"
 alias rsync="rsync --fsync"
 alias lsblk="lsblk --fs"

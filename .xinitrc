@@ -2,5 +2,5 @@
 
 $HOME/.autostart &
 
-exec dwm
+exec dbus-run-session dwm
 
