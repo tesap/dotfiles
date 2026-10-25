@@ -10,7 +10,6 @@ __pycache__
 .config/htop/htop_history
 .inputrc
 .lesshst
-.local/
 .ssh/
 .zcompdump
 .zsh_history
