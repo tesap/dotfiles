@@ -18,7 +18,7 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 # Ctrl+A
 bindkey -e
 # Prompt
-PROMPT='%F{green}[%n]%f %F{blue}%~%f $ '
+PROMPT='%F{green}[%n]%f %(?..%F{red}[%?] %f)%F{blue}%~%f $ '
 
 # Beginning search in history
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search

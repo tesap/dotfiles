@@ -1,6 +1,4 @@
 #!/bin/bash
 
-$HOME/.autostart &
-
-exec dbus-run-session dwm
+exec dbus-run-session $HOME/.start
 

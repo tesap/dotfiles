@@ -1,10 +1,9 @@
 #!/bin/bash
 
-xbacklight -set 100 &
 setxkbmap -layout us,ru -option 'grp:shifts_toggle' &
-xbindkeys &
 dunst &
+xbindkeys > xbind_logs &
 
-$HOME/.scripts/setup/x230-fhd-mod.sh &
+$HOME/.scripts/x230-fhd-mod.sh &
 
 

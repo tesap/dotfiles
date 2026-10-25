@@ -1,6 +1,0 @@
-# /bin/bash
-
-cb=$(xclip -se c -o)
-
-echo $cb
-mpv $cb

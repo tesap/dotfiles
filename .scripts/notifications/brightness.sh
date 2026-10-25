@@ -1,9 +1,14 @@
 #!/bin/bash
 
 # icon="/usr/share/icons/Adwaita/symbolic/status/keyboard-brightness-symbolic.svg"
-icon="/usr/share/icons/buuf-nestort/actions/brightness-high.png"
+icon="$ICONS_PATH/actions/brightness-high.png"
 
-val=$(xbacklight -get | awk -F. '{ print $1 }')
+if [[ -f /bin/xbacklight ]]; then
+    val=$(xbacklight -get | awk -F. '{ print $1 }')
+else
+    echo "No xbacklight found"
+    exit 1
+fi
 
 dunstify \
     -u low \

@@ -37,47 +37,23 @@
 #keystate_capslock = enable
 #keystate_scrolllock= enable
 
-# Examples of commands:
-
-# "xbindkeys_show" 
-#   control+shift + q
-
-"~/.scripts/keys/audio-mute.sh"
+"~/.scripts/audio-mute.sh; ~/.scripts/notifications/volume.sh"
   XF86AudioMute
 
-"~/.scripts/keys/mic-mute.sh"
+"~/.scripts/mic-mute.sh; ~/.scripts/notifications/microphone.sh"
   XF86AudioMicMute
 
-"~/.scripts/keys/volume-down.sh"
+"~/.scripts/volume-down.sh; ~/.scripts/notifications/volume.sh"
   XF86AudioLowerVolume
 
-"~/.scripts/keys/volume-up.sh"
+"~/.scripts/volume-up.sh; ~/.scripts/notifications/volume.sh"
   XF86AudioRaiseVolume
 
-"~/.scripts/keys/light-down.sh"
+"~/.scripts/light-down.sh; ~/.scripts/notifications/brightness.sh"
   XF86MonBrightnessDown
 
-"~/.scripts/keys/light-up.sh"
+"~/.scripts/light-up.sh; ~/.scripts/notifications/brightness.sh"
   XF86MonBrightnessUp
 
 "xdotool key Delete"
   Insert
-
-#"xterm -geom 50x20+20+20"
-#   Shift+Mod2+alt + s
-#
-## set directly keycode (here control+alt+mod2 + f with my keyboard)
-#"xterm"
-#  alt + c:0x29 + m:4 + mod2
-#
-## Control+Shift+a  release event starts rxvt
-#"rxvt"
-#  release+control+shift + a
-#
-## Control + mouse button 2 release event starts rxvt
-#"rxvt"
-#  Control + b:2 + Release
-
-##################################
-# End of xbindkeys configuration #
-##################################

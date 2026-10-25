@@ -1,28 +1,41 @@
 #!/bin/bash
 
-ICON_DISCHARGING_100="/usr/share/icons/buuf-nestort/status/battery-100.png"
-ICON_DISCHARGING_80="/usr/share/icons/buuf-nestort/status/battery-080.png"
-ICON_DISCHARGING_60="/usr/share/icons/buuf-nestort/status/battery-060.png"
-ICON_DISCHARGING_40="/usr/share/icons/buuf-nestort/status/battery-040.png"
-ICON_DISCHARGING_20="/usr/share/icons/buuf-nestort/status/gpm-battery-020.png"
-ICON_DISCHARGING_CRIT="/usr/share/icons/buuf-nestort/status/battery-caution.png"
+ICON_DISCHARGING_100="$ICONS_PATH/status/battery-100.png"
+ICON_DISCHARGING_80="$ICONS_PATH/status/battery-080.png"
+ICON_DISCHARGING_60="$ICONS_PATH/status/battery-060.png"
+ICON_DISCHARGING_40="$ICONS_PATH/status/battery-040.png"
+ICON_DISCHARGING_20="$ICONS_PATH/status/gpm-battery-020.png"
+ICON_DISCHARGING_CRIT="$ICONS_PATH/status/battery-caution.png"
 
-ICON_CHARGING="/usr/share/icons/buuf-nestort/status/battery-charging.png"
-# ICON_CHARGING_100="/usr/share/icons/buuf-nestort/status/battery-charging-100.png"
-# ICON_CHARGING_80="/usr/share/icons/buuf-nestort/status/battery-charging-080.png"
-# ICON_CHARGING_60="/usr/share/icons/buuf-nestort/status/battery-charging-060.png"
-# ICON_CHARGING_40="/usr/share/icons/buuf-nestort/status/battery-charging.png"
-# ICON_CHARGING_20="/usr/share/icons/buuf-nestort/status/battery-charging.png"
-# ICON_CHARGING_CRIT="/usr/share/icons/buuf-nestort/status/battery-charging.png"
-# # ICON_CHARGING_40="/usr/share/icons/buuf-nestort/status/battery-charging-040.png"
-# # ICON_CHARGING_20="/usr/share/icons/buuf-nestort/status/battery-charging-020.png"
-# # ICON_CHARGING_CRIT="/usr/share/icons/buuf-nestort/status/battery-charging-caution.png"
+ICON_CHARGING="$ICONS_PATH/status/battery-charging.png"
+# ICON_CHARGING_100="$ICONS_PATH/status/battery-charging-100.png"
+# ICON_CHARGING_80="$ICONS_PATH/status/battery-charging-080.png"
+# ICON_CHARGING_60="$ICONS_PATH/status/battery-charging-060.png"
+# ICON_CHARGING_40="$ICONS_PATH/status/battery-charging.png"
+# ICON_CHARGING_20="$ICONS_PATH/status/battery-charging.png"
+# ICON_CHARGING_CRIT="$ICONS_PATH/status/battery-charging.png"
+# # ICON_CHARGING_40="$ICONS_PATH/status/battery-charging-040.png"
+# # ICON_CHARGING_20="$ICONS_PATH/status/battery-charging-020.png"
+# # ICON_CHARGING_CRIT="$ICONS_PATH/status/battery-charging-caution.png"
 
-upower_stats=$(upower -i /org/freedesktop/UPower/devices/DisplayDevice)
+if [[ -f /bin/acpi ]]; then
+    acpi_stats=$(acpi -b 2>/dev/null)
+    battery=$(echo $acpi_stats | awk -F", " '{ print $2 }' | tr -d %)
+    state=$(echo $acpi_stats | awk -F, '{ print $1 }' | awk -F': ' '{ print $2 }')
+    time=$(echo $acpi_stats | awk -F", " '{ print $3 }' | sed 's/ until charged//; s/ remaining//; s/charging at zero rate - will never fully charge.//; s/discharging at zero rate - will never fully discharge.//')
+    if [[ $state == "Charging" ]]; then
+        state='charging'
+    fi
+elif [[ -f /bin/upower ]]; then
+    upower_stats=$(upower -i /org/freedesktop/UPower/devices/DisplayDevice)
 
-battery=$(echo "$upower_stats" | /bin/grep percentage | awk '{ print $2 }' | awk -F. '{ print $1 }' | awk -F% '{ print $1 }')
-state=$(echo "$upower_stats" | /bin/grep state | awk '{ print $2 }')
-time=$(echo "$upower_stats" | /bin/grep "time to" | awk '{$1=$2=$3=""; gsub(/^[ \t]*/, ""); print $0 }')
+    battery=$(echo "$upower_stats" | /bin/grep percentage | awk '{ print $2 }' | awk -F. '{ print $1 }' | awk -F% '{ print $1 }')
+    state=$(echo "$upower_stats" | /bin/grep state | awk '{ print $2 }')
+    time=$(echo "$upower_stats" | /bin/grep "time to" | awk '{$1=$2=$3=""; gsub(/^[ \t]*/, ""); print $0 }')
+else
+    echo "Acpi or Upower not found"
+    exit 1
+fi
 
 if [[ $state == "charging" ]]; then
     state='+'
