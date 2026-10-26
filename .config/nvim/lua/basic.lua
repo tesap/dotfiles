@@ -22,6 +22,12 @@ local map = vim.keymap.set
 
 vim.cmd([[colorscheme gruvbox]])
 
+-- Minimalistic setup without  status line
+vim.opt.laststatus = 0
+vim.opt.showmode = true
+vim.opt.ruler = true
+vim.opt.cmdheight = 0
+
 vim.opt.clipboard = "unnamedplus"
 opt.ignorecase = true
 opt.smartcase = true

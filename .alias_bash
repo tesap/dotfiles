@@ -11,6 +11,7 @@ alias rm="rm -v"
 
 alias ssh="TERM='vt100' ssh"
 alias reboot="sudo reboot"
+alias poweroff="sudo poweroff"
 
 alias mtree="tree --dirsfirst -L 3"
 alias qrencode-utf="qrencode -t ansiutf8"
@@ -73,6 +74,7 @@ alias author-lines='git log --author="$(git config user.email)" --pretty=tformat
 alias gs="git status"
 alias gl="git log --stat --graph"
 alias gd="git diff --color"
+alias gds="git diff --staged --color"
 alias gad="git add --all"
 alias gac="git add . && git commit"
 alias gam="git add . && git commit --amend"
