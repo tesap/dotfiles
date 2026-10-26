@@ -1,6 +1,26 @@
+
+-- ################################################################################
+-- # ----------------------------        PACK       ----------------------------- #
+-- ################################################################################
+
+local pack = require('vim.pack')
+
+pack.add({"https://github.com/ellisonleao/gruvbox.nvim"})
+pack.add({"https://github.com/folke/which-key.nvim"})
+pack.add({"https://github.com/nvim-treesitter/nvim-treesitter"})
+pack.add({"https://github.com/hrsh7th/nvim-cmp"})
+pack.add({"https://github.com/hrsh7th/cmp-path"})
+pack.add({"https://github.com/hrsh7th/cmp-buffer"})
+pack.add({"https://github.com/nvim-tree/nvim-web-devicons"})
+pack.add({"https://github.com/akinsho/bufferline.nvim"})
+pack.add({"https://github.com/numToStr/Comment.nvim"})
+pack.add({"https://github.com/Wansmer/treesj"})
+
 local opt = vim.opt
 local g = vim.g
 local map = vim.keymap.set 
+
+vim.cmd([[colorscheme gruvbox]])
 
 vim.opt.clipboard = "unnamedplus"
 opt.ignorecase = true
@@ -54,71 +74,3 @@ map("v", "<", "<gv")
 
 map("n", "L", "<cmd>bnext<cr>", { desc = "Next tab" })
 map("n", "H", "<cmd>bprev<cr>", { desc = "Previous tab" })
-
--- ################################################################################
--- # ----------------------------      TERMINAL      ---------------------------- #
--- ################################################################################
-
-map("n", "<C-/>", function() Snacks.terminal(nil, { cwd = "" }) end, { desc = "Terminal (Root Dir)" })
-map("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
--- map("t", "<C-S-/>", "<Esc><Esc><C-w>T", { desc = "Maximize Terminal" })
-
-
--- ################################################################################
--- # -----------------------------      TYPST      ------------------------------ #
--- ################################################################################
-
-map(
-    "n",
-    "<leader>tc", 
-    function() 
-        pwd = vim.loop.cwd()
-        file_path = string.gsub(vim.api.nvim_buf_get_name(0), pwd.."/", '')
-        shell_exec = "/bin/typst compile --root "..pwd.." "..file_path
-
-        -- vimscript_exec = "call system('"..shell_exec.."')"
-        -- vim.cmd(vimscript_exec)
-        v = Snacks.terminal(shell_exec, { cwd = "" })
-    end, 
-    { desc = "Manually [C]ompile" }
-)
-
-
--- ################################################################################
--- # ----------------------------      FZF-LUA      ----------------------------- #
--- ################################################################################
-
--- Files
-map("n", "<leader>b", "<cmd>FzfLua buffers<cr>", { desc = "[B]uffers" })
-map("n", "<leader>fd", "<cmd>FzfLua files<cr>", { desc = "Find [F]ile in ([D]ir)" })
-map("n", "<leader>fr", "<cmd>FzfLua oldfiles<cr>", { desc = "Find [F]ile in ([R]ecent Global)" })
-
--- Search
-map("n", "<leader>so", "<cmd>FzfLua lines<cr>", { desc = "[S]earch in [O]pen files (Buffers)" })
-map("n", "<leader>sg", "<cmd>FzfLua live_grep<cr>", { desc = "[G]rep (Dir)" })
-map("n", "<leader>sv", "<cmd>FzfLua grep_visual<cr>", { desc = "[S]earch selection (Dir)" })
-map("v", "<leader>sv", "<cmd>FzfLua grep_visual<cr>", { desc = "[S]earch selection (Dir)" })
-
--- LSP
-map("n", "<leader>ld", "<cmd>FzfLua lsp_workspace_diagnostics<cr>", { desc = "[L]SP [D]iagnostics" })
-map("n", "<leader>ls", "<cmd>FzfLua lsp_document_symbols<cr>", { desc = "[L]SP [S]ymbols (Document)" })
-
--- ################################################################################
--- # ---------------------------      NERD TREE      ---------------------------- #
--- ################################################################################
-
-vim.cmd [[map <C-n> :NERDTreeToggleVCS<CR>]]
--- vim.cmd [[map <C-n> :NvimTreeToggle<CR>]]
-
-vim.cmd [[
-" Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
-
-" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-autocmd BufEnter * if winnr() == winnr('h') && bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-
-" Open the existing NERDTree on each new tab.
-autocmd BufWinEnter * if &buftype != 'quickfix' && getcmdwintype() == '' | silent NERDTreeMirror | endif
-]]
-

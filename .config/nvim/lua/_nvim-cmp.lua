@@ -2,7 +2,7 @@
 local cmp = require("cmp")
 
 -- The extentions needed by nvim-cmp should be loaded beforehand
-require("cmp_nvim_lsp")
+-- require("cmp_nvim_lsp")
 require("cmp_path")
 require("cmp_buffer")
 -- require("cmp_omni")
@@ -50,7 +50,7 @@ cmp.setup {
 },
 
   sources = {
-    { name = "nvim_lsp" },
+    -- { name = "nvim_lsp" },
     { name = "ultisnips" },
     { name = "path" },
     { name = "buffer", keyword_length = 3 },
