@@ -4,6 +4,9 @@
 # export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib64:/usr/local/lib
 # export PATH="/home/void/pdfium/manual-build/depot_tools:$PATH"
 
+alias nix="nix --extra-experimental-features 'nix-command flakes'"
+# alias chattr="echo 'Take a deep breath. Hold on, remember what is right\n'"
+
 alias rofi_dmenu="rofi -dmenu -font 'Noto Sans 20'"
 alias rsync="rsync --fsync"
 alias lsblk="lsblk --fs"
@@ -16,7 +19,7 @@ alias docker-rm-full="docker image rm --force \$(docker images -aq); docker cont
 
 ### OMP (Aurora
 
-alias aurora_psdk="TERM=vt100 $PLATFORM_SDK_ROOT/sdks/sfossdk/mer-sdk-chroot"
+alias aurora_psdk="TERM=vt100 $PLATFORM_SDK_ROOT/sdks/sfossdk/sdk-chroot"
 alias push.sh="all.sh -s -p -i -P"
 
 ###
@@ -41,7 +44,7 @@ alias build-dwm="cd ~/gh/dwm-flexipatch/ && sudo make install && cd ~"
 alias dps="docker ps -as"
 
 # alias g++="g++ -Wall -Weffc++ -Wextra -Wsign-conversion"
-alias mtree="tree --dirsfirst -L 3"
+alias tree="tree --dirsfirst"
 alias qrencode-utf="qrencode -t ansiutf8"
 alias qrencode-png="cat $1 | qrencode -t PNG -o $2"
 
@@ -73,8 +76,8 @@ alias us='sudo ufw status verbose'
 alias mount='sudo mount'
 alias umount='sudo umount'
 
-alias grep="grep -i --color=always"
-alias grepfiles="grep -nrI --exclude-dir='.venv' --exclude-dir='.git' --exclude-dir='.idea'"
+alias grep="grep --color=auto"
+alias grepfiles="grep -nrI --color=yes --exclude-dir='.venv' --exclude-dir='.git' --exclude-dir='.idea' 2>/dev/null"
 alias free='free -m'
 alias mkdir="mkdir -p"
 alias tt="trash"
@@ -86,10 +89,17 @@ alias picom="picom --config ~/.config/picom/config"
 alias rdu="sudo ncdu / --exclude /home --exclude /swapfile --exclude /mnt --exclude /media --exclude /run --exclude /proc"
 alias hdu="ncdu $HOME"
 
-alias {v,vi}="$EDITOR"
-alias svi="sudo $EDITOR"
-alias e="emacs"
-alias se="sudo emacs"
+function spawn() {
+    $TERM -e sh -c "$*" & disown
+}
+
+function vi() {
+    spawn $EDITOR $@
+}
+
+function svi() {
+    spawn sudo $EDITOR $@
+}
 
 alias m="ncmpcpp"
 alias h="htop -s PERCENT_CPU"
@@ -123,10 +133,9 @@ alias update-mkinitcpio="sudo mkinitcpio -p linux"
 # -----------------------------      OTHER      ------------------------------ #
 ################################################################################
 
-alias ls='exa -lbg --color=always --group-directories-first'
-alias ll='ls -a'
-alias l1='ls --tree -L 1'
-alias l2='ls --tree -L 2'
+# alias ls='exa -lbg --color=always --group-directories-first'
+alias ls='ls --color=tty --group-directories-first -l'
+alias ll='ls -lah'
 
 alias ..="cd .."
 alias ...="cd ../.."
@@ -186,3 +195,5 @@ alias pipr="pip install -r requirements.txt"
 alias fr="pip freeze > requirements.txt"
 
 alias vef="rve && ve && vea && pipr"
+
+alias mh="matterhorn -c ~/st/Sensitive/matterhorn-config.ini"

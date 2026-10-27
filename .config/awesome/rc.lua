@@ -37,7 +37,7 @@ end)
 
 -- This is used later as the default terminal and editor to run.
 home_dir= os.getenv("HOME") or "/home/void"
-terminal = "alacritty"
+terminal = os.getenv("TERMCMD")
 editor = os.getenv("EDITOR") or "vi"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"

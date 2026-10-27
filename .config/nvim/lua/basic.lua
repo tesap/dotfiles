@@ -2,6 +2,8 @@ local opt = vim.opt
 local g = vim.g
 local map = vim.keymap.set 
 
+opt.background = "light"
+
 vim.opt.clipboard = "unnamedplus"
 opt.ignorecase = true
 opt.smartcase = true
@@ -92,6 +94,7 @@ map(
 map("n", "<leader>b", "<cmd>FzfLua buffers<cr>", { desc = "[B]uffers" })
 map("n", "<leader>fd", "<cmd>FzfLua files<cr>", { desc = "Find [F]ile in ([D]ir)" })
 map("n", "<leader>fr", "<cmd>FzfLua oldfiles<cr>", { desc = "Find [F]ile in ([R]ecent Global)" })
+map("n", "<leader>fm", "<cmd>FzfLua git_status<cr>", { desc = "Find [F]ile in Git [M]odified files" })
 
 -- Search
 map("n", "<leader>so", "<cmd>FzfLua lines<cr>", { desc = "[S]earch in [O]pen files (Buffers)" })

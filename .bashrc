@@ -2,6 +2,7 @@
 # ~/.bashrc
 #
 
+export PATH="/opt:$PATH"
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 

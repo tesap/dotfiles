@@ -1,31 +1,39 @@
-set my_password = `cat ~/.secrets/mutt/password`
+# set my_password = '`cat ~/st/Sensitive/mail.omp.ru.pass`'
 
 # Account
-set from = tox@riseup.net
+set from = "s.tsepa@omp.ru"
 
 # Send
-set smtp_url = 'smtps://tox@mail.riseup.net/'
-set smtp_pass = $my_password
-set smtp_authenticators = 'login'
+# set smtp_url = 'smtps://s.tsepa@omp.ru/'
+# set smtp_pass = $my_password
+# set smtp_authenticators = 'login'
 
 # Connection
 set ssl_force_tls = yes
 set ssl_starttls  = yes
 
 # Receive
-set imap_user = tox@riseup.net
-set imap_pass = $my_password
-set folder    = 'imaps://tox@mail.riseup.net/'
-set imap_check_subscribed
+set imap_user = "s.tsepa@omp.ru"
+# TODO
+set imap_pass = ";XW=h2U.~t]shDY7"
+set folder    = 'imaps://imap.omp.ru/'
+# set imap_check_subscribed
 
 # Folder
 set spoolfile = +INBOX
 set postponed = +Drafts
 set record    = +Sent
 
+# Other
+set mail_check = 60
+set timeout = 300
+set imap_keepalive = 300
+set header_cache = ~/.mutt/cache/headers
+set message_cachedir = ~/.mutt/cache/bodies
 set sidebar_visible = yes
 set sidebar_width = 15
 
+# === UI ===
 # color index_date green default
 color prompt magenta default
 color error red default
@@ -46,3 +54,4 @@ color sidebar_divider   color8  default
 
 # color sidebar_ordinary  default default
 # set sidebar_on_right = yes
+

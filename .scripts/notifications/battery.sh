@@ -39,7 +39,7 @@ else
 	icon=$ICON_DISCHARGING_40
     elif [[ $battery -ge 10 ]]; then
 	icon=$ICON_DISCHARGING_20
-    elif [[ $battery -le 5 ]]; then
+    else
 	icon=$ICON_DISCHARGING_CRIT
     fi
 fi

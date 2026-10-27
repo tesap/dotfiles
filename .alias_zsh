@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+hash -d Notes='/home/void/st/Sensitive/Notes'
+
 hash -d n='/media/st/Qemu/index'
 hash -d f="$HOME/.mozilla/firefox/1"
 hash -d org="$HOME/Projects/dk/org"
@@ -22,8 +24,6 @@ skl() { screen -X -S $1 quit }
 
 # vn() { sudo veracrypt -t -c --pim=0 --encryption=aes --hash=sha512 --size=$1 $2; }
 
-alias tg="cd ~/Downloads/Telegram && ./a"
-alias lsblk="lsblk --fs"
 mkcd () { mkdir -p "$1"; cd "$1" }
 
 alias -g g="| grep"
@@ -38,3 +38,5 @@ alias sz="source $HOME/.zshrc"
 alias ez="$EDITOR $HOME/.zshrc"
 alias eaz="$EDITOR $HOME/.alias_zsh"
 alias ev="$EDITOR $HOME/.vimrc"
+
+alias l='ls'

@@ -1,4 +1,10 @@
-
 [Default Applications]
-image/jpeg=sxiv.desktop
-application/pdf=zathura.desktop
+x-scheme-handler/io.element.nightly=element-desktop-nightly.desktop
+x-scheme-handler/element=element-desktop-nightly.desktop
+x-scheme-handler/tg=userapp-AyuGram Desktop-VVQLW3.desktop
+x-scheme-handler/tonsite=userapp-AyuGram Desktop-RDONW3.desktop
+
+[Added Associations]
+x-scheme-handler/tg=userapp-AyuGram Desktop-G41HO3.desktop;io.github.tdesktop_x64.TDesktop.desktop;userapp-AyuGram Desktop-AEENU3.desktop;userapp-AyuGram Desktop-7DT3T3.desktop;userapp-AyuGram Desktop-KHSJU3.desktop;userapp-AyuGram Desktop-PZXBU3.desktop;userapp-AyuGram Desktop-S2S3U3.desktop;userapp-AyuGram Desktop-COQ0W3.desktop;userapp-AyuGram Desktop-VVQLW3.desktop;
+x-scheme-handler/tonsite=userapp-AyuGram Desktop-RCOQO3.desktop;io.github.tdesktop_x64.TDesktop.desktop;userapp-AyuGram Desktop-16ZMU3.desktop;userapp-AyuGram Desktop-NVX3T3.desktop;userapp-AyuGram Desktop-KWKJU3.desktop;userapp-AyuGram Desktop-6RIDU3.desktop;userapp-AyuGram Desktop-A1L3U3.desktop;userapp-AyuGram Desktop-SLH1W3.desktop;userapp-AyuGram Desktop-RDONW3.desktop;
+application/pdf=firefox.desktop;

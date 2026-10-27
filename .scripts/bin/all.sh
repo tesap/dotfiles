@@ -25,9 +25,9 @@ trap "echo '==== Script interrupted by user ==='; exit 1" SIGINT
 # BUILD_TARGET="Aurora_Target_5.1.0_284"
 
 # === NEW ===
-# BUILD_TARGET="5.3.0.499_armv7hl"
+BUILD_TARGET="5.3.0.499_armv7hl"
 # BUILD_TARGET="Aurora-armv7hl-5.2.0.262"
-BUILD_TARGET="Aurora-aarch64-5.2.1.228"
+# BUILD_TARGET="Aurora-aarch64-5.2.1.228"
 
 # === SSH ===
 # SSH_TARGET=aurora-device

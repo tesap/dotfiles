@@ -7,13 +7,16 @@
 #     exit 1
 # fi
 
+CMD="proxychains4 yt-dlp"
+OUT_PATH="~/st/Videos"
+
 echo "Available formats:"
-yt-dlp $@ --quiet -F $@
+$CMD $@ --quiet -F $@
 
 read -p "Enter format choice: " ask
 
-format_str='~/YT_DLP/%(upload_date>%Y)s_%(upload_date>%m)s_%(upload_date>%d)s_%(title)s.%(ext)s'
-cmd="yt-dlp -f $ask -o $format_str $@"
+format_str="$OUT_PATH/%(upload_date>%Y)s_%(upload_date>%m)s_%(upload_date>%d)s_%(id)s_%(uploader)s_%(title)s.%(ext)s"
+cmd="$CMD -f $ask -o $format_str $@"
 echo "Starting download"
 echo "Format: $ask"
 echo "CMD: $cmd"

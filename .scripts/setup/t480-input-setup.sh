@@ -1,12 +1,18 @@
 #!/bin/bash
 
 # Lower scroll speed
-xinput set-prop 11 357 50
+# xinput set-prop 10 357 50
 # Lower movement acceleration
-xinput set-prop 11 342 -0.6
+xinput set-prop 10 340 -0.4
 
-# Disable touchpad
-xinput --disable 10
+# That was for original T480 screen
+# TOUCH_SCREEN_ID=9
+# TOUCHPAD_ID=10
+
+TOUCHPAD_ID=9
 
 # Disable touch screen
-xinput --disable 9
+# xinput --disable $TOUCH_SCREEN_ID
+
+# Disable touchpad
+xinput --disable $TOUCHPAD_ID

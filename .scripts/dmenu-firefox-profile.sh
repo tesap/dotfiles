@@ -7,6 +7,7 @@ if [[ -z $sel ]]; then
     exit 1
 fi
 
+# ---- VPN ---- 
 sel_vpn=$(echo -e "No\nYes" | $DMENUCMD)
 if [[ -z $sel_vpn ]]; then
     exit 1
@@ -17,4 +18,6 @@ if [[ $sel_vpn == "Yes" ]]; then
 else
     firefox --profile $PROFILES_PATH/$sel
 fi
+
+# ---- Restrict ---- 
 

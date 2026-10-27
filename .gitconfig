@@ -1,5 +1,30 @@
 [user]
 	name = Stepan Tsepa
 	email = s.tsepa@omp.ru
+    signingKey = "1FFB0182D3D9D99F"
 [core]
 	quotepath = false
+[color]
+	ui = auto
+
+
+[commit]
+    gpgSign = true
+ 
+[filter "lfs"]
+    clean = "git-lfs clean -- %f"
+    process = "git-lfs filter-process"
+    required = true
+    smudge = "git-lfs smudge -- %f"
+ 
+[tag]
+    gpgSign = true
+ 
+[url "https://github.com"]
+    insteadOf = "git://github.com"
+ 
+[url "ssh://git@git.omprussia.ru"]
+    insteadOf = "https://git.omprussia.ru"
+ 
+[url "ssh://git@os-git.omprussia.ru"]
+    insteadOf = "https://os-git.omprussia.ru"
