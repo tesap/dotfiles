@@ -1,0 +1,21 @@
+#!/bin/bash
+
+D1="$1/upper/"
+D1_BASE="$1"
+D2="$2"
+if [[ ! -d $D1 || ! -d $D2 ]]; then
+    echo "Dirs do not exist"
+    exit 1
+fi
+
+echo -n "Merging ($D1) -> ($D2)? "
+read ANS
+
+if [[ $ANS == "yes" ]]; then
+    cp -rv $D1/* $D2
+    rm -rvf $D1_BASE
+fi
+
+
+
+

@@ -1,0 +1,199 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BASE_PATH=""
+OVERLAYS=()
+MOUNTS=()
+DISABLE_NET=0
+READ_ONLY=0
+BOOTSTRAP=""
+CMD=("/bin/bash" "-l")
+
+function pprint() {
+    echo "unshare \\"
+    echo "    --user \\"
+    echo "    --map-root-user \\"
+    echo "    --map-auto \\"
+
+    echo "    bwrap \\"
+    first=1
+    for arg in "${BWRAP_ARGS[@]}"; do
+        if [[ "$arg" == --* ]]; then
+            [[ $first -eq 0 ]] && printf ' \\\n'
+            printf '        %q' "$arg"
+            first=0
+        else
+            printf ' %q' "$arg"
+        fi
+    done
+    printf ' \\\n        '
+    printf '%q ' "${CMD[@]}"
+    echo
+}
+
+usage() {
+    cat <<EOF
+Usage: $(basename "$0") [OPTIONS] [-- COMMAND...]
+
+Options:
+  -h, --help                Show this help message
+  -b, --base <dir>          Override base rootfs path (default: $BASE_PATH)
+  --overlay <dir>           Add an overlay layer (can be repeated; last one is writable,
+                            earlier ones are stacked read-only below it)
+  -m, --mount <dir>         Mount additional dirs (to /media)
+  -j, --bootstrap <file>    Bootstrap top overlay with specified script
+  --disable-net             Isolate network namespace (disables internet access)
+  --read-only               Mount rootfs read-only (only applies in non-overlay mode)
+EOF
+    exit 1
+}
+
+BWRAP_ARGS=()
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --overlay)
+            [[ -z "${2:-}" ]] && { echo "Error: --overlay requires a directory path" >&2; exit 1; }
+            OVERLAYS+=("$2")
+            shift 2
+            ;;
+        --disable-net)
+            DISABLE_NET=1
+            shift
+            ;;
+        --read-only)
+            READ_ONLY=1
+            shift
+            ;;
+        -b|--base)
+            [[ -z "${2:-}" ]] && { echo "Error: --base requires a directory path" >&2; exit 1; }
+            BASE_PATH="$2"
+            shift 2
+            ;;
+        -j|--bootstrap)
+            [[ -z "${2:-}" ]] && { echo "Error: --bootstrap requires a script path" >&2; exit 1; }
+            BOOTSTRAP="$2"
+            shift 2
+            ;;
+        -m|--mount)
+            [[ -z "${2:-}" ]] && { echo "Error: --mount requires path" >&2; exit 1; }
+            MOUNTS+=("$2")
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            ;;
+        --)
+            shift
+            [[ $# -gt 0 ]] && CMD=("$@")
+            break
+            ;;
+        *)
+            echo "Unknown option: $1" >&2
+            usage
+            ;;
+    esac
+done
+
+if [[ -z $BASE_PATH ]]; then
+    echo "Error base path is not set";
+    exit 1
+fi
+
+if [[ ! -d $BASE_PATH ]]; then
+    echo "Error: base path does not exist: $BASE_PATH"
+    exit 1
+fi
+
+# 1. Configure Rootfs Mount (Non-overlay vs. Stacked Overlays)
+if [[ ${#OVERLAYS[@]} -eq 0 ]]; then
+    if [[ ! -z $BOOTSTRAP ]]; then
+        echo "Warning: --bootstrap is ignored when --overlay is not specified." >&2
+    fi
+
+    if [[ $READ_ONLY -eq 1 ]]; then
+        BWRAP_ARGS+=(--ro-bind "$BASE_PATH" /)
+    else
+        BWRAP_ARGS+=(--bind "$BASE_PATH" /)
+    fi
+    BWRAP_ARGS+=(--hostname $(basename $BASE_PATH))
+else
+    if [[ $READ_ONLY -eq 1 ]]; then
+        echo "Warning: --read-only is ignored when --overlay is specified (top overlay is always writable)." >&2
+    fi
+
+    # Base image is always the bottommost lowerdir
+    BWRAP_ARGS+=(--overlay-src "$BASE_PATH")
+
+    # All overlays except the last become read-only middle layers
+    LAST_IDX=$(( ${#OVERLAYS[@]} - 1 ))
+    for (( i=0; i<LAST_IDX; i++ )); do
+        BWRAP_ARGS+=(--overlay-src "${OVERLAYS[$i]}/upper")
+    done
+
+    # The final overlay is the writable top layer
+    TOP_OVERLAY="${OVERLAYS[$LAST_IDX]}"
+    mkdir -p "$TOP_OVERLAY/upper" "$TOP_OVERLAY/work"
+    BWRAP_ARGS+=(
+        --overlay "$TOP_OVERLAY/upper" "$TOP_OVERLAY/work" /
+        --hostname $(basename $TOP_OVERLAY)
+    )
+
+    if [[ ! -z $BOOTSTRAP ]]; then
+        SCRIPT_NAME=$(basename $BOOTSTRAP)
+        SCRIPT_PATH=$TOP_OVERLAY/upper/$SCRIPT_NAME
+        cp $BOOTSTRAP $SCRIPT_PATH
+        chmod +x $SCRIPT_PATH
+        CMD=("/bin/sh" "-c" "/$SCRIPT_NAME; rm /$SCRIPT_NAME")
+    fi
+fi
+
+if [[ ! ${#MOUNTS[@]} -eq 0 ]]; then
+    for i in $MOUNTS; do
+        BWRAP_ARGS+=(
+            --bind $i /media/$(basename $i)
+        )
+    done
+fi
+
+
+# 2. Virtual filesystems & base isolation
+BWRAP_ARGS+=(
+    --dev /dev
+    --proc /proc
+    --tmpfs /tmp
+    --tmpfs /run
+    --unshare-ipc
+    --unshare-pid
+    --unshare-net
+    --unshare-uts
+    --unshare-cgroup
+    --die-with-parent
+)
+
+# 3. Network & DNS handling
+if [[ $DISABLE_NET -eq 0 ]]; then
+    BWRAP_ARGS+=(
+        --share-net
+        --ro-bind /etc/resolv.conf /etc/resolv.conf
+    )
+fi
+
+# 4. Clean environment (including Nix profile path if present)
+BWRAP_ARGS+=(
+    --clearenv
+    --setenv USER root
+    --setenv HOME /root
+    --setenv TERM "${TERM:-xterm-256color}"
+    --setenv PATH "/root/.nix-profile/bin:/usr/local/sbin:/usr/local/bin:/usr/bin"
+)
+
+pprint
+
+exec unshare \
+    --user \
+    --map-root-user \
+    --map-auto \
+    bwrap "${BWRAP_ARGS[@]}" "${CMD[@]}"
+
