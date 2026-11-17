@@ -3,8 +3,9 @@
 alias history="history 0"
 alias rofi_dmenu="rofi -dmenu -font 'Noto Sans 20'"
 alias rsync="rsync --fsync"
-alias lsblk="lsblk --fs"
-alias ls="ls --color=always --group-directories-first"
+alias lsblk="lsblk -o NAME,FSTYPE,MOUNTPOINTS,PARTLABEL"
+alias lsblk-full="lsblk -o NAME,FSTYPE,PARTLABEL,UUID,FSSIZE,FSUSE%,FSAVAIL,MOUNTPOINTS"
+alias ls="ls --color=auto --group-directories-first"
 
 alias mv="mv -i"
 alias rm="rm -v"
@@ -23,13 +24,12 @@ alias xclip-png="xclip -t image/png -o"
 alias mount='sudo mount'
 alias umount='sudo umount'
 
-alias grep="grep -i --color=always"
+alias grep="grep -i --color=auto"
 alias grepfiles="grep -nrI --exclude-dir='.venv' --exclude-dir='.git' --exclude-dir='.idea'"
 alias free='free -m'
 alias mkdir="mkdir -p"
 alias df='df -h'
 alias cal="cal -3 -m"
-alias zip="zip -r"
 
 alias rdu="sudo ncdu / --exclude /home --exclude /swapfile --exclude /mnt --exclude /media --exclude /run --exclude /proc"
 alias hdu="ncdu $HOME"

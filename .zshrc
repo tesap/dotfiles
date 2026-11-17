@@ -2,6 +2,10 @@
 
 source ~/.bashrc
 
+hash -d Hobby=/media/Ferg/Hobby
+hash -d Aurora=/media/Ferg/Aurora
+hash -d Container=/media/Ferg/Containers
+
 export HISTSIZE=100000
 export SAVEHIST=100000
 HISTFILE=~/.zsh_history
@@ -25,6 +29,8 @@ PROMPT='%F{green}[%n]%f %(?..%F{red}[%?] %f)%F{blue}%~%f $ '
 # Minus / . - _
 WORDCHARS='*?[]~=&;!#$%^(){}<>'
 
+# Delete key
+bindkey "^[[3~" delete-char
 
 # Beginning search in history
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
@@ -42,7 +48,7 @@ DISABLE_AUTO_TITLE="true"
 autoload -Uz add-zsh-hook
 lastcmd=""
 function set_title() {
-    source ~/.scripts/set-title-zsh.sh "[zsh] ($(basename $(pwd))) $lastcmd"
+    # source ~/.scripts/set-title-zsh.sh "[zsh] ($(basename $(pwd))) $lastcmd"
 }
 function preexec() {
     lastcmd=$1

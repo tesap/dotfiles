@@ -22,11 +22,17 @@ local map = vim.keymap.set
 
 vim.cmd([[colorscheme gruvbox]])
 
--- Minimalistic setup without  status line
-vim.opt.laststatus = 0
-vim.opt.showmode = true
-vim.opt.ruler = true
-vim.opt.cmdheight = 0
+vim.api.nvim_create_user_command(
+    'ZenMode',
+    function(opts)
+        -- Minimalistic look without status line
+        vim.opt.laststatus = 0
+        vim.opt.showmode = true
+        vim.opt.ruler = true
+        vim.opt.cmdheight = 0
+    end,
+    { nargs = 0 , desc = "Zen mode" }
+)
 
 vim.opt.clipboard = "unnamedplus"
 opt.ignorecase = true
