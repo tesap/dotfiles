@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source ~/.vars
-
 scripts_dir=~/.scripts
 err_file=/tmp/log.err
 

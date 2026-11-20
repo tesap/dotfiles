@@ -13,28 +13,35 @@ READ_ONLY=0
 BIND_XORG=0
 BIND_DEVICES=0
 PROXYCHAINS=0
+ENV=()
 USER_NAME="root"
 HOME_DIR="/root"
 CMD=("/bin/bash")
 
-function pprint() {
-    echo "unshare \\"
-    echo "    --user \\"
-    echo "    --map-root-user \\"
-    echo "    --map-auto \\"
 
-    echo "    bwrap \\"
+function clear_overlayfs_attrs() {
+    sudo setfattr -h -x user.overlay.impure "$@" 2>/dev/null || true
+    sudo setfattr -h -x user.overlay.origin "$@" 2>/dev/null || true
+    sudo setfattr -h -x user.overlay.uuid "$@" 2>/dev/null || true
+}
+
+function pprint() {
+    echo "bwrap \\"
     first=1
     for arg in "${BWRAP_ARGS[@]}" "${BIND_ARGS[@]}"; do
         if [[ "$arg" == --* ]]; then
             [[ $first -eq 0 ]] && printf ' \\\n'
-            printf '        %q' "$arg"
+            printf '    %q' "$arg"
             first=0
         else
             printf ' %q' "$arg"
         fi
     done
-    printf ' \\\n        '
+    echo "    /usr/bin/env -i \\"
+    for arg in "${ENV[@]}"; do
+        printf '        %q \\\n' "$arg"
+    done
+    printf '            '
     printf '%q ' "${CMD[@]}"
     echo
 }
@@ -46,6 +53,7 @@ Usage: $(basename "$0") [OPTIONS] [-- COMMAND...]
 Options:
   -h, --help                Show this help message
   -b, --base <dir>          Override base rootfs path (default: $BASE_PATH)
+  --env <ENV>
   --overlay <dir>           Add an overlay layer (can be repeated; last one is writable,
   --overlay-tmp
                             earlier ones are stacked read-only below it)
@@ -99,6 +107,11 @@ while [[ $# -gt 0 ]]; do
             BASE_PATH="$2"
             shift 2
             ;;
+        --env)
+            [[ -z "${2:-}" ]] && { echo "Error: --env requires an argument" >&2; exit 1; }
+            ENV+=("$2")
+            shift 2
+            ;;
         --user)
             [[ -z "${2:-}" ]] && { echo "Error: --user requires an argument" >&2; exit 1; }
             USER_NAME="$2"
@@ -123,6 +136,9 @@ while [[ $# -gt 0 ]]; do
             shift 3
             ;;
         --bind-pwd)
+            BWRAP_ARGS+=(
+                --chdir /root/pwd
+            )
             BIND_ARGS+=(
                 --bind $PWD /root/pwd
             )
@@ -177,21 +193,25 @@ else
         echo "Warning: --read-only is ignored when --overlay is specified (top overlay is always writable)." >&2
     fi
 
+    LAST_IDX=$(( ${#OVERLAYS[@]} - 1 ))
+    TOP_OVERLAY="${OVERLAYS[$LAST_IDX]}"
+
+    for (( i=LAST_IDX-1; i>=0; i-- )); do
+        BWRAP_ARGS+=(--overlay-src "${OVERLAYS[$i]}/upper")
+        clear_overlayfs_attrs "${OVERLAYS[$i]}/upper"
+    done
+
     BWRAP_ARGS+=(--overlay-src "$BASE_PATH")
 
-    LAST_IDX=$(( ${#OVERLAYS[@]} - 1 ))
-    for (( i=0; i<LAST_IDX; i++ )); do
-        BWRAP_ARGS+=(--overlay-src "${OVERLAYS[$i]}/upper")
-    done
-    TOP_OVERLAY="${OVERLAYS[$LAST_IDX]}"
     mkdir -p "$TOP_OVERLAY/upper" "$TOP_OVERLAY/work"
     BWRAP_ARGS+=(
         --overlay "$TOP_OVERLAY/upper" "$TOP_OVERLAY/work" /
-        --hostname $(basename $TOP_OVERLAY)
+        --hostname "$(basename "$TOP_OVERLAY")"
     )
+    clear_overlayfs_attrs "$TOP_OVERLAY/upper"
 fi
 
-CMD=("runuser" "-u" "$USER_NAME" "${CMD[@]}")
+CMD=("runuser" "-u" "$USER_NAME" "--" "${CMD[@]}" )
 BWRAP_ARGS+=(
     --proc /proc
     --tmpfs /tmp
@@ -201,12 +221,13 @@ BWRAP_ARGS+=(
     --unshare-uts
     --unshare-cgroup
     --die-with-parent
-    --new-session
     --clearenv
-    --setenv USER $USER_NAME
-    --setenv HOME $HOME_DIR
-    --setenv TERM "${TERM:-xterm-256color}"
-    --setenv PATH "$HOME_DIR/.nix-profile/bin:/usr/local/sbin:/usr/local/bin:/usr/bin"
+)
+ENV+=(
+    "USER=$USER_NAME"
+    "HOME=$HOME_DIR"
+    "TERM=${TERM:-xterm-256color}"
+    "PATH=/nix/var/nix/profiles/per-user/root/profile:/usr/local/sbin:/usr/local/bin:/usr/bin"
 )
 
 if [[ $DISABLE_NET -eq 0 ]]; then
@@ -234,9 +255,9 @@ if [[ $BIND_XORG -eq 1 ]]; then
     chmod 644 $XAUTH_TMP
     chown root:root $XAUTH_TMP
 
-    BWRAP_ARGS+=(
-        --setenv DISPLAY ":0"
-        --setenv XAUTHORITY "$HOME_DIR/.Xauthority"
+    ENV+=(
+        "DISPLAY=:0"
+        "XAUTHORITY=$HOME_DIR/.Xauthority"
     )
     BIND_ARGS+=(
         --bind /tmp/.X11-unix /tmp/.X11-unix
@@ -260,5 +281,6 @@ pprint
 #     --user \
 #     --map-root-user \
 #     --map-auto \
-bwrap "${BWRAP_ARGS[@]}" "${BIND_ARGS[@]}" "${CMD[@]}"
-
+bwrap "${BWRAP_ARGS[@]}" "${BIND_ARGS[@]}" \
+    /usr/bin/env -i "${ENV[@]}" \
+        "${CMD[@]}"

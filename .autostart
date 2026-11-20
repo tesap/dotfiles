@@ -1,9 +1,0 @@
-#!/bin/bash
-
-setxkbmap -layout us,ru -option 'grp:shifts_toggle' &
-dunst &
-xbindkeys > xbind_logs &
-
-$HOME/.scripts/x230-fhd-mod.sh &
-
-

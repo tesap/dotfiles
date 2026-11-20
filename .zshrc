@@ -2,10 +2,6 @@
 
 source ~/.bashrc
 
-hash -d Hobby=/media/Ferg/Hobby
-hash -d Aurora=/media/Ferg/Aurora
-hash -d Container=/media/Ferg/Containers
-
 export HISTSIZE=100000
 export SAVEHIST=100000
 HISTFILE=~/.zsh_history

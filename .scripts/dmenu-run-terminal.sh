@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source ~/.vars
-
 sel_dir=$(source ~/.scripts/dmenu-recursive-dir-select.sh)
 
 if [[ -z $sel_dir ]]; then

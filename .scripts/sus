@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [[ -f /bin/systemctl ]]; then
+    systemctl suspend
+elif [[ -f /bin/zzz ]]; then
+    zzz
+else
+    echo "Cannot found systemctl or zzz"
+    exit 1
+fi
+
+

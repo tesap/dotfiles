@@ -1,0 +1,9 @@
+wayland-protocols
+wayland-scanner++
+wayland-devel
+libinput-devel
+libudev-devel
+wlroots-devel
+seatd
+wmenu
+foot

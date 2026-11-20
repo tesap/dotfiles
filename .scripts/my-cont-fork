@@ -1,0 +1,310 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ "$(id -u)" -ne 0 ]]; then
+    SUDO_ASKPASS=~/.scripts/dmenu-askpass exec sudo -A "$0" "$@"
+fi
+
+BASE_PATH=""
+OVERLAYS=()
+BIND_ARGS=()
+DISABLE_NET=0
+READ_ONLY=0
+BIND_XORG=0
+BIND_DEVICES=0
+PROXYCHAINS=0
+USER_NAME="root"
+HOME_DIR="/root"
+CMD=("/bin/bash")
+
+function pprint() {
+    echo "bwrap \\"
+    first=1
+    for arg in "${BWRAP_ARGS[@]}" "${BIND_ARGS[@]}"; do
+        if [[ "$arg" == --* ]]; then
+            [[ $first -eq 0 ]] && printf ' \\\n'
+            printf '    %q' "$arg"
+            first=0
+        else
+            printf ' %q' "$arg"
+        fi
+    done
+    printf ' \\\n        '
+    printf '%q ' "${CMD[@]}"
+    echo
+}
+
+usage() {
+    cat <<EOF
+Usage: $(basename "$0") [OPTIONS] [-- COMMAND...]
+
+Options:
+  -h, --help                Show this help message
+  -b, --base <dir>          Override base rootfs path (default: $BASE_PATH)
+  --overlay <dir>           Add an overlay layer (can be repeated; last one is writable,
+  --overlay-tmp
+                            earlier ones are stacked read-only below it)
+  -b, --bind <dir> <to>     Mount additional dirs
+  --copy <dir> <to>         Mount copied <dir>
+  --disable-net             Isolate network namespace (disables internet access)
+  --bind-xorg
+  --bind-devices
+  --proxychains
+  --user <u>
+  --read-only               Mount rootfs read-only (only applies in non-overlay mode)
+EOF
+    exit 1
+}
+
+
+CLEANUP=()
+cleanup() { 
+    echo "--- CLEANUP ---"
+    printf '\t- %s\n' "${CLEANUP[@]}"
+    rm -rf "${CLEANUP[@]}"
+}
+trap cleanup 0
+
+BWRAP_ARGS=()
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --overlay)
+            [[ -z "${2:-}" ]] && { echo "Error: --overlay requires a directory path" >&2; exit 1; }
+            OVERLAYS+=("$2")
+            shift 2
+            ;;
+        --overlay-tmp)
+            TMP=$(mktemp -d /tmp/tmp.tmp-overlay-XXX)
+            OVERLAYS+=("$TMP")
+            CLEANUP+=("$TMP")
+            shift
+            ;;
+        --disable-net)
+            DISABLE_NET=1
+            shift
+            ;;
+        --read-only)
+            READ_ONLY=1
+            shift
+            ;;
+        --base)
+            [[ -z "${2:-}" ]] && { echo "Error: --base requires a directory path" >&2; exit 1; }
+            BASE_PATH="$2"
+            shift 2
+            ;;
+        --user)
+            [[ -z "${2:-}" ]] && { echo "Error: --user requires an argument" >&2; exit 1; }
+            USER_NAME="$2"
+            HOME_DIR="/home/$2"
+            shift 2
+            ;;
+        -b|--bind)
+            [[ -z "${2:-}" || -z "${3:-}" ]] && { echo "Error: --bind requires path" >&2; exit 1; }
+            BIND_ARGS+=(
+                --bind $2 $3
+            )
+            shift 3
+            ;;
+        -c|--copy)
+            [[ -z "${2:-}" || -z "${3:-}" ]] && { echo "Error: --copy requires path" >&2; exit 1; }
+            TMP=$(mktemp -d /tmp/tmp.bind-XXX)
+            cp -r $2/* $TMP
+            BIND_ARGS+=(
+                --bind $TMP $3
+            )
+            CLEANUP+=("$TMP")
+            shift 3
+            ;;
+        --bind-xorg)
+            BIND_XORG=1
+            shift
+            ;;
+        --bind-devices)
+            BIND_DEVICES=1
+            shift
+            ;;
+        --proxychains)
+            PROXYCHAINS=1
+            shift
+            ;;
+        -h|--help)
+            usage
+            ;;
+        --)
+            shift
+            [[ $# -gt 0 ]] && CMD=("$@")
+            break
+            ;;
+        *)
+            echo "Unknown option: $1" >&2
+            usage
+            ;;
+    esac
+done
+
+if [[ -z $BASE_PATH ]]; then
+    echo "Error base path is not set";
+    exit 1
+fi
+
+if [[ ! -d $BASE_PATH ]]; then
+    echo "Error: base path does not exist: $BASE_PATH"
+    exit 1
+fi
+
+# 1. Configure Rootfs Mount (Non-overlay vs. Stacked Overlays)
+if [[ ${#OVERLAYS[@]} -eq 0 ]]; then
+    if [[ $READ_ONLY -eq 1 ]]; then
+        BWRAP_ARGS+=(--ro-bind "$BASE_PATH" /)
+    else
+        BWRAP_ARGS+=(--bind "$BASE_PATH" /)
+    fi
+    BWRAP_ARGS+=(--hostname $(basename $BASE_PATH))
+else
+    if [[ $READ_ONLY -eq 1 ]]; then
+        echo "Warning: --read-only is ignored when --overlay is specified (top overlay is always writable)." >&2
+    fi
+
+    # Base image is always the bottommost lowerdir
+    BWRAP_ARGS+=(--overlay-src "$BASE_PATH")
+
+    # All overlays except the last become read-only middle layers
+    LAST_IDX=$(( ${#OVERLAYS[@]} - 1 ))
+    for (( i=0; i<LAST_IDX; i++ )); do
+        BWRAP_ARGS+=(--overlay-src "${OVERLAYS[$i]}/upper")
+    done
+
+    # The final overlay is the writable top layer
+    TOP_OVERLAY="${OVERLAYS[$LAST_IDX]}"
+    mkdir -p "$TOP_OVERLAY/upper" "$TOP_OVERLAY/work"
+    BWRAP_ARGS+=(
+        --overlay "$TOP_OVERLAY/upper" "$TOP_OVERLAY/work" /
+        --hostname $(basename $TOP_OVERLAY)
+    )
+fi
+
+
+BWRAP_ARGS+=(
+    --proc /proc
+    --tmpfs /tmp
+    --tmpfs /run
+    --unshare-ipc
+    --unshare-pid
+    --unshare-uts
+    --unshare-cgroup
+    --new-session
+    --clearenv
+)
+    # --die-with-parent
+
+if [[ $DISABLE_NET -eq 0 ]]; then
+    BWRAP_ARGS+=(
+        --share-net
+        --ro-bind /etc/resolv.conf /etc/resolv.conf
+    )
+fi
+
+ENV=()
+ENV+=(
+    "USER=$USER_NAME"
+    "HOME=$HOME_DIR"
+    "TERM=${TERM:-xterm-256color}"
+    "PATH=$HOME_DIR/.nix-profile/bin:/usr/local/sbin:/usr/local/bin:/usr/bin"
+)
+
+# BWRAP_ARGS+=(
+#     --clearenv
+#     --setenv USER $USER_NAME
+#     --setenv HOME $HOME_DIR
+#     --setenv TERM "${TERM:-xterm-256color}"
+#     --setenv PATH "$HOME_DIR/.nix-profile/bin:/usr/local/sbin:/usr/local/bin:/usr/bin"
+# )
+# CMD=("runuser" "-u" "$USER_NAME" "${CMD[@]}")
+CMD=("runuser" "-u" "$USER_NAME" "--" "script" "-qec" "${CMD[@]}" "/dev/null" )
+
+if [[ $BIND_DEVICES -eq 1 ]]; then
+    BWRAP_ARGS+=(
+        --dev-bind /dev/ /dev/
+        --ro-bind /sys /sys
+    )
+else
+    BWRAP_ARGS+=(
+        --dev /dev
+    )
+fi
+
+
+if [[ $BIND_XORG -eq 1 ]]; then
+    XAUTH_TMP=$(mktemp /tmp/tmp.xauth-XXX)
+    CLEANUP+=("$XAUTH_TMP")
+    xauth nlist "$DISPLAY" | sed -e 's/^..../ffff/' | xauth -f "$XAUTH_TMP" nmerge -
+    chmod 644 $XAUTH_TMP
+    chown root:root $XAUTH_TMP
+
+    ENV+=(
+        "DISPLAY=:0"
+        "XAUTHORITY=$HOME_DIR/.Xauthority"
+    )
+    # BWRAP_ARGS+=(
+    #     --setenv DISPLAY ":0"
+    #     --setenv XAUTHORITY "$HOME_DIR/.Xauthority"
+    # )
+    BIND_ARGS+=(
+        --bind /tmp/.X11-unix /tmp/.X11-unix
+        --ro-bind $XAUTH_TMP $HOME_DIR/.Xauthority
+    )
+fi
+
+if [[ $PROXYCHAINS -eq 1 ]]; then
+    BWRAP_ARGS+=(
+        --ro-bind /etc/proxychains.conf /etc/proxychains.conf
+        --ro-bind /usr/bin/proxychains4 /usr/bin/proxychains4
+        --ro-bind /usr/lib/libproxychains4.so /usr/lib/libproxychains4.so
+    )
+
+    CMD=("/usr/bin/proxychains4" "${CMD[@]}")
+fi
+
+pprint
+
+# unshare \
+#     --user \
+#     --map-root-user \
+#     --map-auto \
+#     bwrap "${BWRAP_ARGS[@]}" "${BIND_ARGS[@]}" "${CMD[@]}"
+
+SESSION_KEY="$(basename ${TOP_OVERLAY:-$BASE_PATH})"
+STATE_DIR="/tmp/bwrap-session_$SESSION_KEY"
+PID_FILE="$STATE_DIR/child.pid"
+
+if [[ ! -f "$PID_FILE" ]] || ! kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
+    mkdir -p "$STATE_DIR"
+
+    bwrap \
+        "${BWRAP_ARGS[@]}" \
+        "${BIND_ARGS[@]}" \
+        --info-fd 3 \
+        /usr/bin/sleep infinity 3>"$STATE_DIR/info.json" &
+
+    sleep 1
+    CHILD_PID=$(grep -o '"child-pid": [0-9]*' "$STATE_DIR/info.json" | awk '{print $2}')
+    if [[ -z "$CHILD_PID" ]] || ! kill -0 "$CHILD_PID" 2>/dev/null; then
+        echo "Could not find child pid"
+        exit 1
+    fi
+    echo "$CHILD_PID" > "$PID_FILE"
+fi
+
+TARGET_PID=$(cat "$PID_FILE")
+nsenter \
+    --target "$TARGET_PID" \
+    --mount \
+    --uts \
+    --ipc \
+    --pid \
+    --cgroup \
+    --preserve-credentials \
+    /usr/bin/env -i "${ENV[@]}" \
+        "${CMD[@]}"
+

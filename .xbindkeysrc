@@ -57,3 +57,10 @@
 
 "xdotool key Delete"
   Insert
+
+# Remap 7-row keyboard keys near arrows
+"xdotool key --clearmodifiers Prior"
+    XF86Back
+
+"xdotool key --clearmodifiers Next"
+    XF86Forward

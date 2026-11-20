@@ -4,13 +4,9 @@ setxkbmap -layout us,ru -option 'grp:shifts_toggle' &
 dunst &
 xbindkeys &
 
-# For X230 with nitrocaster FHD mod
-xrandr \
-    --output DP-3 --primary --mode 1920x1080 \
-    --output LVDS-1 --mode 1920x1080 --same-as DP-3
-# xrandr --output LVDS-1 --off --output DP-3 --primary --mode 1920x1080 --auto
-
-xbacklight -set 100
-mount --mkdir /dev/disk/by-partlabel/ext-Ferg /media/Ferg
+for i in $HOME/.specific/enabled-startx/*; do
+    echo "Exec $i"
+    source $i &
+done
 
 exec dwm
